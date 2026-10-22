@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="ai-document-summary" content="סיכום קורס מקיף ומעמיק: תכנות מונחה עצמים (20906) - האוניברסיטה הפתוחה. מכסה את כל 18 הפרקים (חלקים I עד VII), עקרונות הליבה, הטבלאות, קטעי הקוד, שאלות הניתוח והמימושים: מנגנוני הפשטה (פרקים 1-2), המושג עצם, זהות, מצב, התנהגות והעתקה רדודה/עמוקה/רקורסיבית (פרק 3), סביבת Squeak והמשחק Quinto (פרקים 4-5), תחביר Smalltalk, פרימיטיבים, בלוקים, איטרטורים, פסאודו-משתנים ו-Cascade (פרקים 6-7), מודל התכנות ב-Smalltalk, 3 סוגי עצמים ב-Squeak, מתודות מחלקה מול static, משתני מופע של מחלקה (Dog/Hyena), Singleton, Traits, איתור מתודות self מול super ומשתנים משותפים (פרק 8), כלי הפיתוח, Monticello ודיבוג המתודה suffix ב-Debugger (פרק 9), המושג מחלקה, 5 מרכיביה ובבואה (פרק 10), המחלקות הבסיסיות Object, Magnitude, Number, Character, String, Symbol ו-Boolean (פרק 11), היררכיית האוספים Collection ואיטרטורים (פרק 12), סימולציה ו-4 אופני ייצוג לחידת N המלכות ו-8 סימטריות הלוח (פרקים 13-14), פתרון מונחה עצמים ל-8 המלכות עם Board, Queen ו-QueenTerminator (פרק 15), הכללה ל-N×N, מלכודת משתנה המחלקה N ולוח תלת-ממדי N×N×N (פרק 16), הסביבה הגרפית Morphic, CrossMorph, אירועי עכבר/מקלדת/Stepping, Drag & Drop, DieMorph ו-Canvas/fork (פרק 17), והמושג מטה-מחלקה Metaclass, סיווג למטה-רמות, אבולוציית 5 הרמות, 10 חוקי המודל, Behavior/ClassDescription/Class/Metaclass ונוסחאות הבחינה (פרק 18).">
+    <title>סיכום קורס מלא: תכנות מונחה עצמים (20906)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            background-image:
+                linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0;
+            font-family: 'Assistant', sans-serif;
+            color: #1e293b;
+            line-height: 1.8;
+            font-size: 1.12rem;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: #0f172a;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .notebook-page {
+            background-color: rgba(15, 23, 42, 0.96);
+            color: #e2e8f0;
+        }
+
+        body.dark-mode #sidebar {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-left-color: #334155;
+        }
+
+        body.dark-mode .hand-drawn-box {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #64748b;
+            box-shadow: 4px 4px 0px #334155;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .note-box-blue,
+        body.dark-mode .note-box-green,
+        body.dark-mode .note-box-orange,
+        body.dark-mode .note-box-purple,
+        body.dark-mode .warning-box {
+            background: rgba(30, 41, 59, 0.85);
+            color: #f1f5f9;
+        }
+
+        body.dark-mode table,
+        body.dark-mode td,
+        body.dark-mode tr {
+            background-color: #1e293b !important;
+            color: #e2e8f0 !important;
+            border-color: #475569 !important;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Rubik', sans-serif;
+        }
+
+        /* פס שוליים אדום כמו במחברת שורות קלאסית */
+        .notebook-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 52px;
+            bottom: 0;
+            width: 2px;
+            background-color: rgba(220, 38, 38, 0.35);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .notebook-page::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 57px;
+            bottom: 0;
+            width: 1px;
+            background-color: rgba(220, 38, 38, 0.15);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .notebook-page {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 75px 60px 45px;
+            background-color: rgba(253, 251, 247, 0.95);
+            position: relative;
+        }
+
+        @media (max-width: 640px) {
+            .notebook-page {
+                padding: 24px 28px 40px 20px;
+            }
+            .notebook-page::before { right: 16px; }
+            .notebook-page::after { right: 20px; }
+        }
+
+        .title-teal {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(153, 246, 228, 0) 0.9%, rgba(153, 246, 228, 0.7) 2.4%, rgba(153, 246, 228, 0.5) 5.8%, rgba(153, 246, 228, 0.55) 50%, rgba(153, 246, 228, 0.4) 93%, rgba(153, 246, 228, 0.6) 96%, rgba(153, 246, 228, 0) 98%);
+            padding: 4px 18px;
+            margin: 0 -4px;
+            color: #0f766e;
+            font-weight: 700;
+            font-size: 1.4rem;
+            border-radius: 3px 5px 3px 5px;
+            display: inline-block;
+            transform: rotate(-0.4deg);
+        }
+
+        body.dark-mode .title-teal {
+            color: #5eead4;
+            background-image: linear-gradient(104deg, rgba(15, 118, 110, 0) 0.9%, rgba(15, 118, 110, 0.45) 2.4%, rgba(15, 118, 110, 0.35) 93%, rgba(15, 118, 110, 0) 98%);
+        }
+
+        .hand-drawn-box {
+            border: 2px solid #334155;
+            border-radius: 4px 255px 5px 25px / 255px 7px 225px 5px;
+            padding: 1.35rem;
+            margin: 1.25rem 0;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 4px 4px 0px #94a3b8;
+        }
+
+        .warning-box {
+            border: 2px solid #dc2626;
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            padding: 1.2rem;
+            margin: 1.25rem 0;
+            background: rgba(254, 226, 226, 0.5);
+            color: #7f1d1d;
+        }
+
+        .note-box-blue {
+            border: 2px solid #2563eb;
+            border-radius: 20px 15px 30px 10px / 10px 25px 12px 20px;
+            padding: 1.2rem;
+            margin: 1.25rem 0;
+            background: rgba(239, 246, 255, 0.6);
+            color: #1e3a8a;
+        }
+
+        .note-box-green {
+            border: 2px solid #16a34a;
+            border-radius: 15px 25px 10px 30px / 20px 10px 25px 12px;
+            padding: 1.2rem;
+            margin: 1.25rem 0;
+            background: rgba(240, 253, 250, 0.65);
+            color: #14532d;
+        }
+
+        .note-box-orange {
+            border: 2px solid #ea580c;
+            border-radius: 25px 10px 20px 15px / 12px 20px 10px 25px;
+            padding: 1.2rem;
+            margin: 1.25rem 0;
+            background: rgba(255, 247, 237, 0.65);
+            color: #7c2d12;
+        }
+
+        .note-box-purple {
+            border: 2px solid #9333ea;
+            border-radius: 18px 22px 15px 25px / 15px 12px 22px 18px;
+            padding: 1.2rem;
+            margin: 1.25rem 0;
+            background: rgba(250, 245, 255, 0.65);
+            color: #581c87;
+        }
+
+        /* מרקרים מציאותיים */
+        .marker-yellow {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(253, 224, 71, 0) 0.9%, rgba(253, 224, 71, 0.65) 2.4%, rgba(253, 224, 71, 0.45) 5.8%, rgba(253, 224, 71, 0.5) 50%, rgba(253, 224, 71, 0.35) 93%, rgba(253, 224, 71, 0.55) 96%, rgba(253, 224, 71, 0) 98%);
+            padding: 2px 0.5em;
+            margin: 0 -0.15em;
+            font-weight: 700;
+            color: inherit;
+            border-radius: 3px 5px 3px 5px;
+            display: inline;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .marker-orange {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(253, 186, 116, 0) 0.9%, rgba(253, 186, 116, 0.65) 2.4%, rgba(253, 186, 116, 0.45) 5.8%, rgba(253, 186, 116, 0.5) 50%, rgba(253, 186, 116, 0.35) 93%, rgba(253, 186, 116, 0.55) 96%, rgba(253, 186, 116, 0) 98%);
+            padding: 2px 0.5em;
+            margin: 0 -0.15em;
+            font-weight: 700;
+            color: inherit;
+            border-radius: 3px 5px 3px 5px;
+            display: inline;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .marker-green {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(134, 239, 172, 0) 0.9%, rgba(134, 239, 172, 0.65) 2.4%, rgba(134, 239, 172, 0.5) 5.8%, rgba(134, 239, 172, 0.3) 93%, rgba(134, 239, 172, 0.65) 96%, rgba(134, 239, 172, 0) 98%);
+            padding: 2px 0.5em;
+            margin: 0 -0.15em;
+            font-weight: 700;
+            color: inherit;
+            border-radius: 3px;
+            display: inline;
+        }
+
+        .marker-blue {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(147, 197, 253, 0) 0.9%, rgba(147, 197, 253, 0.65) 2.4%, rgba(147, 197, 253, 0.5) 5.8%, rgba(147, 197, 253, 0.3) 93%, rgba(147, 197, 253, 0.65) 96%, rgba(147, 197, 253, 0) 98%);
+            padding: 2px 0.5em;
+            margin: 0 -0.15em;
+            font-weight: 700;
+            color: inherit;
+            border-radius: 3px;
+            display: inline;
+        }
+
+        .marker-red {
+            background-color: transparent;
+            background-image: linear-gradient(104deg, rgba(254, 202, 202, 0) 0.9%, rgba(254, 202, 202, 0.7) 2.4%, rgba(254, 202, 202, 0.55) 5.8%, rgba(254, 202, 202, 0.35) 93%, rgba(254, 202, 202, 0.7) 96%, rgba(254, 202, 202, 0) 98%);
+            padding: 2px 0.5em;
+            margin: 0 -0.15em;
+            font-weight: 700;
+            color: inherit;
+            border-radius: 3px;
+            display: inline;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #be185d;
+            font-weight: 700;
+            background-color: rgba(15, 23, 42, 0.06);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.88em;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        body.dark-mode code {
+            color: #f472b6;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        pre {
+            background: #1e293b;
+            color: #f8fafc;
+            border-right: 4px solid #3b82f6;
+            padding: 1.1rem;
+            margin: 0.95rem 0;
+            border-radius: 8px;
+            direction: ltr;
+            text-align: left;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+            overflow-x: auto;
+            font-size: 0.88rem;
+            line-height: 1.55;
+        }
+
+        pre code {
+            background: transparent;
+            color: #f8fafc;
+            padding: 0;
+            font-weight: normal;
+            display: block;
+        }
+
+        .list-bullet {
+            position: relative;
+            padding-right: 1.5rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .list-bullet::before {
+            content: '■';
+            position: absolute;
+            right: 0;
+            font-size: 0.75em;
+            top: 0.25em;
+        }
+
+        .list-bullet-orange::before { color: #c2410c; }
+        .list-bullet-red::before { color: #b91c1c; }
+        .list-bullet-blue::before { color: #1d4ed8; }
+        .list-bullet-teal::before { color: #0f766e; }
+        .list-bullet-purple::before { color: #6d28d9; }
+        .list-bullet-green::before { color: #15803d; }
+        .list-bullet-pink::before { color: #be185d; }
+        .list-bullet-rose::before { color: #e11d48; }
+        .list-bullet-cyan::before { color: #0891b2; }
+        .list-bullet-indigo::before { color: #4338ca; }
+        .list-bullet-amber::before { color: #b45309; }
+        .list-bullet-emerald::before { color: #047857; }
+
+        .sidebar-nav {
+            scrollbar-width: thin;
+            scrollbar-color: #94a3b8 transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body class="bg-amber-50/20 min-h-screen text-slate-800 font-sans relative antialiased flex">
+
+    <!-- כפתור פתיחת תפריט ניווט (מוצג כשהתפריט מוסתר) -->
+    <button id="toggle-sidebar-open"
+        class="fixed right-4 top-4 z-30 bg-[#fdfbf7] text-slate-700 hover:text-amber-700 hover:bg-amber-50 border border-amber-200 shadow-lg rounded-full p-3 transition duration-300 ease-in-out hidden"
+        title="הצג תפריט ניווט">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+    </button>
+
+    <!-- רקע כהה לתפריט הצידי במובייל -->
+    <div id="sidebar-backdrop"
+        class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-10 transition-opacity duration-300 hidden lg:hidden">
+    </div>
+
+    <!-- סרגל ניווט צידי -->
+    <aside id="sidebar"
+        class="w-80 max-w-[85vw] bg-[#fdfbf7] text-slate-800 fixed right-0 top-0 bottom-0 z-20 flex flex-col shadow-[-4px_0_24px_rgba(0,0,0,0.06)] border-l border-amber-200/80 transition-transform duration-300 ease-in-out transform translate-x-0">
+        <div class="py-4 pr-5 pl-10 border-b border-amber-200/80 bg-[#fbf9f3] relative">
+            <h2 class="text-xl font-bold font-heading text-slate-900 flex items-center gap-2">
+                <span>♟️</span> תוכן העניינים (20906)
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">כל 18 פרקי הקורס • לחץ למעבר ישיר</p>
+            <button id="toggle-sidebar-close"
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition"
+                title="הסתר תפריט">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- חיפוש מהיר בסיידבר -->
+        <div class="p-3 border-b border-slate-200/70 bg-amber-50/30">
+            <input id="sidebar-search" type="text" placeholder="🔍 סינון מהיר של פרק, נושא או מתודה..."
+                class="w-full px-3 py-1.5 text-sm rounded-lg border border-amber-300/80 bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <nav id="sidebar-links" class="flex-1 p-5 space-y-5 overflow-y-auto sidebar-nav text-sm">
+
+            <!-- חלק I: פרקים 1-2 -->
+            <div class="nav-group">
+                <h3 class="font-bold text-orange-700 mb-1 border-b border-orange-200/80 pb-1">חלק I: מבוא ומנגנוני הפשטה (פרקים 1–2)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-1-1" class="text-slate-700 hover:text-orange-700 hover:bg-orange-50/50 block rounded px-2 py-0.5 transition font-medium">1.1 Smalltalk כ-OOP טהורה וסביבת Squeak</a></li>
+                    <li><a href="#sec-2-1" class="text-slate-700 hover:text-orange-700 hover:bg-orange-50/50 block rounded px-2 py-0.5 transition font-medium">2.1 דוגמאות להפשטה (מאקרו, enum, Java)</a></li>
+                    <li><a href="#sec-2-2" class="text-slate-700 hover:text-orange-700 hover:bg-orange-50/50 block rounded px-2 py-0.5 transition font-medium">2.2 ★ 7 שלבי התפתחות מנגנוני ההפשטה</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק II: פרק 3 -->
+            <div class="nav-group">
+                <h3 class="font-bold text-red-700 mb-1 border-b border-red-200/80 pb-1">חלק II: המושג "עצם" (פרק 3)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-3-1" class="text-slate-700 hover:text-red-700 hover:bg-red-50/50 block rounded px-2 py-0.5 transition font-medium">3.1–3.3 סוגי עצמים, 3 מאפיינים ודוגמאות</a></li>
+                    <li><a href="#sec-3-2" class="text-slate-700 hover:text-red-700 hover:bg-red-50/50 block rounded px-2 py-0.5 transition font-medium">3.4 האם בשפת C אפשר להגדיר עצמים?</a></li>
+                    <li><a href="#sec-3-3" class="text-slate-700 hover:text-red-700 hover:bg-red-50/50 block rounded px-2 py-0.5 transition font-medium">3.5 ★ זהות עצמית, שוויון והעתקה (רדודה/עמוקה)</a></li>
+                    <li><a href="#sec-3-4" class="text-slate-700 hover:text-red-700 hover:bg-red-50/50 block rounded px-2 py-0.5 transition font-medium">3.6 מאפיינים סטטיים ודינמיים (הודעה מול שיטה)</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק III: פרקים 4-5 -->
+            <div class="nav-group">
+                <h3 class="font-bold text-blue-700 mb-1 border-b border-blue-200/80 pb-1">חלק III: מבוא לסמולטוק ו-Quinto (פרקים 4–5)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-4-1" class="text-slate-700 hover:text-blue-700 hover:bg-blue-50/50 block rounded px-2 py-0.5 transition font-medium">4.1–4.4 קובצי Squeak, 3 כפתורי העכבר ו-World</a></li>
+                    <li><a href="#sec-4-2" class="text-slate-700 hover:text-blue-700 hover:bg-blue-50/50 block rounded px-2 py-0.5 transition font-medium">4.5–4.10 כלי העבודה, חיפוש והמתודה shout</a></li>
+                    <li><a href="#sec-5-1" class="text-slate-700 hover:text-blue-700 hover:bg-blue-50/50 block rounded px-2 py-0.5 transition font-medium">5.1–5.7 ★ המשחק Quinto, באג ^c ו-fileOut/fileIn</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק IV: פרקים 6-9 -->
+            <div class="nav-group">
+                <h3 class="font-bold text-teal-700 mb-1 border-b border-teal-200/80 pb-1">חלק IV: תחביר, שליחת הודעות ומודל השפה (פרקים 6–9)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-6-1" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">6.1–6.2 ליטרלים, מערכים, 6 פסאודו-משתנים ופרימיטיבים</a></li>
+                    <li><a href="#sec-6-2" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">6.3–7.6 ★ 3 סוגי הודעות, קדימויות, מתודות ו-Cascade</a></li>
+                    <li><a href="#sec-6-3" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">6.5–6.6 בלוקים, תנאים, לולאות ואיטרטורים</a></li>
+                    <li><a href="#sec-8-1" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">8.1–8.3 ★ 3 סוגי עצמים, כימוס, מתודות מחלקה ו-Dog/Hyena</a></li>
+                    <li><a href="#sec-8-2" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">8.3–8.4 ★ דפוס Singleton, מחלקות מופשטות ו-Traits</a></li>
+                    <li><a href="#sec-8-3" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">8.5–8.7 ★ איתור מתודות, self מול super ומשתנים משותפים</a></li>
+                    <li><a href="#sec-9-1" class="text-slate-700 hover:text-teal-700 hover:bg-teal-50/50 block rounded px-2 py-0.5 transition font-medium">9.1–9.10 ★ כלי הפיתוח, Monticello ודיבוג suffix ב-Debugger</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק V: פרקים 10-12 -->
+            <div class="nav-group">
+                <h3 class="font-bold text-purple-700 mb-1 border-b border-purple-200/80 pb-1">חלק V: מחלקות ואוספים ב-Squeak (פרקים 10–12)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-10-1" class="text-slate-700 hover:text-purple-700 hover:bg-purple-50/50 block rounded px-2 py-0.5 transition font-medium">10.1–10.6 תפקידי המחלקה, 5 מרכיביה, מצביעי פונקציה ובבואה</a></li>
+                    <li><a href="#sec-11-1" class="text-slate-700 hover:text-purple-700 hover:bg-purple-50/50 block rounded px-2 py-0.5 transition font-medium">11.1 המחלקה Object (הדפסה, שוויון, שייכות, העתקה וחריגים)</a></li>
+                    <li><a href="#sec-11-2" class="text-slate-700 hover:text-purple-700 hover:bg-purple-50/50 block rounded px-2 py-0.5 transition font-medium">11.2–11.5 מספרים, תווים, מחרוזות, Symbol ובוליאנים</a></li>
+                    <li><a href="#sec-12-1" class="text-slate-700 hover:text-purple-700 hover:bg-purple-50/50 block rounded px-2 py-0.5 transition font-medium">12.1–12.4 ★ היררכיית האוספים, סיווגם ו-5 דרכי מימוש</a></li>
+                    <li><a href="#sec-12-2" class="text-slate-700 hover:text-purple-700 hover:bg-purple-50/50 block rounded px-2 py-0.5 transition font-medium">12.5–12.6 ★ מימוש האיטרטורים ו-4 כללי הזהב לאוספים</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק VI: פרקים 13-16 (חידת המלכות) -->
+            <div class="nav-group">
+                <h3 class="font-bold text-green-700 mb-1 border-b border-green-200/80 pb-1">חלק VI א': סימולציית חידת המלכות (פרקים 13–16)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-14-1" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">13–14.4 ★ רקע, ייצוג פרמוטציה ו-4 אופני ייצוג ל-N המלכות</a></li>
+                    <li><a href="#sec-14-2" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">14.5–14.6 ★ 8 סימטריות הלוח ופתרונות זרים ממש</a></li>
+                    <li><a href="#sec-15-1" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">15.1 ★ פתרון מונחה עצמים ל-8 המלכות: המחלקה Board</a></li>
+                    <li><a href="#sec-15-2" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">15.2–15.4 ★ המחלקה Queen: פרוטוקול, Backtracking ו-canAttack</a></li>
+                    <li><a href="#sec-15-3" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">15.5 ★ תבנית Null Object: המחלקה QueenTerminator</a></li>
+                    <li><a href="#sec-16-1" class="text-slate-700 hover:text-green-700 hover:bg-green-50/50 block rounded px-2 py-0.5 transition font-medium">16.1–16.2 ★ הכללה ל-N×N, מלכודת משתנה המחלקה ולוח N×N×N</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק VI ב': פרק 17 (Morphic) -->
+            <div class="nav-group">
+                <h3 class="font-bold text-pink-700 mb-1 border-b border-pink-200/80 pb-1">חלק VI ב': הסביבה הגרפית Morphic (פרק 17)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-17-1" class="text-slate-700 hover:text-pink-700 hover:bg-pink-50/50 block rounded px-2 py-0.5 transition font-medium">17.1–17.3 עקרונות ישירות וחיות, Halo, מערכת הצירים והכלה</a></li>
+                    <li><a href="#sec-17-2" class="text-slate-700 hover:text-pink-700 hover:bg-pink-50/50 block rounded px-2 py-0.5 transition font-medium">17.4 ★ יצירת צורות: drawOn:, CrossMorph ו-containsPoint:</a></li>
+                    <li><a href="#sec-17-3" class="text-slate-700 hover:text-pink-700 hover:bg-pink-50/50 block rounded px-2 py-0.5 transition font-medium">17.5 ★ אירועי עכבר (2 שלבים), מקלדת (3 שלבים) ו-Stepping</a></li>
+                    <li><a href="#sec-17-4" class="text-slate-700 hover:text-pink-700 hover:bg-pink-50/50 block rounded px-2 py-0.5 transition font-medium">17.6–17.10 ★ דו-שיח, Drag &amp; Drop, הקובייה DieMorph ו-Canvas</a></li>
+                </ul>
+            </div>
+
+            <!-- חלק VII: פרק 18 (מטה-מחלקות) -->
+            <div class="nav-group">
+                <h3 class="font-bold text-indigo-700 mb-1 border-b border-indigo-200/80 pb-1">חלק VII: מטה-מחלקות (פרק 18)</h3>
+                <ul class="space-y-1 pr-2 list-none">
+                    <li><a href="#sec-18-1" class="text-slate-700 hover:text-indigo-700 hover:bg-indigo-50/50 block rounded px-2 py-0.5 transition font-medium">18.1–18.7 ★ מחלקה כעצם, סיווג למטה-רמות ו-5 רמות עצמים</a></li>
+                    <li><a href="#sec-18-2" class="text-slate-700 hover:text-indigo-700 hover:bg-indigo-50/50 block rounded px-2 py-0.5 transition font-medium">18.8–18.11 ★ 10 חוקי המודל, היררכיה מקבילה ואיתור new ו-blue</a></li>
+                    <li><a href="#sec-18-3" class="text-slate-700 hover:text-indigo-700 hover:bg-indigo-50/50 block rounded px-2 py-0.5 transition font-medium">18.12–18.15 ★ Behavior, ClassDescription, Class והמעגל של Metaclass</a></li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <div class="p-3 border-t border-amber-200/80 bg-[#fbf9f3] text-center text-xs text-slate-500 font-medium space-y-2">
+            <a href="index.html" class="inline-flex items-center justify-center gap-1.5 w-full py-2 px-3 rounded-xl bg-gradient-to-r from-amber-100 to-orange-100 hover:from-amber-200 hover:to-orange-200 text-amber-950 font-bold text-xs shadow-sm transition border border-amber-300/80 text-center">
+                <span>🏠</span>
+                <span>בחזרה לתפריט הראשי (אינדקס)</span>
+                <span>◀</span>
+            </a>
+            <div>סיכום קורס מלא • תכנות מונחה עצמים (20906)</div>
+        </div>
+    </aside>
+
+    <!-- אזור התוכן הראשי (מחברת) -->
+    <main id="main-content"
+        class="flex-1 notebook-container relative transition-all duration-300 ease-in-out lg:mr-80 pb-12">
+        <div class="notebook-page min-h-screen">
+
+            <!-- כותרת ראשית -->
+            <div class="mb-12 text-center mt-4">
+                <span class="text-xs font-bold text-amber-700 tracking-widest uppercase block mb-2">האוניברסיטה הפתוחה • קורס 20906 • סיכום מקיף</span>
+                <h1 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-3 relative inline-block font-heading">
+                    סיכום קורס: תכנות מונחה עצמים
+                    <svg class="absolute -bottom-3 left-0 w-full h-3" viewBox="0 0 200 10" preserveAspectRatio="none">
+                        <path d="M0,5 Q100,10 200,2" stroke="#dc2626" stroke-width="4" fill="none" stroke-linecap="round" />
+                    </svg>
+                </h1>
+                <p class="text-slate-600 font-semibold mt-4 text-base md:text-lg">
+                    סיכום מדויק, תמציתי ומקיף של כל 18 פרקי הקורס, העקרונות, קטעי הקוד, שאלות הניתוח והדוגמאות המרכזיות
+                </p>
+                <div class="flex flex-wrap justify-center gap-2 mt-4 text-xs font-bold">
+                    <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-800 border border-orange-200">חלקים I–II: הפשטה ועצמים (פרקים 1–3)</span>
+                    <span class="px-3 py-1 rounded-full bg-teal-100 text-teal-800 border border-teal-200">חלקים III–V: Smalltalk, Squeak ואוספים (פרקים 4–12)</span>
+                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-800 border border-green-200">חלק VI: סימולציית N המלכות ו-Morphic (פרקים 13–17)</span>
+                    <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200">חלק VII: מטה-מחלקות ומודל 5 הרמות (פרק 18)</span>
+                </div>
+            </div>
+
+            <!-- ================= חלק I: פרקים 1-2 ================= -->
+            <div class="border-b-4 border-orange-400 pb-3 mb-8 mt-10">
+                <h2 class="text-2xl font-black text-orange-800 font-heading">חלק I: מבוא ומנגנוני הפשטה (פרקים 1–2)</h2>
+                <p class="text-sm text-slate-600">מדוע לומדים Smalltalk כ-OOP טהורה, בעיית הקבועים החוזרים, ו-7 שלבי התפתחות מנגנוני ההפשטה.</p>
+            </div>
+
+            <section id="sec-1-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">1.1–1.11 מטרות הקורס, למה Smalltalk וסביבת העבודה Squeak</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-orange">
+                        <strong class="marker-orange">ספרי הלימוד והמקורות:</strong> הקורס מבוסס על שני ספרי מקור מרכזיים:
+                        <strong>(1)</strong> <em>Squeak by Example</em> (Black et al., 2007) – ללימוד שפת <code>Smalltalk</code> בסביבת <code>Squeak</code> (מתמקד בפרקים 4–9, 11–12, 17–18), ו-<strong>(2)</strong> <em>Object-Oriented Programming</em> (Timothy Budd, 2002) – לעקרונות תכנות מונחה עצמים בחתך שפות כגון C, C++, Ada, Modula-2, Eiffel, Java ו-Smalltalk (מתמקד בפרקים 2–3, 10, 13–16, 18).
+                    </li>
+                    <li class="list-bullet list-bullet-orange">
+                        <strong class="marker-orange">מדוע כדאי ללמוד Smalltalk?</strong> בדומה ל-<code>LISP</code> ול-<code>LOGO</code>, שפת <code>Smalltalk</code> היא <strong class="marker-yellow">שפה מונחית עצמים "טהורה" (Pure OOP)</strong> המתבססת על <strong>מנגנון הפשטה אחד ויחיד</strong>, פשוט וקליט: כל דבר הוא עצם, והתכנות מתבצע אך ורק על ידי הגדרת עצמים ושליחת הודעות ביניהם. היא כמעט נטולת תחביר ומכריחה את הסטודנט לחשוב ולתכנת בגישת OOP טהורה.
+                    </li>
+                    <li class="list-bullet list-bullet-orange">
+                        <strong class="marker-orange">סביבת העבודה Squeak:</strong> סביבת פיתוח בקוד פתוח תואמת <code>Smalltalk-80</code>, הממומשת כולה ב-Smalltalk עצמה ובעלת מנשק גרפי עשיר (ששימש אף את אולפני Disney ביצירת סרטים).
+                    </li>
+                </ul>
+            </section>
+
+            <section id="sec-2-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">2.1 דוגמה לשימוש במנגנוני הפשטה: מניעת חזרה על קבועים</span></h3>
+                <p class="mb-3 text-sm">
+                    <strong>מנגנוני הפשטה מוכרים בשפות תכנות:</strong> משתנים, קבועים, טיפוסי נתונים, פרוצדורות/פונקציות, מודולים, טיפוסי נתונים מופשטים (ADT), מחלקות וירושה.
+                    <br>לדוגמה, נניח שב-C++ מוגדר מערך <code>int a[100];</code> ולולאה <code>for (i = 0; i &lt; 100; i++) cout &lt;&lt; a[i];</code>. להלן השוואת 4 מנגנוני הפשטה למניעת חזרה על הקבוע <code>100</code> ביתרונותיהם וחסרונותיהם:
+                </p>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse bg-white border border-slate-300 shadow-sm text-sm">
+                        <thead>
+                            <tr class="bg-orange-50 text-orange-950 font-bold">
+                                <th class="p-2.5 border border-slate-300">שיטת הפשטה</th>
+                                <th class="p-2.5 border border-slate-300">קוד מרכזי</th>
+                                <th class="p-2.5 border border-slate-300">הערכת מנגנוני ההפשטה (יתרונות וחסרונות)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">ללא הפשטה (קבוע כפול)</td>
+                                <td class="p-2.5 border border-slate-300"><code>int a[100]; ... i &lt; 100</code></td>
+                                <td class="p-2.5 border border-slate-300"><strong>הבעיה בגישה זו:</strong> הקבוע <code>100</code> מופיע פעמיים; אם גודל המערך יעודכן ל-<code>200</code> ויישכח עדכון תנאי הלולאה, תיווצר חוסר עקביות ושגיאות ריצה.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">פקודת מאקרו ב-C++</td>
+                                <td class="p-2.5 border border-slate-300"><code>#define N 100</code></td>
+                                <td class="p-2.5 border border-slate-300">מגדיר את גודל המערך במקום אחד, אך מבוצע ע"י הקדם-מעבד (Preprocessor) כ<strong>החלפת טקסט עיוורת</strong> לפני ההידור, ללא בדיקת טיפוסים או תחום הכרה (Scope).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">שימוש ב-enum ב-C++</td>
+                                <td class="p-2.5 border border-slate-300"><code>enum {N = 100}; int a[N];</code></td>
+                                <td class="p-2.5 border border-slate-300"><strong>יתרון לעומת מאקרו:</strong> <code>enum</code> הוא חלק משפת התכנות עצמה (כפוף לבדיקות המהדר, ל-Scope ולסימבולים ב-Debugger).<br><strong>חיסרון לעומת קבוע ישיר:</strong> דורש שורת קוד נוספת ומפצל את הגדרת המערך וגודלו לשתי שורות נפרדות במקום שורה אחת.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">מאקרו חישוב גודל</td>
+                                <td class="p-2.5 border border-slate-300"><code>#define SIZEOF(arr) (sizeof(arr)/sizeof(arr[0]))</code></td>
+                                <td class="p-2.5 border border-slate-300">משלב את שני היתרונות: הגדרת המערך וגודלו בשורה אחת (<code>int a[100];</code>) והגודל אינו מופיע פעמיים, אך עדיין תלוי במאקרו קדם-מעבד.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold bg-amber-50/50">תמיכה מובנית ב-Java</td>
+                                <td class="p-2.5 border border-slate-300"><code>a.length</code> או <code>for (int k : a)</code></td>
+                                <td class="p-2.5 border border-slate-300">ב-Java תמיכה מובנית בתוך השפה: המערך הוא עצם היודע את אורכו (<code>a.length</code>), ובלולאת for-each תחביר הלולאה מופשט עוד יותר ללא מונה אינדקס כלל (<code>for (int x : a)</code>)!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="sec-2-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">2.2 ★ 7 שלבי התפתחות מנגנוני ההפשטה (סעיפים 2.2.1–2.2.7)</span></h3>
+                <div class="hand-drawn-box text-sm space-y-3">
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <strong class="text-orange-900">1. אסמבלר (Assembler):</strong> ייצוג כתובות ואופרטורים בסיסיים באופן סימבולי במקום מספרי, תוך היעזרות במהדר/אסמבלר לתרגום לשפת מכונה, אך הקוד אינו מובנה.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <strong class="text-orange-900">2. ייצוג נתונים / הפשטה מבוססת נתונים (Fortran, Cobol):</strong> דגש בייצוג מבנה הנתונים הגלובלי (`Global Data`) והגדרת פעולות (`Proc 1..4`) הפועלות עליו באופן המזכיר מסדי נתונים.
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <strong class="text-orange-900">3. פרוצדורות מקוננות / הפשטה מבוססת תהליכים (Pascal, C):</strong> דגש בתהליך ובאלגוריתם (תכנות מלמעלה למטה Top-Down) כאשר כל תהליך מגדיר לוקלית תת-תהליכים ומבני נתונים. <strong class="marker-red">החיסרון (למשל במחסנית ב-C):</strong> הסתרת המידע לוקה בכך שכדי לשתף את המחסנית בין `init()`, `push(val)`, `top()` ו-`pop()`, נדרשים <strong>משתנים גלובליים</strong> (`int datastack[100]; int datatop = 0;`).
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <strong class="text-orange-900">4. מודול (Modula-2):</strong> אוסף של פרוצדורות ונתונים עם יכולת לשלוט במה שיוחצן (Export) ומה שיוסתר. <strong class="marker-red">המגבלה הקריטית של מודול:</strong> מודול הוא כמו <strong>עצם בודד או מחלקה עם עצם (מופע) יחיד בלבד</strong>!
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                        <strong class="text-orange-900">5. טיפוס נתונים מופשט (ADT ב-Ada):</strong> מאפשר להגדיר טיפוס חדש שייתכנו ממנו <strong>כמה מופעים</strong> שלכל אחד סט אופרטורים משלו. בהגדרת `adt List` עם `list = Nil | CELL of integer * list`, כל פעולה כגון `empty(l)` או `tail(l)` מבצעת פיצול מקרים (`case l of Nil => ... | CELL(x, l') => ...`).
+                    </div>
+                    <div class="p-3 bg-amber-50/70 rounded border border-amber-300">
+                        <strong class="text-orange-950">6. מחלקה (Class ב-OOP):</strong> המחלקה היא טיפוס נתונים מופשט שבו <strong class="marker-yellow">הדגש מושם בייצוג הנתונים (העצמים) במקום בייצוג הפעולות!</strong>
+                        <br>• לדוגמה, מוגדרות המחלקות `EmptyList` (שבה `empty = true; head = error; tail = error`) ו-`NonEmptyList(x, l)` (שבה `empty = false; head = x; tail = l`).
+                        <br>• <strong>השוואת מטריצת ADT מול OOP:</strong> בייצוג כ-<strong>ADT</strong> החלוקה היא לפי הפעולות (`empty?`, `head`, `tail` חוצות את העמודות `nil` ו-`cons`), ואילו בייצוג <strong>מונחה עצמים (OOP)</strong> החלוקה היא לפי טיפוסי העצמים (`nil` / `EmptyList` ו-`cons` / `NonEmptyList`), כשכל מחלקה מאגדת את מימוש כל הפעולות עבורה.
+                    </div>
+                    <div class="p-3 bg-emerald-50/70 rounded border border-emerald-300">
+                        <strong class="text-emerald-950">7. ירושה (Inheritance):</strong> מנגנון הפשטה המאפשר שיתוף קוד בין מחלקות. בניסוי המחשה מפורסם, ספרייה בשפת Ada באורך <strong><code>125K</code> שורות קוד</strong> מומשה מחדש בשפת C++ (בעזרת ירושה) באמצעות <strong><code>10K</code> שורות קוד בלבד</strong>!
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= חלק II: פרק 3 ================= -->
+            <div class="border-b-4 border-red-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-red-800 font-heading">חלק II: עצמים – המושג "עצם" (פרק 3)</h2>
+                <p class="text-sm text-slate-600">סוגי עצמים, 3 מאפייני העצם (זהות, מצב, התנהגות), עצמים בשפת C, זהות עצמית, בדיקת שוויון וסוגי העתקה.</p>
+            </div>
+
+            <section id="sec-3-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">3.1–3.3 סוגי עצמים, 3 מאפייני העצם ודוגמאות</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-red">
+                        <strong class="marker-orange">שאלת מפתח: איזה מושג חשוב יותר ב-OOP – "עצם" או "מחלקה"?</strong>
+                        <strong>פתרון:</strong> המושג <strong>"עצם" הוא בסיסי יותר</strong> כמובן, אך למעשה <strong class="marker-yellow">מושג ה"מחלקה" הוא חשוב יותר</strong> (כי הוא מנגנון ההפשטה המגדיר קבוצות של עצמים).
+                    </li>
+                    <li class="list-bullet list-bullet-red">
+                        <strong class="marker-orange">סיווג העצמים לשני מרחבים:</strong>
+                        <br>1. <strong>עצמים השייכים למרחב הבעיה (`problem space`):</strong> מייצגים ישויות מעולם הבעיה, כגון עובד, שעון נוכחות, פריט במלאי, פטיש בחנות, מספר מרוכב $e+2i$, כלי רכב נושא לוחית זיהוי <code>19-070-35</code>, או <em>רשימה ממרחב הבעיה</em> (כגון רשימת קניות או רשימת נוכחות תלמידים).
+                        <br>2. <strong>עצמים השייכים למרחב התכנית / הפתרון (`program / solution space`):</strong> מייצגים מבני עזר תכנותיים, כגון קובץ, או <em>רשימה ממרחב הפתרון</em> (כגון רשימת בלוקים פנויים במנהל זיכרון או שרשרת גיבוב). שימו לב כי רשימה כגון <code>(13, "hello", true)</code> יכולה להשתייך הן למרחב הבעיה והן למרחב הפתרון בהתאם להקשר השימוש בה.
+                    </li>
+                </ul>
+
+                <div class="hand-drawn-box text-sm mt-4">
+                    <h4 class="font-bold text-red-900 mb-2">🔨 שלושת מאפייני העצם (זהות, מצב והתנהגות):</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                            <strong class="marker-yellow block w-fit mb-1">1. זהות (Identity)</strong>
+                            תכונה המבדילה את העצם מכל שאר העצמים (לרוב כתובת הזיכרון שבה שמור העצם). מאפשרת לקבוע אם שני שמות מתייחסים לאותו עצם ממש. <strong>זהות העצם אינה משתנה לעולם!</strong>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                            <strong class="marker-orange block w-fit mb-1">2. מצב (State – המאפיין הסטטי)</strong>
+                            אוסף הערכים בתכונות העצם (למשל בפטיש: מוצג למכירה; במספר מרוכב: חלק ממשי וחלק מדומה; ברכב: מהירות, מיקום, צבע). המצב יכול להשתנות לאורך חיי העצם.
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                            <strong class="marker-blue block w-fit mb-1">3. התנהגות (Behavior – המאפיין הדינמי)</strong>
+                            אוסף הפעולות שהעצם מבצע בתגובה להודעות שהוא מקבל (למשל בפטיש: נעיצת מסמרים; ברשימה: הוספת/מחיקת איבר, מיון; ברכב: נסיעה, האצה, עצירה).
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-3-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">3.4 האם בשפת C אפשר להגדיר עצמים? (סעיפים 3.4.1–3.4.3)</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="p-3.5 bg-white border-r-4 border-amber-500 rounded shadow-sm">
+                        <strong class="text-amber-900 block mb-1">1. פונקציה (דוגמת מונה `counter`)</strong>
+                        <code>int counter(void) { static int n = 0; return ++n; }</code><br>
+                        • <strong>זהות:</strong> מופע הפונקציה.<br>
+                        • <strong>מצב:</strong> ערך המשתנה הסטטי <code>n</code>.<br>
+                        • <strong class="marker-red">החיסרון:</strong> <strong>ההתנהגות מנוונת</strong> (הודעה אחת בלבד – הפעלת הפונקציה) ומופע יחיד.
+                    </div>
+                    <div class="p-3.5 bg-white border-r-4 border-orange-500 rounded shadow-sm">
+                        <strong class="text-orange-900 block mb-1">2. מחסנית כמודול</strong>
+                        קובץ מנשק <code>stack.h</code> (<code>push</code>, <code>pop</code>) וקובץ מימוש <code>stack.c</code> עם <code>static int stack[100], sp;</code>.<br>
+                        • <strong>מצב והתנהגות:</strong> המשתנים הסטטיים ואוסף הפונקציות בקובץ.<br>
+                        • <strong class="marker-red">החיסרון:</strong> <strong>הזהות מנוונת</strong> – יש רק מופע אחד של המחסנית!
+                    </div>
+                    <div class="p-3.5 bg-white border-r-4 border-emerald-500 rounded shadow-sm">
+                        <strong class="text-emerald-900 block mb-1">3. מצביע לקובץ (`FILE *fin`)</strong>
+                        <strong class="marker-green">הדומה ביותר לעצם אמיתי!</strong><br>
+                        • <strong>זהות:</strong> המצביע לקובץ (ייתכנו מצביעים רבים לקבצים שונים!).<br>
+                        • <strong>מצב:</strong> תוכן הקובץ.<br>
+                        • <strong>התנהגות:</strong> הפעולות על המצביע (<code>fopen</code>, <code>feof</code>, <code>fgetc</code>, סגירת הקובץ).
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-3-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">3.5 ★ זהות עצמית, בדיקת שוויון וסוגי העתקה</span></h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="list-bullet list-bullet-red">
+                        <strong class="marker-orange">שם מול זהות והמזהה השמור לעצם הנוכחי:</strong> שם העצם נבדל מזהותו (ייתכנו שני עצמים בעלי אותו שם, עצם בעל כמה שמות, או עצם ללא שם כלל, אך <strong>לא ייתכנו שני עצמים בעלי אותה זהות</strong>). המזהה השמור לעצם הנוכחי: ב-<code>C++</code> וב-<code>Java</code>: <strong><code>this</code></strong> | ב-<code>Eiffel</code>: <strong><code>Current</code></strong> | ב-<code>Smalltalk</code>: <strong><code>self</code></strong>.
+                    </li>
+                    <li class="list-bullet list-bullet-red">
+                        <strong class="marker-orange">שני סוגי השוואה:</strong>
+                        <strong>(1) השוואת הזהות:</strong> שני שמות שווים אמ"ם הזהות זהה (מצביעים לאותו עצם ממש).
+                        <strong>(2) השוואה מבנית:</strong> שני שמות שווים אמ"ם לשני העצמים יש מבנה זהה ומצב זהה.
+                    </li>
+                </ul>
+
+                <div class="hand-drawn-box text-sm mt-4">
+                    <h4 class="font-bold text-red-900 mb-2">📋 סיווג סוגי העתקת עצמים ב-Java (העתקה זהותית, רדודה, רב-שכבתית ועמוקה – חובה למבחן!):</h4>
+                    <p class="mb-2">בהעתקת רשימה מקושרת של נקודות <code>class PList { public Point head; public PList tail; }</code>:</p>
+                    <ul class="space-y-2">
+                        <li><strong class="marker-yellow">1. העתקה זהותית:</strong> המצביע לעצם משוכפל; בסיום ההעתקה יש שני שמות לאותו עצם ממש ונותרת זהות אחת בלבד.</li>
+                        <li><strong class="marker-orange">2. העתקה מבנית:</strong> מצב העצם מועתק לעצם חדש (בסיום יש שני עצמים בעלי זהויות שונות). נחלקת ל:
+                            <ul class="list-disc list-inside ms-5 mt-1 space-y-1">
+                                <li><strong>העתקה רדודה (`oneLevelCopy`):</strong> השורש מועתק בהעתקה מבנית (<code>PList res = new PList();</code>), אך העצמים הפנימיים מועתקים <strong>זהותית</strong> (<code>res.head = head; res.tail = tail;</code>).</li>
+                                <li><strong>העתקה רדודה לעומק 2 (`twoLevelCopy`):</strong> יוצרת נקודה חדשה בראש (<code>res.head = new Point(head.x, head.y);</code>) ומעתיקה את הזנב לעומק אחד (<code>res.tail = tail.oneLevelCopy();</code>).</li>
+                                <li><strong>העתקה עמוקה (`deepCopy`):</strong> הן השורש והן כל חוליות הזנב והנקודות הפנימיות מועתקים רקורסיבית/איטרטיבית בהעתקה מבנית עמוקה (לכל חוליה נוצרים <code>new Point(...)</code> ו-<code>new PList()</code> חדשים).</li>
+                                <li><strong class="marker-green">העתקה רקורסיבית (`copy`):</strong> ב-<code>PList.copy()</code> כתוב: <code>res.head = head.copy(); if (tail != null) res.tail = tail.copy();</code>.
+                                    <br><strong>ניתוח עומק ההעתקה (האם זו העתקה רדודה או עמוקה?):</strong> עומק ההעתקה נקבע כאן ע"י העצמים הפנימיים והאופן שבו הם מממשים את <code>copy()</code>! אם המחלקה <code>Point</code> מוגדרת עם שדות קבועים <code>public final int x, y;</code> (כלומר <code>Point</code> היא <strong>עצם בלתי משתנה / Immutable</strong> שמצבו אינו יכול להשתנות לעולם), <code>Point.copy()</code> יכולה לממש בחוכמה <code>return this;</code> (העתקה זהותית של הנקודה מבלי לשכפלה לשווא בזיכרון), בעוד חוליות ה-<code>PList</code> משוכפלות מבנית לכל אורך הרשימה!</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="sec-3-4" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">3.6 מאפיינים סטטיים ודינמיים של עצמים (סעיפים 3.6.1–3.6.2)</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="note-box-blue !my-1">
+                        <strong class="block mb-1">📦 3.6.1 מאפיינים סטטיים:</strong>
+                        • <strong>תכונה (`attribute` / `field` / `property` / `instance variable` / `data member`):</strong> המקום שבו נשמר המצב.<br>
+                        • <strong>מבנה (`structure`):</strong> אוסף התכונות.<br>
+                        • <strong>מצב (`state`):</strong> אוסף הערכים במבנה.<br>
+                        • <strong>עצם נצחי (`Immutable Object`):</strong> עצם שמצבו אינו משתנה לאורך חייו; המבנה שלו מורכב מ<strong>תכונות נצחיות בלבד</strong>.
+                    </div>
+                    <div class="note-box-purple !my-1">
+                        <strong class="block mb-1">⚡ 3.6.2 מאפיינים דינמיים (הבחנה בין הודעה לשיטה):</strong>
+                        • <strong>הודעה (`Message`):</strong> שם סימבולי (לעיתים עם ארגומנטים נלווים) שהלקוח שולח אל העצם.<br>
+                        • <strong>שיטה / מתודה (`Method`):</strong> הקוד המתאים שהעצם בורר ומריץ בהתאם למהות ההודעה.<br>
+                        • <strong>פרוטוקול (`Protocol`):</strong> אוסף ההודעות שהעצם מבין.<br>
+                        <em>הבחנה קריטית:</em> עצמים שונים עשויים להבין את <strong>אותה הודעה</strong>, אבל להגיב עליה באופן שונה (להפעיל עבורה <strong>שיטה שונה</strong>).
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= חלק III: פרקים 4-5 ================= -->
+            <div class="border-b-4 border-blue-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-blue-800 font-heading">חלק III: מבוא לשפת סמולטוק וסביבת Squeak (פרקים 4–5)</h2>
+                <p class="text-sm text-slate-600">ארכיטקטורת קובצי Squeak, 3 כפתורי העכבר, כלי הפיתוח ופיתוח המשחק המלא Quinto.</p>
+            </div>
+
+            <section id="sec-4-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">4.1–4.4 קובצי סביבת Squeak, 3 כפתורי העכבר ותפריט העולם</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-blue-900 block mb-1">💾 3 הקבצים המרכיבים את סביבת Squeak (סעיפים 4.1–4.2):</strong>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong><code>SqueakX.image</code> (קובץ התמונה):</strong> מכיל את "תמונת" סביבת הריצה ומצב כל האובייקטים (כולל מחלקות ומתודות) כפי שנשמרה לאחרונה.</li>
+                            <li><strong><code>SqueakX.sources</code>:</strong> קובץ לקריאה בלבד המכיל את קובצי המקור המתאימים לגרסה X ואילך.</li>
+                            <li><strong><code>SqueakX.changes</code> (קובץ השינויים):</strong> מכיל את רשימת כל השינויים שהתבצעו בקובצי המקור (מומלץ לגבות את ה-<code>image</code> וה-<code>changes</code> יחד!).</li>
+                        </ul>
+                    </div>
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-blue-900 block mb-1">🖱️ 3 כפתורי העכבר והעולם `World` (סעיפים 4.2–4.4):</strong>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><strong class="marker-red">כפתור אדום (שמאלי):</strong> בחירת פריטים וסימון טקסט; בלחיצה על רקע ה-<code>World</code> מעלה את <strong>תפריט העולם (`World Menu`)</strong> (ניתן לקבעו למסך בלחיצה על צלמית ה<strong>נעץ</strong> בכותרתו!).</li>
+                            <li><strong class="marker-yellow">כפתור צהוב (ימני):</strong> מעלה <strong>תפריטים תלויי-הקשר (Context Menus)</strong>.</li>
+                            <li><strong class="marker-blue">כפתור כחול (מרכזי / גלגלת):</strong> מקיף את העצם במסגרת צלמיות ה-<strong><code>morphic halo</code></strong> (להזזה, סיבוב ושינוי גודל).</li>
+                            <li><strong>שמירה ויציאה (4.4):</strong> <code>save and quit</code> בתחתית תפריט העולם שומרת את תמונת המסך בדיוק כפי שהייתה.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-4-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">4.5–4.10 כלי העבודה ב-Squeak, חיפוש מחלקות/מתודות והמתודה shout</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-blue">
+                        <strong class="marker-orange">חלון עבודה (`Workspace`) מול חלון הודעות (`Transcript` – קיצור `Ctrl+t`):</strong>
+                        <code>Transcript show: 'hello world'; cr.</code> מדפיס ל-Transcript ויורד שורה (בזכות ה-Cascade <code>;</code>).
+                    </li>
+                    <li class="list-bullet list-bullet-blue">
+                        <strong class="marker-orange">4 פקודות הביצוע והבחינה ב-Workspace:</strong>
+                        <br>1. <strong><code>do it (Ctrl+d)</code>:</strong> מבצע את הביטוי המסומן (למשל <code>3 + 4</code> מחשב <code>7</code> אך לא מציג דבר).
+                        <br>2. <strong><code>print it (Ctrl+p)</code>:</strong> מבצע את הביטוי, שולח לעצם המוחזר את ההודעה <strong><code>printString</code></strong> ומציג את הייצוג הטקסטואלי שלו (למשל <code>Time now</code>).
+                        <br>3. <strong><code>inspect it (Ctrl+i)</code>:</strong> פותח <strong><code>Inspector</code></strong> – חלונית שמאל מציגה את <code>self</code> ואת משתני המופע, חלונית ימין מציגה את הערך הנבחר, והחלונית התחתונה משמשת כ-Workspace שבו <code>self</code> קשור לעצם הנבחן (למשל <code>self squared</code> על <code>7</code> יחזיר <code>49</code>).
+                        <br>4. <strong><code>explore it (Ctrl+Shift+i / Shift+Alt+i)</code>:</strong> פותח <strong><code>Explorer</code></strong> המציג את העצם במבנה עץ היררכי (ניתן לעבור מ-Explorer ל-Inspector ולהיפך דרך הכפתור בחלק הימני התחתון).
+                    </li>
+                    <li class="list-bullet list-bullet-blue">
+                        <strong class="marker-orange">טעינת חבילות עם `SqueakMap` ודפדפן המערכת `System Browser`:</strong>
+                        <br>• <strong><code>SqueakMap</code>:</strong> כלי לטעינת חבילות תוכנה מרשת האינטרנט.
+                        <br>• <strong>4 חלוניות ה-<code>System Browser</code> (משמאל לימין):</strong> (1) קטגוריות (Categories) $\to$ (2) מחלקות (Classes) $\to$ (3) פרוטוקולים (Protocols, או <code>--all--</code>) $\to$ (4) מתודות (Methods). לחיצה על כפתור <strong><code>?</code></strong> במרכז מציגה את תיעוד המחלקה.
+                        <br>• <strong>4 דרכים לחיפוש מחלקה:</strong> (1) ניווט בחלונית הקטגוריות, (2) שליחת ההודעה <code>Boolean browse</code> (או סימון שם המחלקה ו-<code>Ctrl+b</code>), (3) פתיחת <code>Hierarchy Browser</code> (כפתור <code>hierarchy</code>), (4) <code>find class... (f)</code> בתפריט ההקשר של חלונית הקטגוריות.
+                        <br>• <strong>חיפוש מתודות ב-<code>Method Finder</code>:</strong> לפי שם/חלק משם (למשל <code>time</code>) או לפי <strong>דוגמת מקבל, ארגומנטים ותוצאה מופרדים בנקודה</strong>: <code>4. 16</code> $\implies$ <code>4 squared --&gt; 16</code>.
+                    </li>
+                </ul>
+
+                <pre><code>// הגדרת המתודה shout במחלקה String (פרוטוקול converting):
+shout
+    "Answer a String converted to Uppercase followed by an exclamation mark."
+    ^ self asUppercase, '!'
+// משולש צהוב בפינה הימנית-עליונה של חלונית העריכה מציין שינויים שטרם נשמרו -> שומרים עם accept (Ctrl+s).
+// הרצה ב-Workspace עם print it:  'hello' shout  -->  'HELLO!'</code></pre>
+            </section>
+
+            <section id="sec-5-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">5.1–5.7 ★ הרצת תכנית ראשונה: המשחק Quinto, דיבוג הבאג וייצוא fileOut</span></h3>
+                <p class="mb-3 text-sm">
+                    המשחק <strong>Quinto</strong> מתנהל על לוח משובץ ($10 \times 10$): לחיצה על כל משבצת הופכת את מצבן (צהוב חיוור $\leftrightarrow$ כחול כהה) של <strong>4 המשבצות השכנות הצמודות אליה</strong> (מעליה, מתחתיה, מימינה ומשמאלה – ללא אלכסונים וללא המשבצת שנלחצה עצמה!). התכנית בקטגוריה <code>SBE-Quinto</code> מורכבת משתי מחלקות:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-3">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-blue-900 block mb-1">1. המחלקה <code>SBECell</code> (סעיפים 5.2–5.4):</strong>
+                        יורשת מ-<strong><code>SimpleSwitchMorph</code></strong> (כפתור דו-מצבי) עם משתנה מופע יחיד <code>mouseAction</code>:
+                        <pre class="!my-2 text-xs"><code>SBECell >> initialize
+    super initialize.
+    self label: ''.
+    self borderWidth: 2.
+    bounds := 0@0 corner: 16@16.
+    offColor := Color paleYellow.
+    onColor := Color paleBlue darker darker.
+    self useSquareCorners.
+    self turnOff
+
+SBECell >> mouseAction: aBlock   "פרוטוקול accessing"
+    ^ mouseAction := aBlock
+
+SBECell >> mouseUp: anEvent      "פרוטוקול event handling"
+    mouseAction value</code></pre>
+                    </div>
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-blue-900 block mb-1">2. המחלקה <code>SBEGame</code>:</strong>
+                        יורשת מ-<strong><code>BorderedMorph</code></strong> עם משתנה מופע יחיד <code>cells</code> (מסוג <code>Matrix</code>) ומתודת <code>cellsPerSide ^ 10</code>:
+                        <pre class="!my-2 text-xs"><code>SBEGame >> initialize
+    | sampleCell width height n |
+    super initialize.
+    n := self cellsPerSide.
+    sampleCell := SBECell new.
+    width := sampleCell width. height := sampleCell height.
+    self bounds: (5@5 extent: ((width*n)@(height*n)) + (2 * self borderWidth)).
+    cells := Matrix new: n tabulate: [:i :j | self newCellAt: i at: j]
+
+SBEGame >> newCellAt: i at: j
+    | c origin |
+    c := SBECell new.
+    origin := self innerBounds origin.
+    self addMorph: c.
+    c position: ((i-1) * c width) @ ((j-1) * c height) + origin.
+    c mouseAction: [self toggleNeighboursOfCellAt: i at: j].
+    ^ c   "חובה! בלעדיו מוחזר self שהוא SBEGame!"</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box text-sm">
+                    <strong>🐞 סעיפים 5.6–5.7: מלכודת הבאג ב-<code>newCellAt:at:</code> ושמירת התכנית (`fileOut` / `fileIn`):</strong>
+                    <br>• <strong>מלכודת ערך החזרה ב-<code>newCellAt:at:</code>:</strong> ללא השורה <code>^ c</code> בסוף <code>newCellAt:at:</code>, המתודה מחזירה כברירת מחדל את <strong><code>^ self</code></strong> (עצם ה-<code>SBEGame</code>!). לכן כל איברי המטריצה <code>cells</code> מתמלאים במצביעים ל-<code>SBEGame</code> במקום ל-<code>SBECell</code>, ובלחיצה על תא המתודה <code>toggleNeighboursOfCellAt:at:</code> שולחת <code>(cells at: i-1 at: j) toggleState</code> ל-<code>SBEGame</code> וזורקת <code>MessageNotUnderstood: SBEGame&gt;&gt;toggleState</code>!
+                    <br>• <strong>ייצוא וייבוא קוד:</strong> ייצוא קטגוריה לקובץ טקסט <code>SBE-Quinto.st</code> מתבצע באמצעות <strong><code>fileOut</code></strong> מתפריט ההקשר של חלונית הקטגוריות. ייבוא הקובץ לסביבה אחרת מתבצע ע"י גרירת הקובץ אל חלון ה-Squeak ובחירה ב-<strong><code>filein entire file</code></strong>.
+                </div>
+            </section>
+
+            <!-- ================= חלק IV: פרקים 6-9 ================= -->
+            <div class="border-b-4 border-teal-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-teal-800 font-heading">חלק IV: פיתוח תוכנה בשפת סמולטוק (פרקים 6–9)</h2>
+                <p class="text-sm text-slate-600">תחביר השפה, פרימיטיבים, קדימויות הודעות, בלוקים ואיטרטורים, מודל העצמים, משתני מופע של מחלקה, Singleton, Traits, כלי הפיתוח וה-Debugger.</p>
+            </div>
+
+            <section id="sec-6-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">6.1–6.2 ליטרלים, מערכים סטטיים/דינמיים, 6 פסאודו-משתנים ופרימיטיבים</span></h3>
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse bg-white border border-slate-300 shadow-sm text-sm">
+                        <thead>
+                            <tr class="bg-teal-50 text-teal-950 font-bold">
+                                <th class="p-2.5 border border-slate-300">אלמנט תחבירי</th>
+                                <th class="p-2.5 border border-slate-300">דוגמאות מפתח</th>
+                                <th class="p-2.5 border border-slate-300">כללים ודגשים למבחן</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">משתנים מקומיים מול משותפים</td>
+                                <td class="p-2.5 border border-slate-300">מקומי: <code>| x y |</code>, <code>myVar</code><br>משותף: <code>Transcript</code>, <code>Color</code></td>
+                                <td class="p-2.5 border border-slate-300"><strong>מקומיים</strong> (משתני מופע, פרמטרים של מתודה/בלוק, משתנים זמניים) מתחילים ב<strong>אות קטנה</strong>. <strong>משותפים</strong> (גלובליים, משתני מחלקה, שמות מחלקות, `pool dictionaries`) מתחילים ב<strong>אות גדולה</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">מספרים, תווים, מחרוזות וסימבולים</td>
+                                <td class="p-2.5 border border-slate-300"><code>2r101</code> (=5), <code>2.4e7</code>, <code>$a</code>, <code>Character tab</code>, <code>'Mc''Donald'</code>, <code>#Hello</code></td>
+                                <td class="p-2.5 border border-slate-300">כדי לכלול גרש בתוך מחרוזת רושמים שתי מרכאות בודדות <code>''</code>. הערות נכתבות במרכאות כפולות <code>"comment"</code>. סימבול (<code>#Hello</code>) מובטח להיות <strong>ייחודי בזיכרון (עותק יחיד) ובלתי ניתן לשינוי (Immutable)</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold bg-rose-50/40">מערך סטטי (זמן הידור) מול דינמי (זמן ריצה)</td>
+                                <td class="p-2.5 border border-slate-300">סטטי: <code>#(1 'ab' $a)</code><br>דינמי: <code>{1. 2. 1+2}</code></td>
+                                <td class="p-2.5 border border-slate-300"><strong class="text-red-700">מלכודת מבחן:</strong> במערך סטטי <code>#(...)</code> האיברים מופרדים ברווחים ונקבעים בזמן הידור ללא שערוך הודעות! לכן <code>#(10@10 100@100)</code> אינו מכיל 2 נקודות אלא <strong>6 איברים</strong>: <code>#(10 #@ 10 100 #@ 100)</code>! במערך דינמי <code>{1. 2. 1+2}</code> הביטויים מופרדים בנקודה ומשוערכים בזמן ריצה ל-<code>#(1 2 3)</code> (חובה רווח אחרי הנקודה ב-<code>1. 2</code> אחרת יתקבל <code>#(1.2 3)</code>!).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">6 פסאודו-משתנים (Pseudo-variables)</td>
+                                <td class="p-2.5 border border-slate-300">קבועים: <code>true</code>, <code>false</code>, <code>nil</code><br>דינמיים: <code>self</code>, <code>super</code>, <code>thisContext</code></td>
+                                <td class="p-2.5 border border-slate-300">ערכם נקבע ע"י מערכת זמן הריצה ולא ניתן לבצע להם השמה (<code>:=</code> או <code>_</code>). <code>nil</code> הוא המופע היחיד של <code>UndefinedObject</code> (כל המשתנים מאותחלים ל-<code>nil</code>). <code>thisContext</code> מתייחס למסגרת העליונה של מחסנית זמן הריצה (הקשר הביצוע של המתודה או הבלוק).</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold">פרימיטיבים (Primitives)</td>
+                                <td class="p-2.5 border border-slate-300"><code>&lt;primitive: 1&gt;</code></td>
+                                <td class="p-2.5 border border-slate-300">פעולות בסיסיות המבוצעות ישירות ע"י ה-VM (הקצאת זיכרון, מניפולציית בתים, חיבור/השוואה ב-<code>SmallInteger</code>, גישה למערך). מתודה עם <code>&lt;primitive: X&gt;</code> כוללת אחריו קוד Smalltalk אלטרנטיבי שמתבצע רק אם הפעולה הפרימיטיבית נכשלה!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="sec-6-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">6.3–7.6 ★ 3 סוגי ההודעות, כללי קדימות, מבנה מתודה ושרשור Cascade</span></h3>
+                <div class="hand-drawn-box text-sm">
+                    <h4 class="font-bold text-teal-900 mb-2">סדר הקדימויות בשפת Smalltalk (סעיפים 6.3 ו-7.1–7.4):</h4>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li><strong class="marker-yellow">1. סוגריים עגולים <code>( ... )</code>:</strong> משנים את סדר ההערכה (אך בניגוד לסוגריים מרובעים <code>[...]</code> אינם משפיעים על מספר הפעמים שהביטוי מוערך!).</li>
+                        <li><strong class="marker-green">2. הודעות אונריות (Unary – הקדימות הגבוהה ביותר!):</strong> מילה אחת (ללא נקודתיים וללא ארגומנטים), כגון <code>3 factorial</code>.</li>
+                        <li><strong class="marker-blue">3. הודעות בינריות (Binary – הקדימות השנייה!):</strong> תו אחד או יותר מתוך הסימנים המיוחדים (<code>+ - * / \ ~ &lt; &gt; = @ % | &amp; ? ,</code>) עם ארגומנט יחיד.
+                            <br><span class="text-red-700 font-bold">⚠️ כלל זהב:</span> לכל האופרטורים הבינריים יש <strong>קדימות זהה והם מוערכים משמאל לימין!</strong> (ניתן להעמיס אופרטורים אך לא לשנות את קדימותם או מספר האופרנדים שלהם).
+                            <br>• דוגמאות חישוב: <code>3 + 4 * 5</code> $\implies$ <strong><code>35</code></strong> | <code>2 + 5 * 4 + 3</code> $\implies$ <strong><code>31</code></strong> | <code>2 raisedTo: 1 + 3 factorial</code> $\implies$ קודם אונרי <code>3 factorial</code> (=6), אז בינרי <code>1 + 6</code> (=7), ולבסוף מילת-מפתח <code>2 raisedTo: 7</code> = <strong><code>128</code></strong>! | <code>2 * 3 factorial raisedTo: 2</code> $\implies$ <code>(2 * 6) raisedTo: 2</code> = <strong><code>144</code></strong>!</li>
+                        <li><strong class="marker-orange">4. הודעות מילות-מפתח (Keyword – הקדימות הנמוכה ביותר!):</strong> מזהה (Selector) המורכב מרצף המילים הארוך ביותר המלוות בנקודתיים <code>:</code> וארגומנט.
+                            <br>• <strong>חשיבות הסוגריים בהודעות מילת-מפתח:</strong> בביטוי <code>st := 'hello'. st at: (st indexOf: $e) put: $x</code> (שמחליף את <code>'e'</code> ב-<code>'x'</code> ומחזיר <code>$x</code> כשהמחרוזת הופכת ל-<code>'hxllo'</code>), ללא הסוגריים המערכת הייתה מנסה לשלוח ל-<code>st</code> הודעה אחת שגויה בשם <code>at:indexOf:put:</code>!</li>
+                    </ol>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-3">
+                    <div class="p-3.5 bg-white border border-slate-200 rounded-lg shadow-sm">
+                        <strong class="text-teal-900 block mb-1">📝 מבנה מתודה ודוגמת `LinkedList>>add:after:`:</strong>
+                        מתודה כוללת: (1) תבנית המתודה (`method pattern`), (2) הערה `"..."`, (3) הצהרת משתנים זמניים `| savedLink |`, ו-(4) משפטים מופרדים בנקודה `.`:
+                        <pre class="!my-1.5 text-xs"><code>LinkedList >> add: link after: otherLink
+    | savedLink |
+    lastLink == otherLink ifTrue: [^ self addLast: link].
+    savedLink := otherLink nextLink.
+    otherLink nextLink: link.
+    link nextLink: savedLink.
+    ^ link</code></pre>
+                    </div>
+                    <div class="note-box-orange !my-1">
+                        <strong class="text-orange-950 block mb-1">🌊 דוגמאות מרכזיות לשימוש ב-Cascade (`;`):</strong>
+                        שולח סדרת הודעות <strong>לאותו מקבל שרשום לפני ה-<code>;</code> הראשונה</strong>, ומחזיר את ערך <strong>ההודעה האחרונה</strong>:
+                        <br>• <code>3 + 4; + 5</code> $\implies$ שתיהן נשלחות ל-<code>3</code> $\implies$ מחזיר <strong><code>8</code></strong>.
+                        <br>• <code>2 raisedTo: 2; * 3 factorial</code> $\implies$ המקבל הוא <code>2</code>; ההודעה השנייה <code>* 6</code> נשלחת ל-<code>2</code> (ולא ל-4!) $\implies$ מחזיר <strong><code>12</code></strong>!
+                        <br>• <code>10@10 - 10; corner: 30@30; isZero</code> $\implies$ המקבל הוא <code>10@10</code>; בסוף <code>(10@10) isZero</code> מחזיר <strong><code>false</code></strong>! אבל <strong>בלי ה-<code>;</code> הראשונה</strong>: <code>10@10 - 10 corner: 30@30; isZero</code> $\implies$ המקבל של ה-Cascade הוא התוצאה של <code>10@10 - 10</code> שהיא הנקודה <code>0@0</code>, ולכן <code>(0@0) isZero</code> מחזיר <strong><code>true</code></strong>!
+                        <br>• <code>(10@10 + 20; corner: 30@30) area</code> $\implies$ מלבן מ-<code>10@10</code> עד <code>30@30</code> ששטחו <strong><code>400</code></strong>.<br><strong>ניתוח ללא שימוש ב-Cascade (בלי ה-<code>;</code>):</strong> <code>(10@10 + 20 corner: 30@30) area</code> יוצר מלבן מ-<code>30@30</code> עד <code>30@30</code> ששטחו <strong><code>0</code></strong>!
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-6-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">6.5–6.6 בלוקים, תנאים, מימוש הלולאות ואיטרטורים</span></h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">בלוקים (`BlockContext`):</strong> פונקציות אנונימיות <code>[ :x :y | | n | ... ]</code>. מוערכים ע"י <code>value</code>, <code>value:</code>, <code>value:value:</code> (עד 4 פרמטרים), או <code>valueWithArguments: anArray</code> (למעל 4 פרמטרים). בלוקים יכולים לגשת למשתנים שהוגדרו מחוץ לבלוק, ופקודת החזרה <code>^</code> בתוך בלוק גורמת ליציאה מיידית מן המתודה שבה נכתב הבלוק.
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">מימוש מבני בקרה, תנאים ולולאות ב-Smalltalk:</strong>
+                        <pre class="!my-2 text-xs"><code>// 1. מימוש תנאים במחלקות True ו-False:
+True >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock
+    ^ trueAlternativeBlock value
+False >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock
+    ^ falseAlternativeBlock value
+
+// 2. מימוש רקורסיבי של לולאת whileTrue: במחלקה BlockContext:
+BlockContext >> whileTrue: aBlock
+    ^ [self value] whileTrue: [aBlock value]
+
+// 3. מימוש timesRepeat: ב-Integer ו-to:do: ב-Number באמצעות whileTrue:
+Integer >> timesRepeat: aBlock
+    | count |
+    count := 1.
+    [count <= self] whileTrue: [aBlock value. count := count + 1]
+
+Number >> to: stop do: aBlock
+    | nextValue |
+    nextValue := self.
+    [nextValue <= stop] whileTrue: [aBlock value: nextValue. nextValue := nextValue + 1]</code></pre>
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">הבחנה בין <code>1 to: 10 do: [...]</code> לבין <code>(1 to: 10) do: [...]</code>:</strong> ללא הסוגריים נשלחת למספר <code>1</code> ההודעה <code>to:do:</code>; עם הסוגריים נוצר תחילה עצם מסוג <code>Interval</code> ואליו נשלחת ההודעה <code>do:</code> (תוצאת הביצוע זהה: <code>55</code>). וב-<code>Interval&gt;&gt;collect: aBlock</code> נעשה שימוש ב-<code>result := self species new: self size</code> כאשר <code>Interval&gt;&gt;species</code> מחזירה את המחלקה <strong><code>Array</code></strong>!
+                    </li>
+                </ul>
+            </section>
+
+            <section id="sec-8-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">8.1–8.3 ★ מודל העצמים, 3 סוגי עצמים ב-Squeak, כימוס, מתודות מחלקה ו-Dog/Hyena</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">סיווג העצמים ב-Squeak לשלושה סוגים לפי ייצוגם בזיכרון:</strong>
+                        <br>1. <strong>עצמים רגילים עם משתני מופע:</strong> מועברים באמצעות מצביע (`reference`).
+                        <br>2. <strong>שלמים מסוג <code>SmallInteger</code>:</strong> מועברים על פי ערך (`by value`) ונשמרים ישירות בתוך המצביע עצמו (Immediate Value) במקום כעצם נפרד בזיכרון.
+                        <br>3. <strong>עצמים מאונדקסים (`Indexed Objects`):</strong> כגון מערכים (`Array`), המתייחסים לרצף זיכרון המכיל אוסף של עצמים.
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">גבולות הכימוס (Encapsulation) ב-Smalltalk מול Java ו-C++:</strong>
+                        <br>• ב-<strong>Java ו-C++</strong> גבולות הכימוס מוגדרים ב<strong>תחום המחלקה</strong> (מופע אחד יכול לגשת ישירות למשתנים הפרטיים של מופע אחר מאותה מחלקה).
+                        <br>• ב-<strong>Smalltalk</strong> גבולות הכימוס מוגדרים ב<strong>תחום המופע</strong>: משתני המופע נגישים ישירות רק למופע עצמו (ולמתודות בתתי-מחלקות, בדומה ל-<code>protected</code> ב-Java), אך <strong>לא למופע אחר מאותה מחלקה</strong>!
+                        <br>• <em>דוגמת יישום (`Rectangle&gt;&gt;containsRect: aRect`):</em> הביטוי <code>^ aRect origin &gt;= origin and: [aRect corner &lt;= corner]</code> ניגש ישירות למשתני המופע <code>origin</code> ו-<code>corner</code> של המקבל (<code>self</code>), אך חייב לקרוא למתודות הגישה <code>aRect origin</code> ו-<code>aRect corner</code> עבור הארגומנט! היתרון: ניתן להעביר ל-<code>containsRect:</code> מלבן ממימוש אחר לגמרי (שמיוצג ע"י נקודה, רוחב וגובה) כל עוד הוא מספק מתודות גישה <code>origin</code> ו-<code>corner</code>!
+                        <br>• <strong>מתודות ב-Smalltalk:</strong> כולן ציבוריות (`public`). שיוך לפרוטוקול <code>private</code> או הוספת קידומת <code>pvt</code> לשם המתודה הם מוסכמה בלבד ואינם חוסמים גישה מחוץ למחלקה.
+                    </li>
+                </ul>
+
+                <div class="note-box-blue text-sm">
+                    <h4 class="font-bold text-blue-950 mb-1">🎨 ניתוח שליחת הודעה למחלקה (`Color blue`) ושני ההבדלים בין מתודות מחלקה ל-<code>static</code> ב-Java:</h4>
+                    • <strong>היכן מוגדרת <code>Color blue</code>?</strong> המתודה <code>blue</code> מוגדרת ב-<strong><code>Color class</code></strong> (כמתודת מחלקה, ולא ב-<code>Color</code>!). לכן:
+                    <br>&nbsp;&nbsp;1. <code>Color new blue</code> $\implies$ <strong class="text-red-700">שגיאה! (`MessageNotUnderstood: Color&gt;&gt;blue`)</strong> כי מופע של <code>Color</code> אינו מבין מתודת מחלקה!
+                    <br>&nbsp;&nbsp;2. <code>Color blue</code> $\implies$ <strong class="text-emerald-700">תקין!</strong> שולח את ההודעה לעצם המחלקה <code>Color</code> ומחזיר מופע צבע כחול.
+                    <br>&nbsp;&nbsp;3. <code>Color blue blue</code> $\implies$ <strong class="text-red-700">שגיאה!</strong> כי <code>Color blue</code> מחזיר מופע של <code>Color</code>, ושליחת <code>blue</code> שנייה למופע נכשלת!
+                    <br>• <strong>2 הבדלים מהותיים בין מתודות מחלקה ב-Smalltalk למתודות <code>static</code> ב-Java:</strong>
+                    <br>&nbsp;&nbsp;1. <strong>קישור דינמי מול סטטי:</strong> ב-Java מתודות <code>static</code> מקושרות בזמן הידור (קישור סטטי), ואילו ב-Smalltalk מתודות מחלקה מקושרות בזמן ריצה (קישור דינמי) ותומכות בירושה ובדריסה מלאה!
+                    <br>&nbsp;&nbsp;2. <strong>הפעלה דרך מופעים:</strong> ב-Smalltalk מתודות מחלקה ניתנות להפעלה <strong>רק דרך עצם המחלקה ולא דרך מופעים</strong>, ואילו ב-Java מתודות <code>static</code> ניתנות להפעלה גם דרך המחלקה וגם דרך מופעים.
+                </div>
+
+                <div class="hand-drawn-box text-sm mt-3">
+                    <h4 class="font-bold text-teal-900 mb-1">🐕 משתני מופע של מחלקה (`class instance variables`): דוגמת `Dog` ו-`Hyena`:</h4>
+                    במטה-מחלקה <code>Dog class</code> מוגדר <code>instanceVariableNames: 'count'</code>, והמחלקה <code>Hyena</code> יורשת מ-<code>Dog</code>.
+                    <br>• <strong class="marker-yellow">לכל תת-מחלקה נוצר עותק פרטי ונפרד משלה של <code>count</code></strong> (בניגוד ל-<code>static</code> ב-Java/C++ או ל-<code>classVariables</code> ב-Smalltalk שבהם קיים עותק יחיד משותף!). כמו כן, מחלקה אינה יכולה לגשת ישירות למשתני מופע של עצם, ועצם אינו יכול לגשת ישירות למשתני מופע של מחלקה.
+                    <br>• <strong>מדוע <code>Hyena new</code> מקדם רק את <code>count</code> של <code>Hyena</code> ולא את של <code>Dog</code>?</strong> כי <code>Hyena</code> יורשת את <code>Dog class&gt;&gt;new</code> (שמבצעת <code>count := count + 1. ^ super new</code>). בזמן ריצת <code>Hyena new</code> המקבל (<code>self</code>) הוא <code>Hyena</code> ולכן מקודם ה-<code>count</code> של <code>Hyena</code>, ואילו הקריאה ל-<code>super new</code> מתחילה את החיפוש ממחלקת-העל של המחלקה שבה <em>כתובה</em> המתודה (מחלקת-העל של <code>Dog class</code> שהיא <code>Object class</code>!) ולכן מדלגת על <code>Dog class&gt;&gt;new</code>! (כנ"ל ב-<code>Hyena initialize</code>).
+                </div>
+            </section>
+
+            <section id="sec-8-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">8.3–8.4 ★ דפוס Singleton, מחלקות מופשטות ו-Traits</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                        <strong class="text-teal-900 block mb-1">1. מימוש תבנית היחיד (Singleton) ב-`WebServer`:</strong>
+                        משתמשים במשתנה מופע של מחלקה <code>uniqueInstance</code>:
+                        <pre class="!my-2 text-xs"><code>WebServer class >> uniqueInstance
+    uniqueInstance ifNil: [uniqueInstance := self new].
+    ^ uniqueInstance</code></pre>
+                        <strong>מדוע <code>self new</code> ולא <code>WebServer new</code>?</strong> כדי שאם תת-מחלקה תירש מ-<code>WebServer</code> ותקבל את ההודעה <code>uniqueInstance</code>, ייווצר מופע מסוג תת-המחלקה (<code>self</code>) ולא מסוג <code>WebServer</code>!
+                    </div>
+                    <div class="p-4 bg-white border border-slate-200 rounded-lg shadow-sm">
+                        <strong class="text-teal-900 block mb-1">2. מחלקות מופשטות ו-Traits:</strong>
+                        • מתודה מופשטת שולחת <strong><code>self subclassResponsibility</code></strong> (למשל <code>Number&gt;&gt;* aNumber</code>; שרשרת ההפשטה: <code>Magnitude &rarr; Number &rarr; Integer &rarr; SmallInteger</code> הקונקרטית).<br>
+                        • <strong><code>Traits</code>:</strong> שיתוף אוספי מתודות בין מחלקות ללא קשר ירושה:
+                        <pre class="!my-1.5 text-xs"><code>Trait named: #TAuthor uses: {} category: 'SBE-Quinto'
+TAuthor >> author  ^ 'on'
+// שילוב במחלקה עם מילת המפתח uses:
+BorderedMorph subclass: #SBEGame
+    uses: TAuthor instanceVariableNames: 'cells' ...</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-8-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">8.5–8.7 ★ איתור מתודות, הגדרה מחדש מול הרחבה, self מול super ומשתנים משותפים</span></h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">הגדרה מחדש (Overriding) מול הרחבה (Extension):</strong>
+                        <br>• <strong>הגדרה מחדש (Overriding):</strong> <code>EllipseMorph&gt;&gt;defaultColor ^ Color yellow</code> דורסת לחלוטין את <code>Morph&gt;&gt;defaultColor ^ Color blue</code>.
+                        <br>• <strong>הרחבה (Extension):</strong> <code>BorderedMorph&gt;&gt;initialize</code> מרחיבה את מתודת האב ע"י קריאה ל-<code>super initialize</code> ואחריה אתחול משתני המופע שלה.
+                    </li>
+                </ul>
+
+                <div class="hand-drawn-box text-sm">
+                    <h4 class="font-bold text-teal-900 mb-1">כלל הברזל: שליחה ל-<code>self</code> מול שליחה ל-<code>super</code> ו-<code>doesNotUnderstand:</code>:</h4>
+                    • <code>self</code> ו-<code>super</code> מתייחסות שתיהן ל<strong>אותו עצם מקבל בדיוק</strong>!<br>
+                    • <strong class="marker-green">שליחה ל-<code>self</code> (איתור דינמי):</strong> החיפוש מתחיל ב<strong>מחלקה של המקבל</strong> (ידועה רק בזמן ריצה).<br>
+                    • <strong class="marker-orange">שליחה ל-<code>super</code> (איתור סטטי):</strong> החיפוש מתחיל ב<strong>מחלקת-העל של המחלקה שבה נמצאת המתודה המבצעת את השליחה ל-<code>super</code></strong> (ידועה מראש בזמן הידור!).<br>
+                    • <strong class="marker-red">הודעה שאינה מובנת:</strong> אם החיפוש מגיע לראש ההיררכיה (<code>ProtoObject</code>) ללא הצלחה, ה-VM שולחת ל-<code>self</code> את ההודעה <strong><code>doesNotUnderstand:</code></strong> (המוגדרת ב-<code>Object</code>, יוצרת חריג <code>MessageNotUnderstood</code> ופותחת את ה-Debugger; ניתן לדרוס אותה בתת-מחלקה!).
+                </div>
+
+                <ul class="space-y-2 text-sm mt-3">
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">3 סוגי המשתנים המשותפים ב-Smalltalk:</strong>
+                        <br>1. <strong>משתנים גלובליים (`Global Variables`):</strong> מוגדרים במרחב השמות <code>Smalltalk</code> (מופע של <code>SystemDictionary</code>), כגון: <code>Transcript</code> (מופע של <code>TranscriptStream</code>), <code>Smalltalk</code>, <code>Sensor</code> (מופע של <code>EventSensor</code>), <code>World</code> (מופע של <code>PasteUpMorph</code>), <code>ActiveHand</code> (מופע של <code>HandMorph</code>), <code>Undeclared</code> (מופע של <code>SystemDictionary</code>) ו-<code>SystemOrganization</code> (מופע של <code>SystemOrganizer</code>). הוספת גלובלי חדש: השמה ב-Workspace או <code>Smalltalk at: #Name put: obj</code> (והסרה ב-<code>Smalltalk removeKey: #Name</code>).
+                        <br>2. <strong>משתני מחלקה (`Class Variables`):</strong> מוגדרים ב-<code>classVariableNames:</code> (למשל ב-<code>Character</code>: <code>'CharacterTable ClassificationTable...'</code>), <strong>משותפים לעצם המחלקה, לכל מופעיה ולכל תתי-המחלקות שלה</strong>, ונגישים ממתודות מופע וממתודות מחלקה. מאותחלים ב-<code>ClassName class&gt;&gt;initialize</code> (יש להפעילה מפורשות כי היא מופעלת אוטומטית רק כשהמחלקה נטענת לראשונה לזיכרון!) או באתחול עצל במתודת גישה (שמונע גישה ישירה ומוסיף תקורה).
+                        <br>3. <strong>מאגרים משותפים (`Pool Dictionaries`):</strong> מילוני משתנים המשותפים לקבוצת מחלקות שאינן קשורות בהיררכיית ירושה (כיום מומלץ להגדירם כתת-מחלקות של <code>SharedPool</code> ולציינם תחת <code>poolDictionaries:</code>).
+                    </li>
+                </ul>
+            </section>
+
+            <section id="sec-9-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">9.1–9.10 ★ כלי הפיתוח ב-Squeak, Monticello ודיבוג המתודה suffix ב-Debugger</span></h3>
+                <ul class="space-y-2 text-sm">
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">כפתורי ה-<code>System Browser</code> ו-5 צבעי כפתור <code>inheritance</code>:</strong>
+                        <code>browse (Ctrl+b)</code> (ובחלונית הקטגוריות מציג <code>back...</code> למחלקות שהוצגו לאחרונה), <code>senders</code>, <code>implementors</code>, <code>versions</code>, <code>hierarchy</code>, <code>vars</code>, <code>source</code>, וכפתור <strong><code>inheritance</code></strong> שצבעו מציין:
+                        <strong>ורוד</strong> = דריסה ללא קריאה ל-<code>super</code>; <strong>ירוק</strong> = דריסה תוך שימוש ב-<code>super</code>; <strong>זהב</strong> = מוגדרת מחדש בתת-מחלקה; <strong>כתום</strong> = ורוד + זהב; <strong>סגול</strong> = ירוק + זהב.
+                        <br>• <strong>הפעלה תכנותית דרך <code>SystemNavigation default</code>:</strong> <code>SystemNavigation default browseClass: EllipseMorph</code>, <code>browseHierarchy: EllipseMorph</code>, ו-<code>browseAllCallsOn: #drawOn:</code>.
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">ניהול מארזים ב-<code>Monticello</code>:</strong>
+                        מארז <code>SqueakLink</code> כולל: (1) את כל המחלקות בקטגוריה <code>SqueakLink</code> ובקטגוריות המתחילות ב-<code>SqueakLink-</code> (למעט מתודות בפרוטוקולים המתחילים ב-<code>*</code>), ו-(2) <strong>כל מתודה בכל מחלקה אחרת (כגון <code>Object&gt;&gt;asSQL</code>) שנמצאת בפרוטוקול ששמו <code>*squeaklink</code> או מתחיל ב-<code>*squeaklink-</code>!</strong> כתוצאה מכלל זה (הממומש במחלקה <code>PackageInfo</code>), <strong>כל מחלקה וכל מתודה שייכת למארז אחד בלבד</strong>. גיבוי מקומי של קובצי <code>.mcz</code> נשמר בתיקייה <code>package-cache</code>.
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange"><code>Inspector</code> מול <code>Explorer</code>:</strong> ב-<code>Inspector</code> הפריט השני הוא <code>all inst vars</code> ו-<code>self</code> קשור תמיד לעצם הראשי; ב-<code>Explorer</code> המשתנה <strong><code>self</code> בחלונית התחתונה מתקשר דינמית לאיבר/המשתנה הספציפי שנבחר כרגע בעץ!</strong>
+                    </li>
+                    <li class="list-bullet list-bullet-teal">
+                        <strong class="marker-orange">כלי סביבה נוספים:</strong> <code>Process Browser</code> (תהליכים רצים), <code>Message Names</code> (חיפוש מתודות ללא פתיחת חלון חדש), <code>Change Set Browser</code> (<code>simple change sorter</code>) ו-<code>Change Sorter</code> (<code>dual change sorter</code> להעברת שינויים בין מקבצי שינויים), <code>File List Browser</code>, ו<strong>שחזור קוד שהלך לאיבוד</strong> מתוך קובץ השינויים (.changes).
+                    </li>
+                </ul>
+
+                <div class="hand-drawn-box text-sm mt-3">
+                    <h4 class="font-bold text-teal-900 mb-1">🐞 מקרה הבוחן של ה-Debugger: איתור ותיקון 3 הבאגים במתודה `String>>suffix`:</h4>
+                    <pre class="!my-2 text-xs"><code>// הגרסה השגויה הראשונית שנכשלת בהרצת 'readme.txt' suffix (זורקת Error: Object is not in the collection):
+String >> suffix
+    | dot dotPosition |
+    dot := FileDirectory dot.   "באג 1: מחזיר את המחרוזת '.' בעוד (self at: i) מחזיר תו $. (ו- $. = '.' הוא false!)"
+    dotPosition := (self size to: 1 by: -1) detect: [:i | (self at: i) = dot]. "באג 3: קורס אם אין נקודה במחרוזת!"
+    ^ self copyFrom: dotPosition to: self size   "באג 2: מחזיר '.txt' כולל הנקודה במקום 'txt'!"
+
+// הגרסה המתוקנת והמלאה לאחר 3 התיקונים ב-Debugger:
+String >> suffix
+    | dot dotPosition |
+    dot := FileDirectory dot asCharacter.   "תיקון 1: המרה לתו $. "
+    dotPosition := (self size to: 1 by: -1) detect: [:i | (self at: i) = dot] ifNone: [self size]. "תיקון 3"
+    ^ self copyFrom: (dotPosition + 1) to: self size   "תיקון 2: יחזיר 'txt', ואם אין נקודה יחזיר מחרוזת ריקה ''"</code></pre>
+                </div>
+            </section>
+
+            <!-- ================= חלק V: פרקים 10–12 ================= -->
+            <div class="border-b-4 border-purple-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-purple-800 font-heading">חלק V: מחלקות, ירושה ואוספים ב-Squeak (פרקים 10–12)</h2>
+                <p class="text-sm text-slate-600">5 מרכיבי המחלקה, מחלקות הבסיס (Object, Number, Character, String, Symbol, Boolean) והיררכיית האוספים (Collections).</p>
+            </div>
+
+            <section id="sec-10-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">10.1–10.6 המושג "מחלקה" (Class): 3 תפקידים, 5 מרכיבים ובבואה (Reflection)</span></h3>
+                <p class="mb-3 text-sm">
+                    <strong>חשיבות המחלקה כמנגנון הפשטה:</strong> המחלקה היא מנגנון ההפשטה החשוב ביותר ב-OOP משום שהיא מרכזת במקום אחד את מה שמשותף לכל העצמים מאותה קבוצה: <strong>הפרוטוקול</strong> (אוסף ההודעות), <strong>מימוש ההתנהגות</strong> (המתודות) ו<strong>המבנה</strong> (הצהרות משתני המופע). (רק <em>הזהות</em> ו<em>המצב</em> הספציפי שונים מעצם לעצם).
+                </p>
+
+                <div class="note-box-purple text-sm">
+                    <strong>💡 שאלת ניתוח מעמיקה: האם ההתנהגות של כל העצמים מאותה מחלקה חייבת בהכרח להיות זהה?</strong>
+                    <br><strong>תשובה:</strong> <strong>כן ולא!</strong> ככלל, בשפות מונחות עצמים מקובל שכל העצמים מאותה מחלקה מתנהגים בהתאם למוגדר במחלקה, אבל <strong>אפשרי בהחלט</strong> לתכנן מחלקה שבה כל עצם קובע לעצמו מימוש שונה של המתודות! לדוגמה, ניתן לממש מחסנית <code>class Stack</code> ב-C++ שבה <code>void (*push)(int element);</code> ו-<code>int (*pop)(void);</code> מוגדרים כ<strong>מצביעים לפונקציה (Function Pointers) במשתני המופע</strong> במקום הגדרת הפונקציה עצמה!
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-4">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-purple-900 text-base block mb-1">🎯 3 התפקידים של מחלקה:</strong>
+                        <ol class="list-decimal list-inside space-y-1">
+                            <li><strong>תבנית ליצירת עצמים חדשים</strong> (למשל ביטוי <code>new</code> המקבל את שם המחלקה).</li>
+                            <li><strong>הצהרה על הפרוטוקול</strong> שהעצמים "מבינים" (משמש שפות עם הטפסה סטטית לאיתור שגיאות בזמן הידור).</li>
+                            <li><strong>ישות בפני עצמה בזמן ריצה</strong> (מיוצגת ע"י עצם ב-Smalltalk וב-Java Reflection).</li>
+                        </ol>
+                    </div>
+                    <div class="hand-drawn-box !my-1 border-purple-600">
+                        <strong class="text-purple-900 text-base block mb-1">🧱 5 המרכיבים של מחלקה:</strong>
+                        <ul class="space-y-1">
+                            <li><strong>1. כור יצירה / מכרה עצמים (`Forge`):</strong> אוסף ההודעות ליצירת עצמים חדשים (חתימות הבנאים).</li>
+                            <li><strong>2. בית-חרושת לייצור עצמים (`Mill`):</strong> המימוש של הבנאים.</li>
+                            <li><strong>3. פרוטוקול (`Protocol`):</strong> אוסף ההודעות שהעצמים מבינים (חתימת המתודות).</li>
+                            <li><strong>4. התנהגות (`Behavior`):</strong> המימוש של המתודות.</li>
+                            <li><strong>5. מבנה (`Structure`):</strong> אוסף משתני המופע (מבנה הזיכרון של כל עצם).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse bg-white border border-slate-300 shadow-sm text-sm">
+                        <thead>
+                            <tr class="bg-purple-900 text-white">
+                                <th class="p-2.5 border border-purple-800">דוגמה והמחשה בשפות שונות</th>
+                                <th class="p-2.5 border border-purple-800">אילו מ-5 מרכיבי המחלקה קיימים בה?</th>
+                                <th class="p-2.5 border border-purple-800">יצירת עצמים חדשים</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">10.5.1 מנשק ב-Java (<code>interface printable</code>)</td>
+                                <td class="p-2.5 border border-slate-300">מגדיר את <strong>הפרוטוקול (`Protocol`) בלבד</strong>, אך לא את ההתנהגות ולא את המבנה.</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">אינו מאפשר ליצור עצמים חדשים</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">10.5.2 מחלקה אנונימית ב-Java (<code>new printable { ... }</code>)</td>
+                                <td class="p-2.5 border border-slate-300">כוללת מבנה (<code>private int s;</code>) והתנהגות (<code>void print()</code>), אך <strong>חסרת `Forge` ליצירת מופעים נוספים</strong>.</td>
+                                <td class="p-2.5 border border-slate-300 text-amber-700 font-bold">נוצר מופע יחיד בלבד; אינה מאפשרת ליצור עצמים נוספים</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">10.5.3 מחלקה מופשטת ב-<code>++C</code> (<code>virtual void draw() = 0;</code>)</td>
+                                <td class="p-2.5 border border-slate-300">ניתן להגדיר בה פרוטוקול, מבנה, מתודות ובנאים (עבור תתי-מחלקות).</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">אינה מאפשרת ליצור עצמים חדשים ישירות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">10.5.4 מחלקה ב-Smalltalk (המחלקה <code>Point</code>)</td>
+                                <td class="p-2.5 border border-slate-300">מבנה (<code>instanceVariableNames: 'x y'</code>), מתודות-מופע (<code>setX:setY:</code>, <code>x</code>, <code>y</code>) ומתודות-מחלקה ליצירה: <code>Point class&gt;&gt;x: xInteger y: yInteger ^ self basicNew setX: xInteger setY: yInteger</code>.</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן – המחלקה עצמה היא עצם המגיב להודעות יצירה!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="note-box-blue text-sm">
+                    <strong>🪞 בבואה (Reflection) ב-Java:</strong>
+                    לדוגמה, פונקציית השמה דינמית <code>assignField(Object o, String fieldName, Object value)</code> מבצעת: <code>Class c = o.getClass(); Field f = c.getField(fieldName); f.set(o, value);</code>.
+                    <br>• <strong>האם <code>getClass()</code> מחזירה עצם?</strong> המתודה <code>o.getClass()</code> אכן מחזירה <strong>עצם לכל דבר</strong> (מופע של המחלקה <code>java.lang.Class</code>), ולכן ניתן לקרוא עליו למתודה <code>c.getField(...)</code> וגם לקרוא עליו שוב ושוב ל-<code>getClass()</code>!
+                    <br>• <strong>שרשור קריאות <code>getClass()</code>:</strong> מה מחזירה הקריאה <code>o.getClass().getClass().getClass().getClass();</code> ב-Java? היא מחזירה תמיד את <strong>העצם המייצג את המחלקה <code>java.lang.Class</code></strong>! הסיבה לכך היא שב-Java (מערכת בת 3 רמות בלבד, כמפורט בפרק 18) כל עצם-מחלקה הוא מופע של המחלקה <code>Class</code>, והמחלקה <code>Class</code> היא מופע של עצמה (<code>Class.class.getClass() == Class.class</code>)!
+                </div>
+            </section>
+
+            <section id="sec-11-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">11.1 המחלקה Object (הדפסה, שוויון ו-hash, שייכות, העתקה וניפוי שגיאות)</span></h3>
+                <p class="mb-3 text-sm">
+                    בראש היררכיית המחלקות ב-Squeak נמצאת <strong><code>ProtoObject</code></strong> (המרכזת את ההגדרות המינימליות ביותר), ומתחתיה <strong><code>Object</code></strong>. <strong>ל-<code>Object</code> אין משתני מופע ואסור להוסיף לה כאלה</strong>, כדי לא לשנות את מבנה הזיכרון של מחלקות שה-VM מסתמכת על מבנן (כגון <code>SmallInteger</code>).
+                </p>
+
+                <div class="space-y-3 text-sm">
+                    <div class="p-3.5 bg-white border-r-4 border-teal-500 rounded shadow-sm">
+                        <strong class="text-teal-900 text-base block mb-1">1. מתודות הדפסה (`printString`, `printOn: aStream`) ועצמים מסוג `self evaluating`:</strong>
+                        • ב-<code>Object&gt;&gt;printOn: aStream</code> נכתב לזרם <code>'an '</code> (אם שם המחלקה מתחיל בתנועה <code>title first isVowel</code>) או <code>'a '</code> ואחריו שם המחלקה (באמצעות <code>nextPutAll:</code>).
+                        <br>• ב-<code>Point&gt;&gt;printOn: aStream</code> מוגדר:
+                        <pre class="!my-1.5 text-xs"><code>Point >> printOn: aStream
+    x printOn: aStream.
+    aStream nextPut: $@.
+    (y isNumber and: [y negative]) ifTrue: [aStream space].   "שורות 3-4"
+    y printOn: aStream</code></pre>
+                        • <strong class="marker-yellow">שאלת הבנה (מדוע קיימות שורות 3–4 ב-<code>Point&gt;&gt;printOn:</code>?):</strong> אם שיעור ה-<code>y</code> הוא מספר שלילי (למשל בנקודה <code>3 @ -4</code>), ללא הוספת הרווח (<code>aStream space</code>) היה מודפס הרצף <code>3@-4</code>, והמפענח של Smalltalk היה מפרש את שני התווים הצמודים <code>@-</code> כאופרטור בינרי אחד לא-מוגדר במקום האופרטור <code>@</code> ואחריו המספר השלילי <code>-4</code>!
+                        <br>• <strong class="marker-yellow">קדימות אופרטורים בהדפסה (השמטת סוגריים ב-<code>3@4 printString</code>):</strong> הביטוי <code>(3@4) printString</code> מחזיר את המחרוזת <code>'3@4'</code>, אך <strong>ללא סוגריים</strong> <code>3@4 printString</code> מריץ קודם את ההודעה האונארית <code>4 printString</code> (שמחזירה <code>'4'</code>) ואז יוצר עצם <code>Point</code> ששיעור ה-<code>y</code> שלו הוא מחרוזת: <strong><code>3@'4'</code></strong>!
+                        <br>• <strong class="marker-orange">עצמים שהם `self evaluating`:</strong> המערך הדינמי <code>{3@4. 4.5}</code> מדפיס <code>{3@4 . 4.5}</code> ולכן הוא <code>self evaluating</code>, ואילו <code>{3@4. 4+5}</code> מדפיס <code>{3@4 . 9}</code> ולכן ביטוי המקור אינו זהה לייצוג המודפס.
+                    </div>
+
+                    <div class="p-3.5 bg-white border-r-4 border-blue-500 rounded shadow-sm">
+                        <strong class="text-blue-900 text-base block mb-1">2. זהות (`==`) מול שוויון (`=`), אי-שוויון (`~=`) והמתודה `hash`:</strong>
+                        • ב-<code>Object</code> המתודה <code>=</code> ממומשת כבדיקת זהות: <code>^ self == anObject</code> (ואי-שוויון <code>~=</code> מחזיר את שלילת <code>=</code>).
+                        <br>• ב-<code>Point&gt;&gt;= aPoint</code> נבדק שוויון הסוג והערכים: <code>self species = aPoint species ifTrue: [^ x = aPoint x and: [y = aPoint y]] ifFalse: [^ false]</code>.
+                        <br>• <strong class="marker-red">חוק ברזל למבחן:</strong> אם מגדירים מחדש את <code>=</code>, <strong>חובה להגדיר מחדש גם את <code>hash</code></strong> כך ששני עצמים שווים (<code>a = b</code>) יחזירו תמיד אותו מספר <code>hash</code>!
+                    </div>
+
+                    <div class="p-3.5 bg-white border-r-4 border-purple-500 rounded shadow-sm">
+                        <strong class="text-purple-900 text-base block mb-1">3. שייכות למחלקה (`class`, `isMemberOf:`, `isKindOf:`, `respondsTo:`):</strong>
+                        • <code>4 isMemberOf: SmallInteger</code> $\implies$ <code>true</code>, אך <code>4 isMemberOf: Number</code> $\implies$ <strong><code>false</code></strong> (בודקת אם העצם הוא מופע <strong>בדיוק</strong> של המחלקה הנתונה).
+                        <br>• <code>4 isKindOf: Number</code> וגם <code>4 isKindOf: Object</code> $\implies$ <strong><code>true</code></strong> (בודקת אם העצם הוא מסוג הארגומנט <strong>או כל תת-מחלקה שלו</strong>).
+                        <br>• <code>4 respondsTo: #+</code> וגם <code>'hello' respondsTo: #size</code> $\implies$ <strong><code>true</code></strong>.
+                    </div>
+
+                    <div class="p-3.5 bg-white border-r-4 border-emerald-500 rounded shadow-sm">
+                        <strong class="text-emerald-900 text-base block mb-1">4. העתקה ושכפול (`shallowCopy`, `copyTwoLevel`, `deepCopy`, `copy` + `postCopy`):</strong>
+                        • עבור מערך דו-ממדי <code>a1 := {{'a'. 'b'}. {'c'. 'd'}}</code>: ב-<code>a2 := a1 shallowCopy</code> שינוי תת-מערך <code>(a1 at: 1) at: 1 put: 'z'</code> ישנה גם את <code>a2</code> כי תתי-המערכים משותפים! ב-<code>a2 := a1 copyTwoLevel</code> שינוי במערך דו-ממדי לא ישפיע על <code>a2</code>, אך במערך תלת-ממדי <code>{{{'a'}}...}</code> שינוי ברמה השלישית עדיין ישפיע על שניהם (ולכך נדרשת <strong><code>deepCopy</code></strong>).
+                        <br>• המתודה <strong><code>Object&gt;&gt;copy</code></strong> מבצעת <code>shallowCopy</code> ואז שולחת לעותק את ההודעה <strong><code>postCopy</code></strong> (תתי-מחלקות דורסות את <code>postCopy</code> להשלמת השכפול מעבר לרדוד).
+                    </div>
+
+                    <div class="p-3.5 bg-white border-r-4 border-rose-500 rounded shadow-sm">
+                        <strong class="text-rose-900 text-base block mb-1">5. ניפוי שגיאות, חוזים, בדיקות ואתחול:</strong>
+                        • <code>self halt</code> (פתיחת ה-Debugger), <code>self assert: [aBlock]</code> (תכנות לפי חוזה <em>Design by Contract</em> – זורק <code>AssertionFailure</code> אם התנאי <code>false</code>), <code>self deprecated: 'use ifNotNilDo:'</code> (כמו ב-<code>doIfNotNil:</code>), <code>doesNotUnderstand:</code>, <code>self error: 'msg'</code>, <code>self subclassResponsibility</code>, ו-<strong><code>self shouldNotImplement</code></strong> (לביטול מתודה שנורשה אך אינה מתאימה לתת-המחלקה).
+                        <br>• מתודות בדיקה כגון <code>isArray</code>, <code>isBoolean</code>, <code>isBlock</code> אינן מומלצות לשימוש כי הן מפרות את עקרון הכימוס, למעט <code>ProtoObject&gt;&gt;isNil</code> ו-<code>Object&gt;&gt;notNil</code> השימושיות. מתודת האתחול <code>initialize</code> מוגדרת ב-<code>ProtoObject</code> ונקראת אוטומטית מתוך <code>new</code>.
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-11-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">11.2–11.5 מספרים, תווים, מחרוזות, Symbol ובוליאניים</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-purple-900 text-base block mb-1">🔢 11.2 מספרים (`Magnitude &rarr; Number`) ו-11.3 תווים (`Character`):</strong>
+                        • ב-<strong><code>Magnitude</code></strong> (מופשטת) האופרטורים <code>&lt;</code> ו-<code>=</code> מוגדרים כ<strong>מתודות מופשטות</strong> ומשמשים למימוש כל השאר (<code>&lt;=, &gt;, &gt;=, between:and:, min:, max:</code>).
+                        <br>• ב-<strong><code>Number</code></strong> האופרטורים <code>+, -, *, /</code> הם מופשטים. <code>//</code> מבצע חלוקת שלמים מעוגלת כלפי מטה, ו-<code>\\</code> מחזיר את השארית.
+                        <br>• תחת <code>Number</code> יורשות: <strong><code>Float</code></strong> (עם מתודות מחלקה לקבועים <code>Float pi</code> ו-<code>Float e</code>), <strong><code>Fraction</code></strong> (נוצר ב-<code>Fraction numerator:denominator:</code> או ע"י <code>/</code> בין שלמים ונשמר תמיד בצורה מצומצמת: <code>6/8 &rarr; (3/4)</code>), ו-<strong><code>Integer</code></strong> (מופשטת, עם <code>factorial, atRandom, isPrime, gcd:</code> ו-3 תתי-המחלקות <code>SmallInteger, LargePositiveInteger, LargeNegativeInteger</code> המומרות אוטומטית זו לזו!).
+                        <br>• <strong><code>Character</code></strong> (יורשת מ-<code>Magnitude</code>): נוצרת עם <code>$a</code>, <code>Character tab / cr / space / backspace / escape / enter</code> או <code>Character value: asciiCode</code>.
+                    </div>
+
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-purple-900 text-base block mb-1">🔤 11.4 מחרוזות (`ByteString` מול `Symbol`) ו-11.5 בוליאניים:</strong>
+                        • היררכיית המחרוזות: <code>Object &rarr; Collection &rarr; SequenceableCollection &rarr; ArrayedCollection &rarr; String (מופשטת) &rarr; ByteString / Symbol</code>.
+                        <br>• <strong>השוואת <code>ByteString</code> מול <code>Symbol</code>:</strong> עבור <code>s1 := 'hello'. s2 := 'hello'</code>: המחרוזות שוות (<code>s1 = s2</code> הוא <code>true</code>), אך הן מופעים נפרדים בזיכרון (<code>s1 == s2</code> הוא <code>false</code>), וביצוע <code>s1 at: 1 put: $H</code> או <code>s1 := s1, ' world'</code> משנה רק את <code>s1</code> מבלי להשפיע על <code>s2</code>! לעומת זאת, שני <code>Symbol</code> זהים (<code>#hello</code>) הם תמיד <strong>אותו עצם בזיכרון (<code>==</code>) ואינם ניתנים לשינוי (`Immutable`)</strong>!
+                        <br>• מתודות <code>String</code> חשובות: שרשור עם פסיק <code>,</code>, <code>replaceAll:with:</code>, <code>replaceFrom:to:with:</code> (משנות במקום), <code>copyReplaceAll:with:</code> (יוצרת עותק חדש), <code>findString:</code>, ו-<code>'123+12' asNumber &rarr; 123</code>!
+                        <br>• <strong><code>Boolean &rarr; True / False</code>:</strong> <code>false ifTrue: [...]</code> מחזיר <code>nil</code>, ו-<code>true ifFalse: [...]</code> מחזיר <code>nil</code>. ב-<code>and:</code> ו-<code>or:</code> כאשר אין צורך להעריך את הבלוק מוחזר <code>self</code>.
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-12-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">12.1–12.4 ★ אוספים ב-Squeak: היררכיית Collection, 8 סיווגי יכולות ו-5 דרכי מימוש</span></h3>
+                <ul class="space-y-2 text-sm mb-3">
+                    <li class="list-bullet list-bullet-purple">
+                        <strong class="marker-orange">7 הפרוטוקולים המשותפים ב-`Collection`:</strong>
+                        (1) <strong>גישה:</strong> <code>size, capacity, at:, at:put:</code> |
+                        (2) <strong>בדיקה:</strong> <code>isEmpty, includes:, contains:, occurrencesOf:</code> |
+                        (3) <strong>הוספה:</strong> <code>add:, addAll:</code> |
+                        (4) <strong>הסרה:</strong> <code>remove:, remove:ifAbsent:, removeAll:</code> |
+                        (5) <strong>אנומרציה:</strong> <code>do:, collect:, select:, reject:, detect:, detect:ifNone:, inject:into:, count:, anySatisfy:</code> |
+                        (6) <strong>הסבה:</strong> <code>asBag, asSet, asOrderedCollection, asSortedCollection, asSortedCollection:, asArray</code> |
+                        (7) <strong>יצירה (מתודות מחלקה):</strong> <code>new, new:, with:, with:with: (עד 4 איברים), withAll:</code>.
+                    </li>
+                    <li class="list-bullet list-bullet-purple">
+                        <strong class="marker-orange">5 קטגוריות המימוש של אוספים:</strong>
+                        <strong>(1) מימושי מערך</strong> (<code>Array</code> – מאחסן איברים במשתנה מופע מאונדקס של האוסף ולכן גודלו קבוע),
+                        <strong>(2) מימושים סדורים</strong> (<code>OrderedCollection, SortedCollection</code> – מאחסנים איברים במערך פנימי השמור באחד ממשתני המופע של האוסף, כך שניתן להקצות מערך גדול יותר לפי הצורך!),
+                        <strong>(3) מימושי Hash</strong> (<code>Set, Dictionary</code> – משתמשים במערך כטבלת גיבוב; ו-<code>Bag</code> שמשתמש בפנים ב-<code>Dictionary</code> שבו האלמנטים הם המפתחות ומספר המופעים הוא הערכים!),
+                        <strong>(4) מימושים מקושרים</strong> (<code>LinkedList</code> – רשימה מקושרת סטנדרטית),
+                        <strong>(5) מימושי אינטרוול</strong> (<code>Interval</code> – ממומש באמצעות 3 שלמים בלבד: <code>start, stop, step</code>).
+                    </li>
+                </ul>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse bg-white border border-slate-300 shadow-sm text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-purple-900 text-white">
+                                <th class="p-2.5 border border-purple-800">מחלקת אוסף</th>
+                                <th class="p-2.5 border border-purple-800">סדור / גישה</th>
+                                <th class="p-2.5 border border-purple-800">דינמי (Growable)?</th>
+                                <th class="p-2.5 border border-purple-800">כפילויות?</th>
+                                <th class="p-2.5 border border-purple-800">דרכי יצירה ומתודות ייחודיות</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">Array</td>
+                                <td class="p-2.5 border border-slate-300">אינדקס <code>1..n</code></td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">לא (גודל קבוע)</td>
+                                <td class="p-2.5 border border-slate-300">כן (הטרוגני; יש גם הומוגניים <code>ByteArray, IntegerArray, FloatArray</code>)</td>
+                                <td class="p-2.5 border border-slate-300"><code>Array new: 5</code> ($\to$ 5 איברי <code>nil</code>), <code>Array with: 1 with: 2</code>, <code>#(...)</code>, <code>{...}</code>. גישה ב-<code>at:</code> ו-<code>at:put:</code>.</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">OrderedCollection</td>
+                                <td class="p-2.5 border border-slate-300">לפי סדר הכנסה</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן</td>
+                                <td class="p-2.5 border border-slate-300">כן</td>
+                                <td class="p-2.5 border border-slate-300"><code>add:</code> (מוסיף בסוף), <code>addFirst:</code>, <code>addLast:</code>, <code>insert:before:</code>, <code>at:</code>, <code>at:put:</code>, <code>remove:</code> (מסיר את המופע הראשון שמתאים!).</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">SortedCollection</td>
+                                <td class="p-2.5 border border-slate-300">ממוין (<code>&lt;=</code> או <code>sortBlock:</code>)</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן</td>
+                                <td class="p-2.5 border border-slate-300">כן</td>
+                                <td class="p-2.5 border border-slate-300"><code>SortedCollection sortBlock: [:s1 :s2 | s1 area &lt;= s2 area]</code>.</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">Interval</td>
+                                <td class="p-2.5 border border-slate-300">אינדקס <code>at:</code> (אך <strong>Immutable!</strong>)</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">לא</td>
+                                <td class="p-2.5 border border-slate-300">לא</td>
+                                <td class="p-2.5 border border-slate-300"><code>Interval from: 1 to: 10 by: 2</code> או <code>1 to: 10 by: 2</code>. תומך ב-<code>at:</code> אך <strong>אסור לבצע עליו <code>at:put:</code></strong>!</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">Dictionary / IdentityDictionary</td>
+                                <td class="p-2.5 border border-slate-300">לפי מפתח (Keyed)</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן (Hash)</td>
+                                <td class="p-2.5 border border-slate-300">מפתחות ייחודיים, ערכים חופשיים</td>
+                                <td class="p-2.5 border border-slate-300">זוגות <code>Association</code> (<code>#one-&gt;1</code>). יצירה עם <code>Dictionary newFrom: {#one-&gt;1}</code> או <code>Dictionary withAll: #(7 3 1 3)</code> (מצמיד מפתחות סידוריים <code>1..4</code>!). מתודות: <code>at:put:, at:ifAbsent:, removeKey:, keys (מחזיר Set!), values (מחזיר Array!), associations</code>. <code>IdentityDictionary</code> משווה מפתחות ב-<code>==</code> (יעיל ל-<code>Symbol</code>).</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">Set</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">לא (אין <code>at:</code>!)</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן (Hash)</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700 font-bold">לא (מנפה כפילויות: <code>add: 3; add: 9/3</code> שומר איבר אחד!)</td>
+                                <td class="p-2.5 border border-slate-300"><code>Set newFrom: #(1 2 2 3)</code>, <code>union:</code>, <code>intersection:</code>, <code>includes:</code>.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50" dir="ltr">Bag</td>
+                                <td class="p-2.5 border border-slate-300 text-red-700">לא</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן</td>
+                                <td class="p-2.5 border border-slate-300 text-emerald-700 font-bold">כן (קבוצה עם חזרות)</td>
+                                <td class="p-2.5 border border-slate-300">ממומש ע"י <code>Dictionary</code> (איבר $\to$ מונה מופעים <code>occurrencesOf:</code>).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="sec-12-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">12.5–12.6 ★ מימוש כל האיטרטורים במחלקה Collection ו-4 כללי הזהב</span></h3>
+                <pre><code>// מימוש איטרטורים מרכזיים באוספים (do:, collect:, select:, reject:, detect:, inject:into:):
+SequenceableCollection >> do: aBlock
+    1 to: self size do: [:index | aBlock value: (self at: index)]
+// גרסאות נוספות של do: -> doWithout:, withIndexDo:, reverseDo:, ובמילון: keysDo:, valuesDo:, associationsDo: (במילון do: סורקת את הערכים values!)
+
+Collection >> collect: aBlock
+    | newCollection |
+    newCollection := self species new.
+    self do: [:each | newCollection add: (aBlock value: each)].
+    ^ newCollection
+// זהירות: collect: על String תחזיר String ולכן הבלוק חייב להחזיר תווים (Character), אחרת תיזרק שגיאה!
+
+Collection >> select: aBlock
+    | newCollection |
+    newCollection := self species new.
+    self do: [:each | (aBlock value: each) ifTrue: [newCollection add: each]].
+    ^ newCollection
+
+Collection >> reject: aBlock
+    ^ self select: [:element | (aBlock value: element) == false]
+
+Collection >> detect: aBlock
+    ^ self detect: aBlock ifNone: [self errorNotFound: aBlock]
+
+Collection >> detect: aBlock ifNone: exceptionBlock
+    self do: [:each | (aBlock value: each) ifTrue: [^ each]].
+    ^ exceptionBlock value
+
+Collection >> inject: thisValue into: binaryBlock
+    | nextValue |
+    nextValue := thisValue.
+    self do: [:each | nextValue := binaryBlock value: nextValue value: each].
+    ^ nextValue
+// הודעות איטרציה נוספות: count: [:each | ...] ו-anySatisfy: [:each | ...]</code></pre>
+
+                <div class="warning-box text-sm">
+                    <h4 class="font-bold text-red-900 mb-1">⚠️ 4 הערות שימושיות וכללי מפתח לעבודה עם אוספים:</h4>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li><strong>המתודה <code>add:</code> מחזירה את האיבר שהתקבל להוספה ולא את האוסף!</strong> (<code>OrderedCollection new add: 1</code> מחזיר <code>1</code>). לקבלת האוסף שולחים <strong><code>; yourself</code></strong>.</li>
+                        <li><strong>אסור להסיר איבר מאוסף בזמן שמבצעים עליו איטרציה!</strong> במקום זאת משכפלים את האוסף באמצעות <code>copy</code> ומבצעים את האיטרציה על העותק המשוכפל.</li>
+                        <li><strong>הגדרת <code>=</code> מחייבת הגדרת <code>hash</code>:</strong> אוספים משתמשים ב-<code>=</code> וב-<code>hash</code> לבדיקת שוויון בין איברים.</li>
+                        <li><strong>עדיף להשתמש בעצמים `Immutable` כמפתחות במילונים וכאיברים בקבוצות (`Set`):</strong> כי ערך ה-<code>hash</code> של עצמים `Mutable` עלול להשתנות במהלך חייהם, ואז שני עצמים שווים עלולים להיחשב כשונים.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- ================= חלק VI: פרקים 13–17 ================= -->
+            <div class="border-b-4 border-green-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-green-800 font-heading">חלק VI: סימולציה – חידת המלכות והסביבה הגרפית Morphic (פרקים 13–17)</h2>
+                <p class="text-sm text-slate-600">ייצוגים מתמטיים וגרפיים לחידת N המלכות, הפתרון המבוזר ב-Smalltalk, הכללה ל-N×N×N וממשק Morphic.</p>
+            </div>
+
+            <section id="sec-14-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">13–14.4 ★ רקע, ייצוג פרמוטציה ו-4 אופני הייצוג של חידת N המלכות</span></h3>
+                <ul class="space-y-2 text-sm mb-3">
+                    <li class="list-bullet list-bullet-green">
+                        <strong class="marker-orange">הגדרת בעיית 8 המלכות ועקרונות הסימולציה:</strong>
+                        <br>• <strong>הגדרת חידת 8 המלכות:</strong> הצב 8 מלכות על לוח שחמט כך שאף מלכה אינה מאיימת על אף מלכה אחרת (אין שתי מלכות באותה שורה, באותה עמודה או באותו אלכסון).
+                        <br>• <strong>רקע היסטורי:</strong> הוצגה ב-1848 ע"י שחקן השחמט מקס בזל (Max Bezzel), ונחקרה ע"י גאוס (C.F. Gauss, 1865), פוליה (G. Polya, 1918) ולוקאס (E. Lucas, 1960). במדעי המחשב היא דוגמה קלאסית לאלגוריתמי <code>Backtracking</code> ולסימולציה בעזרת עצמים (הגישה שהולידה את שפת <code>Simula</code>).
+                        <br>• <strong>ייצוג פתרון כפרמוטציה:</strong> מכיוון שבכל עמודה ובכל שורה יש בדיוק מלכה אחת, ניתן לייצג פתרון כפרמוטציה מעל $\{0, 1, 2, 3, 4, 5, 6, 7\}$, למשל הפתרון החוקי:
+                        $$\begin{pmatrix} 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\ 7 & 3 & 0 & 2 & 5 & 1 & 6 & 4 \end{pmatrix}$$
+                    </li>
+                </ul>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-4">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-green-900 text-base block mb-1">1. ייצוג אלגברי</strong>
+                        יהא $A = \{0, 1, 2, \dots, N-1\}$ ויהא $B = A \times A = \{(0,0), (0,1), \dots, (N-1, N-1)\}$. תת-קבוצה $C \subseteq B$ של $N$ איברים היא פתרון לחידת המלכות אם לכל $Q_k(i_k, j_k), Q_l(i_l, j_l) \in C$ (כאשר $k \ne l$) מתקיימים כל 4 התנאים:
+                        <br>1. לא באותה עמודה: $i_k \ne i_l$
+                        <br>2. לא באותה שורה: $j_k \ne j_l$
+                        <br>3. לא באותו אלכסון: $i_k + j_k \ne i_l + j_l$
+                        <br>4. לא באותו אלכסון נגדי: $i_k - j_k \ne i_l - j_l$
+                    </div>
+
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-green-900 text-base block mb-1">2. ייצוג בחשבון מודולרי</strong>
+                        יהא $A = \{0, 1, 2, \dots, N^2-1\}$. תת-קבוצה $B \subseteq A$ של $N$ איברים היא פתרון אם לכל $x, y \in B$ כך ש-$x \ne y$ מתקיימים:
+                        <br>1. לא באותה עמודה: $x \not\equiv y \pmod N$
+                        <br>2. לא באותה שורה: $\lfloor x/N \rfloor \ne \lfloor y/N \rfloor$
+                        <br>3. לא באותו אלכסון: $(x \bmod N) + \lfloor x/N \rfloor \ne (y \bmod N) + \lfloor y/N \rfloor$
+                        <br>4. לא באותו אלכסון נגדי: $|(x \bmod N) - \lfloor x/N \rfloor| \ne |(y \bmod N) - \lfloor y/N \rfloor|$
+                    </div>
+
+                    <div class="hand-drawn-box !my-1 border-emerald-500">
+                        <strong class="text-emerald-900 text-base block mb-1">3. קבוצה יציבה מקסימלית – Maximum Stable Set (14.3)</strong>
+                        בגרף $G=(V,E)$, קבוצת צמתים $V' \subseteq V$ היא <strong>יציבה (stable)</strong> אם <strong>אין ב-$E$ אף קשת המחברת שני צמתים ב-$V'$</strong>.
+                        <br>• נייצג כל משבצת בלוח כצומת ב-$V$ ($|V|=N^2$), ותהא ב-$E$ קשת בין כל שני צמתים שנמצאים <strong>על אותה עמודה, אותה שורה או אותו אלכסון (יחס איום)</strong>.
+                        <br>• <strong>פתרון:</strong> כל קבוצה יציבה $V' \subseteq V$ בגודל $\sqrt{|V|} = N$.
+                    </div>
+
+                    <div class="hand-drawn-box !my-1 border-purple-500">
+                        <strong class="text-purple-900 text-base block mb-1">4. קליק מקסימלי – Maximum Clique (14.4)</strong>
+                        בגרף $G=(V,E)$, קבוצת צמתים $V' \subseteq V$ היא <strong>קליק (clique)</strong> אם <strong>בין כל שני צמתים ב-$V'$ יש קשת ב-$E$ המחברת אותם</strong>.
+                        <br>• נייצג כל משבצת כצומת ב-$V$, ותהא ב-$E$ קשת בין כל שני צמתים <strong>שאינם נמצאים על אותה עמודה, אותה שורה או אותו אלכסון (יחס אי-איום, הגרף המשלים ל-14.3)</strong>.
+                        <br>• <strong>פתרון:</strong> כל קליק $V' \subseteq V$ בגודל $\sqrt{|V|} = N$ ($\binom{N}{2}$ קשתות).
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-14-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">14.5–14.6 ★ 8 סימטריות הלוח ופתרונות זרים ממש</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-green">
+                        <strong class="marker-orange">8 סיבובי הסימטריה היוצרים פתרונות שקולים איזומורפית:</strong>
+                        <br>• <strong>4 סיבובים דו-ממדיים נגד כיוון השעון:</strong> ב-$90^\circ$, ב-$180^\circ$, ב-$270^\circ$, וב-$360^\circ$ (זהות עצמית).
+                        <br>• <strong>4 סיבובים תלת-ממדיים של $180^\circ$ במרחב (שיקופים):</strong> סביב הציר האופקי, סביב הציר האנכי, סביב הציר האלכסוני ($i \ne j$), וסביב הציר האלכסוני הנגדי ($i = j$).
+                    </li>
+                </ul>
+
+                <div class="overflow-x-auto my-3">
+                    <table class="w-full text-center border-collapse bg-white border border-slate-300 shadow-sm text-xs md:text-sm" dir="ltr">
+                        <thead>
+                            <tr class="bg-green-900 text-white font-bold">
+                                <th class="p-2 border border-green-800">N (Board Size)</th>
+                                <th class="p-2 border border-green-800">1</th>
+                                <th class="p-2 border border-green-800">2</th>
+                                <th class="p-2 border border-green-800">3</th>
+                                <th class="p-2 border border-green-800">4</th>
+                                <th class="p-2 border border-green-800">5</th>
+                                <th class="p-2 border border-green-800">6</th>
+                                <th class="p-2 border border-green-800">7</th>
+                                <th class="p-2 border border-green-800 bg-amber-600">8</th>
+                                <th class="p-2 border border-green-800">9</th>
+                                <th class="p-2 border border-green-800">10</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-mono">
+                            <tr class="border-b">
+                                <td class="p-2 border border-slate-300 font-bold bg-slate-50 font-sans" dir="rtl">סך כל הפתרונות עבור N</td>
+                                <td class="p-2 border border-slate-300">1</td>
+                                <td class="p-2 border border-slate-300 text-red-600 font-bold">0</td>
+                                <td class="p-2 border border-slate-300 text-red-600 font-bold">0</td>
+                                <td class="p-2 border border-slate-300 font-bold">2</td>
+                                <td class="p-2 border border-slate-300">10</td>
+                                <td class="p-2 border border-slate-300 text-amber-700 font-bold">4</td>
+                                <td class="p-2 border border-slate-300">40</td>
+                                <td class="p-2 border border-slate-300 font-black text-green-900 bg-amber-50">92</td>
+                                <td class="p-2 border border-slate-300">352</td>
+                                <td class="p-2 border border-slate-300">724</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 border border-slate-300 font-bold bg-slate-50 font-sans" dir="rtl">פתרונות זרים ממש (עצמאיים)</td>
+                                <td class="p-2 border border-slate-300">1</td>
+                                <td class="p-2 border border-slate-300 text-red-600">0</td>
+                                <td class="p-2 border border-slate-300 text-red-600">0</td>
+                                <td class="p-2 border border-slate-300 font-bold text-emerald-700">1</td>
+                                <td class="p-2 border border-slate-300">2</td>
+                                <td class="p-2 border border-slate-300 font-bold text-emerald-700">1</td>
+                                <td class="p-2 border border-slate-300">6</td>
+                                <td class="p-2 border border-slate-300 font-black text-emerald-800 bg-emerald-50">12</td>
+                                <td class="p-2 border border-slate-300">46</td>
+                                <td class="p-2 border border-slate-300">92</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-slate-600">
+                    * <strong>מספר הפתרונות הזרים ממש:</strong> עבור $N = 1, 2, 3, 4, 5, 6, 7, 8$ מספר הפתרונות הזרים ממש (שאינם שקולים איזומורפית תחת 8 הסימטריות) הוא <strong>1, 0, 0, 1, 2, 1, 6, 12</strong> בהתאמה.
+                </p>
+            </section>
+
+            <section id="sec-15-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">15.1 ★ פתרון מונחה עצמים לחידת 8 המלכות: המחלקה Board ושרשרת המלכות</span></h3>
+                <p class="mb-3 text-sm">
+                    בפתרון מונחה העצמים (פרק 15), לכל מלכה מוקצית עמודה כנחלתה הבלעדית בלוח, והמלכות דנות ביניהן באמצעות שליחת הודעות רק לגבי השורה (<code>row</code>) שכל אחת תתפוס. המחלקה <code>Board</code> מחזיקה משתנה מופע יחיד בלבד (<code>lastQueen</code>) המצביע לראש רשימה מקושרת של 8 מלכות שבסופה מלכה מנוונת (<code>QueenTerminator</code>):
+                </p>
+
+                <pre><code>// הגדרת המחלקה Board, אתחול שרשרת המלכות והמתודה solve:
+Object subclass: #Board
+    instanceVariableNames: 'lastQueen'
+    classVariableNames: '' poolDictionaries: '' category: 'OOD-8Queens'
+
+Board >> initialize
+    lastQueen := QueenTerminator new.
+    (1 to: 8) do: [:i |
+        lastQueen := Queen new setColumn: i neighbor: lastQueen]
+
+Board >> solve
+    Transcript clear.
+    lastQueen firstSolution
+        ifTrue: [
+            Transcript show: lastQueen result printString; cr.
+            [lastQueen nextSolution] whileTrue: [
+                Transcript show: lastQueen result printString; cr].
+            Transcript show: 'End of Solutions.'; cr]
+        ifFalse: [
+            Transcript show: 'No Solution.'; cr]
+
+// הרצה ופלט:
+// board := Board new initialize. board solve
+// OrderedCollection (1 5 8 6 3 7 2 4) ... (92 פתרונות)</code></pre>
+            </section>
+
+            <section id="sec-15-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">15.2–15.4 ★ המחלקה Queen: שלושת משתני המופע ו-7 מתודות הפרוטוקול</span></h3>
+                <p class="mb-3 text-sm">
+                    למחלקה <code>Queen</code> יש <strong>3 משתני מופע</strong>: <code>row</code> (השורה הנוכחית 1..8), <code>column</code> (מספר העמודה הקבוע 1..8), ו-<code>neighbor</code> (המצביע הקבוע למלכה השכנה משמאל).
+                </p>
+
+                <pre><code>Object subclass: #Queen
+    instanceVariableNames: 'row column neighbor'
+    classVariableNames: '' poolDictionaries: '' category: 'OOD-8Queens'
+
+// --- 15.3 ארבע מתודות הפרוטוקול החיצוני ---
+Queen >> setColumn: aColumn neighbor: aQueen
+    column := aColumn.
+    neighbor := aQueen
+
+Queen >> firstSolution
+    neighbor firstSolution.
+    row := 1.
+    ^ self moveToNextNonAttackedRow
+
+Queen >> nextSolution
+    ^ self advance and: [self moveToNextNonAttackedRow]
+
+Queen >> result
+    "add row to the list"
+    ^ neighbor result addLast: row; yourself
+
+// --- 15.4 שלוש מתודות התקשורת הפנימית ("פרטיות") בין המלכות ---
+Queen >> advance
+    row = 8
+        ifTrue: [
+            neighbor nextSolution ifFalse: [^ false].
+            row := 0].
+    row := row + 1.
+    ^ true
+
+Queen >> moveToNextNonAttackedRow
+    [neighbor canAttack: row x: column]
+        whileTrue: [self advance ifFalse: [^ false]].
+    ^ true
+
+Queen >> canAttack: testRow x: testColumn
+    | columnDifference |
+    columnDifference := testColumn - column.
+    ((row = testRow
+        or: [row + columnDifference = testRow])
+        or: [row - columnDifference = testRow])
+            ifTrue: [^ true].
+    ^ neighbor canAttack: testRow x: testColumn</code></pre>
+
+                <div class="note-box-green text-sm mt-3">
+                    <h4 class="font-bold text-green-950 mb-1">🔍 4 דגשים קריטיים על מתודות <code>Queen</code> למבחן:</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>ב-<code>canAttack:x:</code>:</strong> לא בודקים <code>column = testColumn</code> כי לכל מלכה הוקצתה עמודה ייחודית באתחול! נבדקים רק 3 תנאים: אותה שורה (<code>row = testRow</code>), אלכסון עולה (<code>row + columnDifference = testRow</code>) ואלכסון יורד (<code>row - columnDifference = testRow</code>).</li>
+                        <li><strong>ב-<code>advance</code>:</strong> כאשר <code>row = 8</code> המלכה מבקשת משכנתה <code>neighbor nextSolution</code> (Backtracking!), מאפסת <code>row := 0</code> ואז מקדמת <code>row := row + 1</code> כך שהיא מתמקמת בשורה <code>1</code> מול הסידור החדש של שכנותיה.</li>
+                        <li><strong>ב-<code>result</code>:</strong> חובה לסיים ב-<code>; yourself</code> כי <code>addLast: row</code> מחזירה את <code>row</code> ולא את ה-<code>OrderedCollection</code>!</li>
+                        <li><strong>ב-<code>nextSolution</code>:</strong> השימוש ב-<code>and: [...]</code> העצל מבטיח שאם <code>self advance</code> החזיר <code>false</code> (אין יותר פתרונות), החיפוש ייעצר מיד.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="sec-15-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">15.5 ★ הגדרת מלכה מנוונת: המחלקה QueenTerminator (תבנית Null Object)</span></h3>
+                <p class="mb-3 text-sm">
+                    במקום לסרבל את המימוש בתנאי עצירה (בדיקות <code>neighbor isNil</code>), מגדירים את <strong><code>QueenTerminator</code></strong> המשמשת כשכנה של המלכה הראשונה (בעמודה 1) ובעלת אותו פרוטוקול:
+                </p>
+
+                <pre><code>Object subclass: #QueenTerminator
+    instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'OOD-8Queens'
+
+QueenTerminator >> canAttack: testRow x: testColumn
+    ^ false                        "תמיד מחזיר false (אינה מאיימת על אף משבצת)"
+
+QueenTerminator >> firstSolution
+    ^ true                         "תמיד מחזיר true"
+
+QueenTerminator >> nextSolution
+    ^ false                        "תמיד מחזיר false (עוצר את החיפוש כשמלכה 1 מיצתה את שורה 8)"
+
+QueenTerminator >> result
+    ^ OrderedCollection new        "מחזיר רשימה ריקה חדשה"
+// המתודות setColumn:neighbour:, advance ו-moveToNextNonAttackedRow אינן בשימוש במלכה המנוונת!</code></pre>
+            </section>
+
+            <section id="sec-16-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">16.1–16.2 ★ הכללה ללוח N×N (מלכודת משתנה המחלקה N!) וללוח תלת-ממדי N×N×N</span></h3>
+                <p class="mb-3 text-sm">
+                    <strong>הכללה ל-$N$ מלכות על לוח $N \times N$:</strong> הצב $N$ מלכות על לוח שחמט $N \times N$ כך שאף מלכה אינה מאיימת על מלכה אחרת. בפתרון מונחה העצמים הקבוע <code>8</code> מופיע ב-<strong>2 מקומות בלבד</strong>: בלולאת <code>1 to: 8</code> ב-<code>Board&gt;&gt;initialize</code> ובבדיקה <code>row = 8</code> ב-<code>Queen&gt;&gt;advance</code>.
+                </p>
+
+                <div class="warning-box text-sm">
+                    <h4 class="font-bold text-red-900 text-base mb-1">🚨 שאלת הבחינה הקלאסית: מלכודת משתנה המחלקה <code>N</code> בהכללת הלוח ל-$N \times N$!</h4>
+                    <p class="mb-2">
+                        אם נגדיר ב-<code>Board</code> משתנה מחלקה משותף <code>classVariableNames: 'N'</code> ומתודת מחלקה <code>Board class&gt;&gt;N ^ N</code>, וב-<code>Queen&gt;&gt;advance</code> נבדוק <code>row = Board N</code>, מה יקרה בהרצת הקוד הבא?
+                    </p>
+                    <pre class="!my-2"><code>board1 := Board new.
+board2 := Board new.
+board1 initialize: 5.   "קובע N := 5 ויוצר ב-board1 שרשרת של 5 מלכות"
+board2 initialize: 1.   "דורס את משתנה המחלקה המשותף וקובע N := 1!"
+board1 solve.           "ידפיס: No Solution. !"</code></pre>
+                    <p class="mb-1">
+                        <strong>הסבר:</strong> משתנה מחלקה <code>N</code> משותף לכל מופעי <code>Board</code>! הקריאה <code>board2 initialize: 1</code> דרסה את <code>N</code> ל-<code>1</code>, ולכן כשמריצים <code>board1 solve</code>, 5 המלכות של <code>board1</code> בודקות <code>row = Board N</code> מול <code>1</code>, לא מתקדמות מעבר לשורה 1, ואי אפשר להציב 5 מלכות בשורה אחת בלבד!
+                        <br><strong>הפתרון התקני:</strong> לשמור את גודל הלוח כ<strong>משתנה מופע פרטי (<code>boardSize</code>)</strong> ב-<code>Board</code> ובכל <code>Queen</code>!
+                    </p>
+                </div>
+
+                <div class="hand-drawn-box text-sm mt-4">
+                    <h4 class="font-bold text-green-900 mb-2">🧊 חידת המלכות המרחבית – לוח שחמט תלת-ממדי $N \times N \times N$:</h4>
+                    <p class="mb-2">
+                        <strong>הגדרת הבעיה התלת-ממדית:</strong> הצב <strong>$N^2$ מלכות</strong> על לוח שחמט תלת-ממדי $N \times N \times N$ כך שבכל אחד מהמישורים אף מלכה אינה מאיימת על מלכה אחרת. עבור שתי מלכות $Q_1(i, j, k)$ ו-$Q_2(\text{row}, \text{col}, \text{lev})$, הקוד ב-Smalltalk המזהה איום מרחבי:
+                    </p>
+                    <pre><code>dx := (row - i) abs.
+dy := (col - j) abs.
+dz := (lev - k) abs.
+((dx = 0) and: [ dy = 0 ]) ifTrue: [ ^ true ].   "1. איום לאורך ציר המפלסים (אותה שורה ואותה עמודה)"
+((dx = 0) and: [ dy = dz ]) ifTrue: [ ^ true ].  "2. איום אלכסוני במישור המקביל לצירים y-z (אותה שורה)"
+((dx = dz) and: [ dy = 0 ]) ifTrue: [ ^ true ].  "3. איום אלכסוני במישור המקביל לצירים x-z (אותה עמודה)"
+((dx = dy) and: [ dx = dz ]) ifTrue: [ ^ true ]  "4. איום באלכסון מרחבי תלת-ממדי או במישור x-y (כאשר dz=0)"</code></pre>
+                    <p class="text-xs text-slate-700 mt-1">
+                        * <strong>מימוש פתרון לחידה התלת-ממדית ב-Smalltalk:</strong> מכיוון שיש להציב $N^2$ מלכות על לוח $N \times N \times N$, מקצים לכל מלכה זוג קבוע של <code>(row, column)</code> (סה"כ $N^2$ מלכות בשרשרת מקושרת מהמלכה $(N,N)$ ועד <code>QueenTerminator</code>), והמלכות מנהלות משא ומתן על בחירת המפלס <code>lev</code> ($1 \dots N$) תוך בדיקת אי-איום באמצעות 4 תנאי האיום המרחביים שהוגדרו לעיל!
+                    </p>
+                </div>
+            </section>
+
+            <!-- ================= חלק VI ב': פרק 17 (Morphic) ================= -->
+            <section id="sec-17-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">17.1–17.3 הסביבה הגרפית Morphic: ישירות, חיות, מערכת הצירים והרכבת צורות</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">שני עקרונות היסוד של סביבת Morphic:</strong>
+                        <br>1. <strong>ישירוּת (`directness`):</strong> הצורות על המסך הן עצמים שאפשר לבחון ולשנותם בצורה ישירה. <em>הדגמת ניתוק פריט מתפריט העולם:</em> לוחצים בכפתור הכחול (האמצעי) מעל תפריט העולם לקבלת ה-<code>morphic halo</code> של התפריט $\to$ לוחצים שוב בכפתור הכחול מעל אחד מפריטי התפריט להקפתו ב-Halo משלו $\to$ גוררים אותו החוצה באמצעות צלמית ה-<strong><code>pickup</code></strong> (באמצע השורה העליונה), והפריט מתפקד ככפתור עצמאי!
+                        <br>2. <strong>חיוּת (`liveness`):</strong> הסביבה מגיבה אל המשתמש והמידע על המסך מתעדכן בהתאם בזמן אמת.
+                    </li>
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">הפיכת עצמים וצבעים ל-Morph וחלון ה-Viewer:</strong>
+                        <br>• <code>s := 'Hello' asMorph openInWorld. s openViewerForArgument.</code> פותח בצד ימין את חלון ה-Viewer המאפשר להזיז ולסובב את העצם בלחיצה על סימני הקריאה <code>!</code> (ולגרום לו "לצחוק" באמצעות שליחת הפקודה הקולית ב-Viewer!).
+                        <br>• <code>Color&gt;&gt;asMorph</code> ממומשת עם Cascade ו-<code>yourself</code>: <code>^ (RectangleMorph new) fillStyle: self; borderWidth: 0; yourself</code>.
+                    </li>
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">מערכת הצירים, מתודות בסיסיות ובניית צורות מורכבות:</strong>
+                        ראשית הצירים <code>(0@0)</code> נמצאת ב<strong>פינה השמאלית העליונה של המסך</strong>; ציר <code>x</code> מתקדם ימינה וציר <code>y</code> מתקדם <strong>כלפי מטה</strong>. מתודות: <code>position</code> / <code>position:</code> (פינה שמאלית-עליונה של המלבן החוסם), <code>extent</code> / <code>extent:</code> (רוחב@גובה), <code>color:</code>.
+                        <pre class="!my-1.5 text-xs"><code>// יצירת צורה צהובה וצורה ירוקה מסוג Morph:
+mYellow := Morph new color: Color yellow; openInWorld.
+mGreen := Morph new color: Color green; openInWorld.
+10 timesRepeat: [mYellow position: mYellow position + (10@0)].    "הזזה ימינה 10 פיקסלים 10 פעמים"
+10 timesRepeat: [mGreen position: mGreen position + (10@10)].     "הזזה באלכסון למטה וימינה 10 פעמים"
+mGreen extent: mYellow extent.                                    "השוואת גודל הירוקה לצהובה"
+mYellow color: Color blue.                                        "שינוי צבע הצהובה לכחול"</code></pre>
+                    </li>
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">הרכבת צורות (`Composition`):</strong>
+                        <br>• בקוד: <code>rect addMorph: star</code> מכניסה את הכוכב לתוך המלבן; הזזת המלבן (<code>rect position: ...</code>) מזיזה את שניהם יחדיו, והזזת הכוכב ישירות מזיזה אותו ביחס למלבן אך הוא ממשיך לזוז עם המלבן! <code>star center: rect center</code> ממרכזת אותו (בפרוטוקול <code>geometry</code>), ו-<code>rect removeMorph: star</code> מנתקת אותו (נעלם מהמסך אך קיים בזיכרון ומוצג שוב עם <code>star openInWorld</code>).
+                        <br>• בממשק החזותי: מתפריט העולם <code>objects (o) &rarr; Graphics</code> גוררים שתי צורות, מניחים זו על זו, לוחצים בכפתור הצהוב (ימני) על העליונה ובוחרים <strong><code>embed into</code></strong>. לניתוק: שתי לחיצות בכפתור הכחול (הראשונה מעלה Halo למכילה, השנייה למוכלת) וגרירתה החוצה.
+                    </li>
+                </ul>
+            </section>
+
+            <section id="sec-17-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">17.4 ★ יצירת צורות גרפיות: CrossMorph, drawOn:, containsPoint: ושני השכתובים</span></h3>
+                <p class="mb-3 text-sm">
+                    כדי ליצור את המחלקה <code>CrossMorph</code> (היורשת מ-<code>Morph</code>), משכתבים את <strong><code>drawOn: aCanvas</code></strong> (הנעזרת ב-<code>self bounds insetBy:</code> להסטת פינות המלבן החוסם פנימה) ואת <strong><code>containsPoint: aPoint</code></strong> (כדי שרק נקודות על הצלב עצמו יגיבו לעכבר ולא 4 הפינות הריקות של המלבן החוסם):
+                </p>
+                <pre><code>CrossMorph >> drawOn: aCanvas
+    | crossHeight crossWidth horizontalBar verticalBar |
+    crossHeight := self height / 3.0.
+    crossWidth := self width / 3.0.
+    horizontalBar := self bounds insetBy: 0 @ crossHeight.
+    verticalBar := self bounds insetBy: crossWidth @ 0.
+    aCanvas fillRectangle: horizontalBar color: self color.
+    aCanvas fillRectangle: verticalBar color: self color
+
+CrossMorph >> containsPoint: aPoint
+    | crossHeight crossWidth horizontalBar verticalBar |
+    crossHeight := self height / 3.0.
+    crossWidth := self width / 3.0.
+    horizontalBar := self bounds insetBy: 0 @ crossHeight.
+    verticalBar := self bounds insetBy: crossWidth @ 0.
+    ^ (horizontalBar containsPoint: aPoint) or: [verticalBar containsPoint: aPoint]</code></pre>
+                <p class="text-xs text-slate-700 mt-2">
+                    <strong>שני עקרונות תכנון וארגון קוד ב-CrossMorph:</strong> (1) ריכוז חישובי <code>horizontalBar</code> ו-<code>verticalBar</code> במתודות עזר פרטיות למניעת כפילות הקוד בין <code>drawOn:</code> ל-<code>containsPoint:</code>; (2) פיצול המלבן האנכי לחלק עליון וחלק תחתון (מעל ומתחת ל-<code>horizontalBar</code>) כך שהריבוע המרכזי המשותף יצויר <strong>פעם אחת בלבד</strong> (חשוב במיוחד כשמציירים בצבע שקוף למחצה!).
+                </p>
+            </section>
+
+            <section id="sec-17-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">17.5 ★ אירועי עכבר (2 שלבים), מקלדת (3 שלבים) ואנימציית Stepping</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-3">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-pink-900 text-base block mb-1">🖱️ טיפול באירועי עכבר (2 שלבים) ודוגמאות תגובה:</strong>
+                        • <strong>שלב 1 (הצהרה):</strong> שכתוב <code>handlesMouseDown:</code> (ללחיצה/שחרור/תזוזה), <code>handlesMouseOver:</code> (לכניסה/יציאה) או <code>handlesMouseOverDragging:</code> כך שיחזירו <code>^ true</code>.<br>
+                        • <strong>שלב 2 (תגובה + `self changed`):</strong>
+                        <pre class="!my-1.5 text-xs"><code>// תגובה ללחיצה (הקטנה בלחיצה על הכפתור הצהוב):
+CrossMorph >> mouseDown: anEvent
+    anEvent redButtonPressed
+        ifTrue: [self extent: (self extent * 1.1)].
+    anEvent yellowButtonPressed
+        ifTrue: [self extent: (self extent * 0.9)].
+    self changed   "חובה כדי לתזמן קריאה ל-drawOn:!"
+
+// תגובה לתנועת סמן (אדום בכניסת עכבר, ירוק ביציאה):
+CrossMorph >> handlesMouseOver: anEvent  ^ true
+CrossMorph >> mouseEnter: anEvent  self color: Color red
+CrossMorph >> mouseLeave: anEvent  self color: Color green</code></pre>
+                    </div>
+
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-pink-900 text-base block mb-1">⌨️ אירועי מקלדת (3 שלבים) ואנימציית Stepping:</strong>
+                        • <strong>שלב 1:</strong> ב-<code>mouseEnter: anEvent</code> מעבירים פוקוס: <code>anEvent hand newKeyboardFocus: self</code> (ובו בזמן יש לדרוס <code>handlesMouseOver: ^ true</code>).<br>
+                        • <strong>שלב 2:</strong> ב-<code>handleKeystroke: anEvent</code> בודקים את <code>anEvent keyValue</code>:
+                        <strong><code>30</code></strong> (חץ למעלה: <code>-(0@1)</code>), <strong><code>31</code></strong> (חץ למטה: <code>+(0@1)</code>), <strong><code>29</code></strong> (חץ ימינה: <code>+(1@0)</code>), <strong><code>28</code></strong> (חץ שמאלה: <code>-(1@0)</code>).<br>
+                        • <strong>שלב 3:</strong> ב-<code>mouseLeave: anEvent</code> משחררים פוקוס: <code>anEvent hand newKeyboardFocus: nil</code>.<br>
+                        • <strong>אנימציות (`stepping and presenter`):</strong> <code>stepTime</code> (מספר המילישניות בין צעדים), <code>step</code> (מבצעת את השינוי בצורה בכל פעימה), <code>startStepping</code>, <code>stopStepping</code> ו-<code>isStepping</code>.
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-17-4" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">17.6–17.10 ★ דו-שיח, Drag &amp; Drop, DieMorph ו-Canvas/fork</span></h3>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">תיבת דו-שיח (`FillInTheBlank`) ותפריט קופץ (`PopUpMenu`):</strong>
+                        <br>• <code>FillInTheBlank request: 'enter your name:' initialAnswer: '??????'</code> $\implies$ מחזירה את המחרוזת שהוקלדה (או <code>'??????'</code> אם אושר ללא שינוי, או <code>''</code> ב-Cancel).
+                        <br>• <code>menu := PopUpMenu labelArray: #('x' 'y' 'z') lines: #(1 2 3). menu startUpWithCaption: 'Choose an item'</code> $\implies$ <code>lines:</code> מציין אחרי אילו אינדקסים יופיע קו מפריד, ו-<code>startUpWithCaption:</code> מחזירה את אינדקס הפריט שנבחר (<code>1..3</code>, או <code>0</code> אם לא נבחר דבר).
+                    </li>
+                    <li class="list-bullet list-bullet-pink">
+                        <strong class="marker-orange">גרירה והשמטה (`Drag and Drop`) ומנגנון תיאום בין צורות:</strong>
+                        <br>• <strong>במקבל (`ReceiverMorph`):</strong> <code>wantsDroppedMorph: aMorph event: anEvent</code> (האם לקבל את העצם הנגרר) ו-<code>repelsMorph: aMorph event: ev</code> (אם מחזירה <code>true</code>, עצם שנדחה <strong>חוזר למקומו המקורי</strong> במקום להישאר מונח בנקודת העזיבה!).
+                        <br>• <strong>בנגרר (`DroppedMorph`):</strong> <code>wantsToBeDroppedInto: aMorph</code> ו-<code>rejectDropMorphEvent: anEvent</code> (מגדירה את התנהגות הנגרר במקרה של דחייה).
+                        <pre class="!my-1.5 text-xs"><code>// מנגנון Drag & Drop (ReceiverMorph מקבל רק צבע שונה משלו ומחזיר דחויים; DroppedMorph משנה צבע בדחייה):
+ReceiverMorph >> wantsDroppedMorph: aMorph event: anEvent
+    ^ self color ~= aMorph color
+ReceiverMorph >> repelsMorph: aMorph event: ev
+    ^ (self wantsDroppedMorph: aMorph event: ev) not
+DroppedMorph >> rejectDropMorphEvent: anEvent
+    self color: Color random.   "משנה את צבעו כך שבגרירה הבאה יתקבל!"
+    super rejectDropMorphEvent: anEvent</code></pre>
+                    </li>
+                </ul>
+
+                <div class="hand-drawn-box text-sm mt-3">
+                    <h4 class="font-bold text-pink-900 mb-2">🎲 קוביית המשחק `DieMorph` (`perform:`) ומחלקת `Canvas`</h4>
+                    <pre class="!my-2 text-xs"><code>BorderedMorph subclass: #DieMorph
+    instanceVariableNames: 'faces dieValue isStopped'
+    classVariableNames: '' poolDictionaries: '' category: 'SBE-Morphic'
+
+DieMorph class >> faces: aNumber  ^ self new faces: aNumber
+DieMorph >> initialize
+    super initialize. self extent: 50@50. self color: Color green.
+    dieValue := 1. faces := 6. isStopped := false
+DieMorph >> faces: aNumber
+    (aNumber isInteger and: [aNumber > 0] and: [aNumber <= 9]) ifTrue: [faces := aNumber]
+DieMorph >> face1  ^ {0.5@0.5}
+DieMorph >> face2  ^ {0.25@0.25 . 0.75@0.75}
+DieMorph >> face3  ^ {0.25@0.25 . 0.75@0.75 . 0.5@0.5}  "... עד face9 (קואורדינטות יחסיות 0..1)"
+DieMorph >> drawOn: aCanvas
+    super drawOn: aCanvas.
+    (self perform: ('face', dieValue asString) asSymbol)
+        do: [:aPoint | self drawDotOn: aCanvas at: aPoint]
+DieMorph >> drawDotOn: aCanvas at: aPoint
+    aCanvas fillOval: (Rectangle center: self position + (self extent * aPoint) extent: self extent / 6) color: Color black
+DieMorph >> dieValue: aNumber
+    (aNumber isInteger and: [aNumber > 0] and: [aNumber <= faces])
+        ifTrue: [dieValue := aNumber. self changed]
+DieMorph >> stepTime  ^ 100
+DieMorph >> step      isStopped ifFalse: [self dieValue: (1 to: faces) atRandom]
+DieMorph >> handlesMouseDown: anEvent  ^ true
+DieMorph >> mouseDown: anEvent         anEvent redButtonPressed ifTrue: [isStopped := isStopped not]</code></pre>
+                    <p class="text-xs text-slate-700 mt-1">
+                        • <strong>שימוש ב-<code>Canvas</code>, תמונות <code>Form</code> ותהליכי <code>fork</code>:</strong> המחלקה <code>Canvas</code> מספקת מתודות לציור צורות, טקסט ותמונות (כולל שקיפות ב-<code>AlphaBlendingCanvas</code>, רוטציה ושינוי קנה-מידה). לטעינת תמונה מקובץ והקטנתה: <code>f := (Form fromFileNamed: 'myPic.bmp') magnifyBy: 0.5. f asMorph openInWorld</code>. להרצת אנימציה בתהליך רקע עצמאי (Thread): שולחים לבלוק את ההודעה <strong><code>fork</code></strong> (למשל <code>[100 timesRepeat: [(Delay forMilliseconds: 20) wait. m position: m position + (2@1)]] fork</code>).
+                    </p>
+                </div>
+            </section>
+
+            <!-- ================= חלק VII: פרק 18 ================= -->
+            <div class="border-b-4 border-indigo-400 pb-3 mb-8 mt-12">
+                <h2 class="text-2xl font-black text-indigo-800 font-heading">חלק VII: מטה-מחלקות – המושג "מטה-מחלקה" (פרק 18)</h2>
+                <p class="text-sm text-slate-600">שרשרת true class..., סיווג למטה-רמות, אבולוציית 5 הרמות, 10 חוקי המודל ב-Squeak, איתור מתודת new והמעגל הסגור של Metaclass.</p>
+            </div>
+
+            <section id="sec-18-1" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">18.1–18.7 ★ ייצוג מחלקה כעצם, שרשרת class, סיווג למטה-רמות ו-5 רמות עצמים</span></h3>
+                <p class="mb-3 text-sm">
+                    מכיוון שב-Smalltalk <strong>כל דבר הוא עצם</strong> ו<strong>כל עצם הוא מופע של מחלקה</strong>, גם מחלקה היא עצם — והיא מופע של <strong>מטה-מחלקה (`Metaclass`)</strong>: מחלקה שהמופעים שלה הם מחלקות!
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-3">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-indigo-900 block mb-1">🔄 מעקב שרשרת שליחת הודעת class (חוקי המודל ומטה-מחלקות):</strong>
+                        <ul class="space-y-1 font-mono text-xs" dir="ltr">
+                            <li>• שלב 1: <strong>true class</strong> &rarr; <code>True</code></li>
+                            <li>• שלב 2: <strong>true class class</strong> &rarr; <code>True class</code></li>
+                            <li>• שלב 3: <strong>true class class class</strong> &rarr; <strong class="text-rose-700">Metaclass</strong></li>
+                            <li>• שלב 4: <strong>true class class class class</strong> &rarr; <strong class="text-indigo-700">Metaclass class</strong></li>
+                            <li>• שלב 5 (5 פעמים class): &rarr; <strong class="text-rose-700">Metaclass</strong></li>
+                            <li>• שלב 6 (6 פעמים class): &rarr; <strong class="text-indigo-700">Metaclass class</strong></li>
+                            <li>• שלב 7 (7 פעמים class): &rarr; <strong class="text-rose-700">Metaclass</strong></li>
+                        </ul>
+                    </div>
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-indigo-900 block mb-1">🎭 סיווג לשלוש שכבות של עצמים:</strong>
+                        בדוגמת המחזות ("מקבת", "כטוב בעיניכם", "אותלו" $\in$ המחלקה <code>Play</code>) והרומנים ("1984", "אוליבר טוויסט", "מלחמה ושלום" $\in$ המחלקה <code>Novel</code>), מבחינים בשלוש שכבות מהותיות של ישויות במערכת:
+                        <br>1. <strong>מופעים סופיים (`Terminal Instances` / `Non-instantiable objects`):</strong> עצמים פשוטים שאינם יכולים לייצר עצמים נוספים (כגון "אוליבר טוויסט").
+                        <br>2. <strong>מחלקות (`Classes` / `Instantiable objects`):</strong> עצמים המייצרים מופעים פשוטים (כגון <code>Novel</code> ו-<code>Play</code>).
+                        <br>3. <strong>מטה-מחלקות (`Metaclasses` / `Instances are classes`):</strong> עצמים המייצרים מחלקות (כגון המחלקה <code>Class</code>).
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto my-4">
+                    <table class="w-full text-right border-collapse bg-white border border-slate-300 shadow-sm text-xs md:text-sm">
+                        <thead>
+                            <tr class="bg-indigo-900 text-white">
+                                <th class="p-2.5 border border-indigo-800">מספר הרמות במערכת</th>
+                                <th class="p-2.5 border border-indigo-800">שפות מייצגות</th>
+                                <th class="p-2.5 border border-indigo-800">מאפייני הארכיטקטורה והמגבלה שהובילה לרמה הבאה</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">רמה 1: מערכת של עצמים בלבד</td>
+                                <td class="p-2.5 border border-slate-300 font-mono font-bold">Self</td>
+                                <td class="p-2.5 border border-slate-300">מערכת "שטוחה" ללא מחלקות כלל. כל עצם מתאר את עצמו (טבלה המתאימה שמות לערכים) ומופעים חדשים נוצרים באמצעות <strong>שכפול (Cloning) של עצם קיים (אב-טיפוס `Novel Prototype`)</strong>.</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">רמה 2: מערכת עצמים בת 2 רמות</td>
+                                <td class="p-2.5 border border-slate-300 font-mono font-bold">Eiffel</td>
+                                <td class="p-2.5 border border-slate-300">יש עצמים ויש מחלקות המתארות אותם, אך אין מטה-מחלקות: <strong>המחלקות אינן מיוצגות בזמן ריצה, אינן עצמים ואינן מגיבות להודעות</strong>.</td>
+                            </tr>
+                            <tr class="border-b bg-rose-50/40">
+                                <td class="p-2.5 border border-slate-300 font-bold">רמה 3: מערכת עצמים בת 3 רמות</td>
+                                <td class="p-2.5 border border-slate-300 font-mono font-bold">Smalltalk-76, Little Smalltalk</td>
+                                <td class="p-2.5 border border-slate-300">הדרישה המינימלית למערכת סמולטוק: גם העצמים וגם המחלקות הם עצמים, ויש <strong>רק מטה-מחלקה אחת בלבד</strong> (היורשת מ"עצם" והיא מופע של עצמה). <strong class="text-red-700">המגבלה:</strong> לכל המחלקות יש מבנה והתנהגות זהים (למשל מימוש משותף של <code>new</code>) ואי אפשר להגדיר מתודות-מחלקה או משתני-מחלקה פרטניים לכל מחלקה!</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-2.5 border border-slate-300 font-bold bg-slate-50">רמה 4: מערכת עצמים בת 4 רמות</td>
+                                <td class="p-2.5 border border-slate-300 font-mono font-bold">LOOPS, ObjVlisp (הרחבות Lisp)</td>
+                                <td class="p-2.5 border border-slate-300">מאפשרת לכל מחלקה להגדיר מטה-מחלקה פרטית משלה (כגון <code>Meta Novel</code> עם <code>n_novels</code>, או לשתף מטה-מחלקה), וכל המטה-מחלקות הן מופעים של "המטה-מחלקה הגנרית" היחידה (שהיא מופע של עצמה).</td>
+                            </tr>
+                            <tr class="bg-emerald-50/50">
+                                <td class="p-2.5 border border-slate-300 font-bold">רמה 5: מערכת בת 5 רמות – Explicit Metaclass</td>
+                                <td class="p-2.5 border border-slate-300 font-mono font-bold">Squeak, Smalltalk-80</td>
+                                <td class="p-2.5 border border-slate-300">לכל מחלקה (לרבות <code>Metaclass</code> עצמה!) יש מטה-מחלקה שמתארת <strong>רק אותה</strong>; כל המטה-מחלקות (לרבות <code>Metaclass class</code>) הן מופעים של <code>Metaclass</code>, ונוצר גרף ירושה של מטה-מחלקות החופף את גרף הירושה של המחלקות הרגילות!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="sec-18-2" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">18.8–18.11 ★ 10 חוקי המודל ב-Squeak, היררכיה מקבילה ואיתור blue ו-new</span></h3>
+                <div class="hand-drawn-box text-sm">
+                    <h4 class="font-bold text-indigo-900 text-base mb-2">📜 10 החוקים של מודל העצמים והמטה-מחלקות ב-Squeak (סעיפים 18.8–18.14):</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-slate-50 rounded border border-slate-200">
+                            <strong class="text-slate-900 block mb-1">חוקים 1–5 (מודל העצמים הבסיסי):</strong>
+                            1. כל דבר הוא עצם.<br>
+                            2. כל עצם הוא מופע של מחלקה.<br>
+                            3. לכל מחלקה יש מחלקת-על.<br>
+                            4. הכל קורה באמצעות שליחת הודעות.<br>
+                            5. איתור מתודות נעשה במעלה היררכיית הירושה (למשל שליחת <code>class</code> ל-<code>translucentBlue</code> מחפשת ב-<code>TranslucentColor &rarr; Color &rarr; Object</code>).
+                        </div>
+                        <div class="p-3 bg-indigo-50/60 rounded border border-indigo-200">
+                            <strong class="text-indigo-900 block mb-1">חוקים 6–10 (חוקי המטה-מחלקות – סעיפים 18.10–18.14):</strong>
+                            6. כל מחלקה היא מופע יחיד של מטה-מחלקה אנונימית (<code>Color class</code>).<br>
+                            7. <strong>היררכיית מטה-מחלקות מקבילה להיררכיית המחלקות!</strong><br>
+                            8. כל מטה-מחלקה יורשת מהמחלקה <code>Class</code> ומהמחלקה <code>Behavior</code>.<br>
+                            9. כל מטה-מחלקה היא מופע של המחלקה <code>Metaclass</code>.<br>
+                            10. המטה-מחלקה של <code>Metaclass</code> (<code>Metaclass class</code>) היא מופע של <code>Metaclass</code>!
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="space-y-2.5 text-sm mt-3">
+                    <li class="list-bullet list-bullet-indigo">
+                        <strong class="marker-orange">הודעות תשאול למחלקה כעצם ובחינה ב-Inspector:</strong>
+                        <br>• הודעות למחלקה: <code>subclasses</code> (מערך תתי-מחלקות), <code>allSuperclasses</code> (אוסף כל מחלקות-העל), <code>instVarNames</code> (מערך משתני המופע של המחלקה), <code>allInstVarNames</code> (מערך כל משתני המופע כולל אלו שנורשו ממחלקות-העל).
+                        <br>• <strong>מעקב שרשרת superclass של מטה-מחלקה:</strong> מה מחזיר הביטוי <code>TranslucentColor class superclass superclass</code>? הוא מחזיר את <strong><code>Object class</code></strong> (המטה-מחלקה של <code>Object</code>).
+                        <br>• <strong>שליחת מתודת מחלקה בירושה (<code>TranslucentColor blue</code>):</strong> כששולחים <code>TranslucentColor blue</code>, החיפוש מתחיל ב-<code>TranslucentColor class</code>, עולה ל-<code>Color class</code>, מוצא שם את <code>blue</code> ומחזיר צבע כחול אטום רגיל (<code>Color blue</code>). <strong>מה אפשר לעשות כדי ש-<code>TranslucentColor blue</code> תחזיר צבע כחול שקוף במקום כחול רגיל?</strong> להגדיר מחדש (Override) את המתודה <code>blue</code> במטה-מחלקה <strong><code>TranslucentColor class</code></strong> (למשל <code>^ super blue alpha: 0.5</code>)!
+                        <br>• <strong>כותרת חלון ה-Inspector:</strong> בכותרת ה-Inspector רשום תמיד <strong>שם המחלקה של העצם הנבחן</strong> (ולא שם העצם): כשבוחנים את <code>Color blue</code> הכותרת היא <code>Color</code>, וכשבוחנים את המחלקה <code>Color</code> הכותרת היא <strong><code>Color class</code></strong>!
+                    </li>
+                </ul>
+
+                <div class="note-box-orange text-sm">
+                    <h4 class="font-bold text-orange-950 text-base mb-1">🏆 שאלת הבחינה הקלאסית: מסלול איתור המתודה <code>TranslucentColor new</code>:</h4>
+                    <ol class="list-decimal list-inside space-y-1">
+                        <li><strong>המקבל (<code>self</code>):</strong> עצם המחלקה <code>TranslucentColor</code>.</li>
+                        <li><strong>התחלת החיפוש במטה-מחלקה של המקבל:</strong> החיפוש מתחיל ב-<strong><code>TranslucentColor class</code></strong> (<em>ולא במחלקת-העל <code>Color</code>!</em>).</li>
+                        <li><strong>טיפוס במעלה היררכיית המטה-מחלקות:</strong> <code>TranslucentColor class &rarr; Color class &rarr; Object class &rarr; Class &rarr; ClassDescription &rarr; Behavior</code>.</li>
+                        <li><strong>מציאת <code>new</code> ב-<code>Behavior</code>:</strong> המתודה <code>new</code> ממומשת ב-<strong><code>Behavior</code></strong>, ומכיוון שהיא יוצרת ומחזירה מופע של <code>self</code> (שהוא המקבל המקורי <code>TranslucentColor</code>), העצם המוחזר הוא מופע של <strong><code>TranslucentColor</code></strong> (ולא של <code>Behavior</code>)!</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section id="sec-18-3" class="mb-10 scroll-mt-6">
+                <h3 class="text-xl font-bold mt-6 mb-4"><span class="title-teal">18.12–18.15 ★ מחלקות הליבה (Behavior, ClassDescription, Class, Metaclass), נוסחאות ודבר סוף</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm my-4">
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-indigo-900 text-base block mb-1">1. <code>Behavior</code> (יורשת מ-<code>Object</code>)</strong>
+                        יוצרת את המינימום הנדרש להידור מתודות וליצירת מופעים ולהרצתם (שומרת מצביע ל-<code>superclass</code>, מילון מתודות, פורמט מופעים, ומתודות היצירה <code>new</code>, <code>basicNew</code>, <code>new:</code>, <code>basicNew:</code>).
+                    </div>
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-indigo-900 text-base block mb-1">2. <code>ClassDescription</code> (יורשת מ-<code>Behavior</code>)</strong>
+                        מחלקה מופשטת המוסיפה פעולות כגון הגדרת פרוטוקולים, שמות למשתני מופע, תיעוד ומעקב אחרי שינויים. <strong>ממנה יורשות שתי אחיות: <code>Class</code> ו-<code>Metaclass</code>!</strong>
+                    </div>
+                    <div class="hand-drawn-box !my-1">
+                        <strong class="text-indigo-900 text-base block mb-1">3. <code>Class</code> (יורשת מ-<code>ClassDescription</code>)</strong>
+                        יוצרת את ההתנהגות המשותפת לכל המחלקות הרגילות: מטפלת בשם המחלקה, משתני מחלקה, מאגרים משותפים ויצירת תתי-מחלקות. <strong>ממנה יורשת <code>Object class</code> (וב-Squeak דרך <code>ProtoObject class</code>)!</strong>
+                    </div>
+                    <div class="hand-drawn-box !my-1 border-indigo-500">
+                        <strong class="text-indigo-900 text-base block mb-1">4. <code>Metaclass</code> (יורשת מ-<code>ClassDescription</code>)</strong>
+                        מגדירה את התנהגותן המשותפת של מטה-מחלקות (יצירה ואתחול של מופע יחיד שהוא עצם המחלקה, אתחול משתני מחלקה וכו'). <strong>כל המטה-מחלקות (כולל <code>Metaclass class</code>!) הן מופעים של <code>Metaclass</code>!</strong>
+                    </div>
+                </div>
+
+                <div class="note-box-green text-sm">
+                    <h4 class="font-bold text-green-950 text-base mb-2">🎓 נוסחאות זהב לפיצוח שאלות שרשור <code>class</code> ו-<code>superclass</code> במבחן (סעיפים 18.14–18.15):</h4>
+                    <ul class="space-y-1.5 font-mono text-xs md:text-sm" dir="ltr">
+                        <li>• <strong>C superclass class == C class superclass</strong> &rarr; <code>true</code> &nbsp;<span class="font-sans text-slate-700">(עבור כל מחלקה C שאינה שורש העץ, לפי חוק 7 של ההיררכיה המקבילה!)</span></li>
+                        <li>• <strong>Object superclass</strong> &rarr; <code>ProtoObject</code> (או <code>nil</code> בשורש) &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Object class superclass</strong> &rarr; <code>Class</code> (דרך <code>ProtoObject class</code>)</li>
+                        <li>• <strong>Metaclass superclass</strong> &rarr; <code>ClassDescription</code> &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Class superclass</strong> &rarr; <code>ClassDescription</code></li>
+                        <li>• <strong>Metaclass class</strong> &rarr; <code>Metaclass class</code> &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Metaclass class class</strong> &rarr; <code>Metaclass</code> &nbsp;<span class="font-sans text-slate-700">(חוק 10: קשר מופע מעגלי!)</span></li>
+                        <li>• <strong>Metaclass class superclass</strong> &rarr; <code>ClassDescription class</code> &nbsp;<span class="font-sans text-slate-700">(לפי חוק 7, כי מחלקת-העל של Metaclass היא ClassDescription!)</span></li>
+                    </ul>
+                    <p class="text-xs text-slate-700 mt-2 font-sans" dir="rtl">
+                        * <strong>דבר סיום והשפעות בעולם התוכנה:</strong> שפת <strong><code>Objective-C</code></strong> (ששימשה את חברת Apple למערכות OS X ו-iOS) היא שפת תכנות מונחית עצמים המוסיפה לשפת C הודעות בסגנון שפת <code>Smalltalk</code>!
+                    </p>
+                </div>
+            </section>
+
+            <!-- סיום -->
+            <div class="mt-16 text-center text-slate-600 font-semibold mb-6 border-t-2 border-dashed border-slate-300 pt-10">
+                <p class="text-xl text-slate-900 font-heading font-bold mb-2">בהצלחה רבה במבחן בתכנות מונחה עצמים (20906)! 🎓🚀</p>
+                <p class="text-sm">הסיכום מקיף, מעמיק ונאמן לחומר הלימוד בכל 18 הפרקים של הקורס.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+            const openBtn = document.getElementById('toggle-sidebar-open');
+            const closeBtn = document.getElementById('toggle-sidebar-close');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const searchInput = document.getElementById('sidebar-search');
+
+            function safeGetStorage(key) {
+                try { return localStorage.getItem(key); } catch (e) { return null; }
+            }
+            function safeSetStorage(key, val) {
+                try { localStorage.setItem(key, val); } catch (e) {}
+            }
+
+            // Sidebar search filter
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const q = e.target.value.trim().toLowerCase();
+                    const groups = document.querySelectorAll('#sidebar-links .nav-group');
+                    groups.forEach(group => {
+                        const items = group.querySelectorAll('li');
+                        let anyVisible = false;
+                        const groupTitle = group.querySelector('h3').textContent.toLowerCase();
+                        items.forEach(li => {
+                            const text = li.textContent.toLowerCase();
+                            if (!q || text.includes(q) || groupTitle.includes(q)) {
+                                li.style.display = '';
+                                anyVisible = true;
+                            } else {
+                                li.style.display = 'none';
+                            }
+                        });
+                        group.style.display = anyVisible ? '' : 'none';
+                    });
+                });
+            }
+
+            // Sidebar show/hide
+            const sidebarHidden = safeGetStorage('oop-sidebar-hidden') === 'true';
+
+            function showSidebar() {
+                sidebar.classList.remove('translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                if (window.innerWidth >= 1024) {
+                    mainContent.classList.remove('lg:mr-0');
+                    mainContent.classList.add('lg:mr-80');
+                } else {
+                    backdrop.classList.remove('hidden');
+                    backdrop.classList.add('opacity-100');
+                }
+                openBtn.classList.add('hidden');
+                safeSetStorage('oop-sidebar-hidden', 'false');
+            }
+
+            function hideSidebar() {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('translate-x-full');
+                if (window.innerWidth >= 1024) {
+                    mainContent.classList.remove('lg:mr-80');
+                    mainContent.classList.add('lg:mr-0');
+                } else {
+                    backdrop.classList.remove('opacity-100');
+                    backdrop.classList.add('hidden');
+                }
+                openBtn.classList.remove('hidden');
+                safeSetStorage('oop-sidebar-hidden', 'true');
+            }
+
+            openBtn.addEventListener('click', showSidebar);
+            closeBtn.addEventListener('click', hideSidebar);
+            backdrop.addEventListener('click', hideSidebar);
+
+            window.addEventListener('resize', () => {
+                const isHidden = sidebar.classList.contains('translate-x-full');
+                if (window.innerWidth >= 1024) {
+                    backdrop.classList.remove('opacity-100');
+                    backdrop.classList.add('hidden');
+                    if (isHidden) {
+                        mainContent.classList.remove('lg:mr-80');
+                        mainContent.classList.add('lg:mr-0');
+                    } else {
+                        mainContent.classList.remove('lg:mr-0');
+                        mainContent.classList.add('lg:mr-80');
+                    }
+                } else {
+                    mainContent.classList.remove('lg:mr-80', 'lg:mr-0');
+                    if (!isHidden) {
+                        backdrop.classList.remove('hidden');
+                        backdrop.classList.add('opacity-100');
+                    }
+                }
+            });
+
+            if (window.innerWidth < 1024) {
+                hideSidebar();
+            } else if (sidebarHidden) {
+                hideSidebar();
+            } else {
+                showSidebar();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

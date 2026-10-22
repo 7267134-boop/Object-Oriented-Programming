@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>יחידה 0: מבוא והקדמה - תכנות מונחה עצמים (20906)</title>
+    <meta name="ai-document-summary" content="יחידת פתיחה ומבוא מקיפה לקורס תכנות מונחה עצמים (20906) של האוניברסיטה הפתוחה. הדף מחולק ל-3 לשוניות אינטראקטיביות: 1. 'קצת על הקורס' – מטרות הקורס, פילוסופיית Pure OOP מול שפות היברידיות, שפת Smalltalk וסביבת Squeak, 7 חלקי הקורס ו-18 הפרקים. 2. 'קצת על האתר' – מדריך לשימוש בפורטל הלימודי, סיכומי הפרקים, הסימולציות האינטראקטיביות, מאגר השאלות האמריקאיות, קובץ הסיכום המקיף ומאגר המבחנים. 3. 'קצת על המבחן' – מבנה בחינת הגמר, ניקוד, ניתוח קוד ושרשראות ירושה, שאלת המטה-מחלקות של פרק 18, 5 מלכודות נפוצות וטיפים להצלחה.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7c3aed',
+                        'primary-dark': '#5b21b6',
+                        accent: '#d946ef',
+                        brandviolet: '#8b5cf6',
+                        brandfuchsia: '#d946ef',
+                        brandindigo: '#4f46e5',
+                        dark: '#0f172a',
+                        darker: '#1e1b4b',
+                        codebg: '#0f172a',
+                        highlight: '#c084fc'
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            background-image: radial-gradient(circle at 1px 1px, rgba(124, 58, 237, 0.06) 1px, transparent 0);
+            background-size: 28px 28px;
+            font-family: 'Heebo', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes violet-ambient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .sidebar-animated-mesh {
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 25%, #fae8ff 50%, #eef2ff 75%, #ffffff 100%);
+            background-size: 250% 250%;
+            animation: violet-ambient-shift 12s ease infinite;
+        }
+
+        .nav-group-title {
+            font-size: 0.72rem;
+            font-weight: 800;
+            color: #5b21b6;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        .nav-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #1e293b;
+            border: 1px solid rgba(196, 181, 253, 0.4);
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(6px);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: right;
+            line-height: 1.35;
+            cursor: pointer;
+        }
+
+        .nav-btn:hover {
+            background: rgba(237, 233, 254, 0.9);
+            color: #4c1d95;
+            border-color: #a78bfa;
+            transform: translateX(-2px);
+        }
+
+        .nav-btn.active-nav {
+            background: linear-gradient(135deg, #ddd6fe 0%, #f5d0fe 55%, #c7d2fe 100%) !important;
+            color: #3b0764 !important;
+            font-weight: 800 !important;
+            border-color: #8b5cf6 !important;
+            box-shadow: 0 4px 14px -2px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+            transform: translateX(-3px);
+        }
+
+        #sidebar-toggle-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 45;
+            width: 1.65rem;
+            height: 4.2rem;
+            background: linear-gradient(135deg, #f5f3ff, #ddd6fe);
+            color: #6d28d9;
+            border-radius: 0.6rem 0 0 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: -3px 0 10px rgba(109, 40, 217, 0.18);
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s, color 0.2s;
+            border: 1px solid #c4b5fd;
+            border-right: none;
+        }
+
+        #sidebar-toggle-btn:hover {
+            background: linear-gradient(135deg, #ddd6fe, #f5d0fe);
+            color: #4c1d95;
+        }
+
+        body:not(.sidebar-collapsed) #sidebar-toggle-btn {
+            right: 20rem;
+        }
+
+        body.sidebar-collapsed #sidebar-toggle-btn {
+            right: 0;
+            border-right: 1px solid #c4b5fd;
+            border-radius: 0.6rem 0 0 0.6rem;
+        }
+
+        body:not(.sidebar-collapsed) #sidebar-toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        #sidebar-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        aside {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, min-width 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .sidebar-collapsed aside {
+            width: 0 !important;
+            min-width: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .violet-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .violet-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .violet-scroll::-webkit-scrollbar-thumb {
+            background: #c4b5fd;
+            border-radius: 9999px;
+        }
+
+        .violet-scroll::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 20px -2px rgba(124, 58, 237, 0.05);
+        }
+
+        .glass-card-hover {
+            transition: all 0.25s ease;
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -4px rgba(124, 58, 237, 0.12);
+            border-color: rgba(167, 139, 250, 0.6);
+        }
+    </style>
+</head>
+
+<body class="antialiased h-screen flex overflow-hidden text-slate-800">
+
+    <!-- Sidebar Toggle Floating Button -->
+    <button id="sidebar-toggle-btn" onclick="toggleSidebar()" title="הצג / הסתר סרגל ניווט">
+        <svg class="h-4 w-4" fill="none" id="sidebar-toggle-icon" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+        </svg>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-80 sidebar-animated-mesh text-slate-800 flex flex-col h-full shadow-[-4px_0_25px_rgba(124,58,237,0.08)] z-20 flex-shrink-0 border-l border-purple-200">
+        
+        <!-- Header / Notebook Box -->
+        <div class="p-4 border-b border-purple-200/80 bg-white/40 backdrop-blur-md">
+            <div class="relative bg-gradient-to-br from-white to-purple-50/60 p-3.5 border border-purple-200 shadow-[2px_2px_0px_#c4b5fd] rounded-xl mb-3">
+                <div class="flex items-center gap-2 mb-1">
+                    <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+                        0
+                    </span>
+                    <strong class="text-slate-900 font-extrabold text-[0.98rem]">יחידה 0: מבוא והקדמה</strong>
+                </div>
+                <span class="text-[0.82rem] text-purple-900/80 font-medium leading-tight block">
+                    שער הכניסה לקורס, לאתר האינטראקטיבי ולבחינת הגמר.
+                </span>
+            </div>
+
+            <!-- Back to Main Menu Button -->
+            <a class="group relative overflow-hidden flex items-center justify-between px-3 py-2 bg-purple-50/80 border border-purple-200 rounded-xl transition-all hover:bg-purple-100 hover:border-purple-300 text-purple-950 font-bold text-xs shadow-sm"
+                href="index.html">
+                <i class="fa-solid fa-arrow-right text-purple-500 group-hover:translate-x-0.5 transition-transform"></i>
+                <span>חזרה לתפריט הראשי (אינדקס)</span>
+                <div class="bg-purple-200/70 p-1 rounded-lg text-purple-700">
+                    <i class="fa-solid fa-house text-xs"></i>
+                </div>
+            </a>
+        </div>
+
+        <!-- 3 Main Tabs Nav Items -->
+        <div class="flex-1 overflow-y-auto violet-scroll px-3.5 pt-4 pb-4 space-y-3">
+            <div class="nav-group-title">לשוניות המדריך</div>
+
+            <!-- Tab 1 Button -->
+            <button class="nav-btn active-nav" id="btn-about-course" onclick="showTab('about-course')">
+                <span class="text-xl ml-2.5">🎓</span>
+                <div class="text-right flex-1">
+                    <div class="font-bold text-[0.92rem]">קצת על הקורס</div>
+                    <div class="text-[0.74rem] text-purple-800/70 font-normal">Pure OOP, Smalltalk ו-18 הפרקים</div>
+                </div>
+                <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
+            </button>
+
+            <!-- Tab 2 Button -->
+            <button class="nav-btn" id="btn-about-site" onclick="showTab('about-site')">
+                <span class="text-xl ml-2.5">🌐</span>
+                <div class="text-right flex-1">
+                    <div class="font-bold text-[0.92rem]">קצת על האתר</div>
+                    <div class="text-[0.74rem] text-slate-500 font-normal">סימולציות, שאלות וארגז כלים</div>
+                </div>
+                <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
+            </button>
+
+            <!-- Tab 3 Button -->
+            <button class="nav-btn" id="btn-about-exam" onclick="showTab('about-exam')">
+                <span class="text-xl ml-2.5">📝</span>
+                <div class="text-right flex-1">
+                    <div class="font-bold text-[0.92rem]">קצת על המבחן</div>
+                    <div class="text-[0.74rem] text-slate-500 font-normal">מבנה, מלכודות וסודות פרק 18</div>
+                </div>
+                <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
+            </button>
+
+            <!-- Useful Quick Links Box -->
+            <div class="mt-6 pt-4 border-t border-purple-200/70">
+                <div class="nav-group-title">קיצורי דרך מרכזיים</div>
+                <div class="space-y-1.5 text-xs font-medium">
+                    <a href="summary.html" class="flex items-center justify-between p-2 rounded-lg bg-white/60 hover:bg-purple-100/70 text-slate-700 hover:text-purple-900 border border-purple-100 transition">
+                        <span>📑 הסיכום המקיף של כל 18 הפרקים</span>
+                        <i class="fa-solid fa-arrow-left text-[10px] text-purple-400"></i>
+                    </a>
+                    <a href="exams.html" class="flex items-center justify-between p-2 rounded-lg bg-white/60 hover:bg-purple-100/70 text-slate-700 hover:text-purple-900 border border-purple-100 transition">
+                        <span>🏆 מאגר בחינות גמר ופתרונות</span>
+                        <i class="fa-solid fa-arrow-left text-[10px] text-purple-400"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Bottom Footer -->
+        <div class="mt-auto p-3 border-t border-purple-200/80 bg-white/50 backdrop-blur-md flex flex-col gap-2">
+            <a class="group relative overflow-hidden flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white rounded-xl transition-all font-bold text-xs shadow-md"
+                href="1_smalltalk_squeak.html">
+                <span>כניסה לפרק 1: יסודות ו-Smalltalk</span>
+                <i class="fa-solid fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto scroll-smooth bg-transparent relative">
+        <div class="max-w-5xl mx-auto p-6 sm:p-10 lg:p-14 pb-28">
+
+            <!-- =================================================================== -->
+            <!-- TAB 1: ABOUT COURSE (קצת על הקורס) -->
+            <!-- =================================================================== -->
+            <div class="tab-content active" id="about-course">
+                
+                <!-- Hero Header -->
+                <header class="mb-10 pb-6 border-b border-purple-200">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>מדריך ומבוא לקורס 20906</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
+                        קצת על הקורס: תכנות מונחה עצמים
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
+                        ברוכים הבאים לאחד הקורסים המרתקים, הפילוסופיים והמעצבים ביותר בתואר למדעי המחשב. כאן לא לומדים עוד שפת תכנות שגרתית – כאן לומדים <strong class="text-purple-900">לחשוב מונחה עצמים באופן טהור (Pure OOP)</strong>.
+                    </p>
+                </header>
+
+                <div class="space-y-10 text-slate-700 text-base leading-relaxed">
+                    
+                    <!-- Section 1: The Core Philosophy -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">1</span>
+                            מהות הקורס: מודל טהור מול מודל היברידי
+                        </h2>
+                        
+                        <p class="mb-4">
+                            רוב הסטודנטים מגיעים לקורס כשהם מכירים שפות כגון <strong>Java, C++ או Python</strong>. שפות אלו מוגדרות כ-<strong>שפות היברידיות (Hybrid OOP)</strong>: הן משלבות מנגנוני עצמים לצד תכנות פרוצדורלי קלאסי (משתנים פרימיטיביים כמו <code>int</code> ו-<code>boolean</code> שאינם עצמים, פקודות בקרה חיצוניות כמו <code>if</code> ו-<code>for</code>, ופונקציות סטטיות).
+                        </p>
+
+                        <p class="mb-6">
+                            קורס זה בוחר בגישה רדיקלית וחינוכית מהמעלה הראשונה: שימוש בשפת <strong>Smalltalk-80</strong> ובסביבת <strong>Squeak</strong>. Smalltalk היא שפה מונחית עצמים "טהורה" (Pure OOP) שפותחה במעבדות <strong>Xerox PARC</strong> על ידי ענקי המחשוב (אלן קיי, דן אינגלס ואדל גולדברג). בסמולטוק מתקיים מנגנון הפשטה אחד ויחיד:
+                        </p>
+
+                        <!-- Highlight Callout Box -->
+                        <div class="p-5 rounded-xl bg-gradient-to-r from-purple-50 via-indigo-50/50 to-pink-50 border-r-4 border-purple-600 shadow-sm mb-6">
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl mt-0.5">💡</span>
+                                <div>
+                                    <strong class="text-purple-950 text-lg block mb-1">חוק היסוד של Smalltalk: הכל הוא עצם!</strong>
+                                    <p class="text-purple-900/90 text-sm leading-relaxed">
+                                        ב-Smalltalk אין שום דבר שאינו עצם. מספר שלם הוא עצם; מחרוזת היא עצם; קטע קוד בתוך סוגריים מרובעים הוא עצם (בלוק); תנאים ולולאות אינם מילות מפתח של השפה אלא <strong>הודעות שנשלחות לעצמים</strong>; ואפילו המחלקות עצמן הן עצמים חיים בזיכרון!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pure vs Hybrid Table -->
+                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                            <table class="w-full text-right text-sm">
+                                <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3.5">מאפיין השוואה</th>
+                                        <th class="p-3.5 bg-purple-50 text-purple-950 border-x border-purple-100">Smalltalk (מודל טהור)</th>
+                                        <th class="p-3.5">Java / C++ (מודל היברידי)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 font-semibold text-slate-800">האם הכל עצם?</td>
+                                        <td class="p-3 bg-purple-50/40 text-purple-900 font-bold border-x border-purple-100">כן, 100% ללא יוצא מן הכלל</td>
+                                        <td class="p-3 text-slate-600">לא (טיפוסים פרימיטיביים <code>int</code>, <code>char</code>)</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 font-semibold text-slate-800">מבני בקרה (תנאים ולולאות)</td>
+                                        <td class="p-3 bg-purple-50/40 text-purple-900 border-x border-purple-100">הודעות רגילות הנשלחות לבוליאנים ולבלוקים (<code>ifTrue:</code>, <code>whileTrue:</code>)</td>
+                                        <td class="p-3 text-slate-600">מילות מפתח קבועות מראש במהדר (<code>if</code>, <code>while</code>, <code>for</code>)</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 font-semibold text-slate-800">האם מחלקה היא עצם?</td>
+                                        <td class="p-3 bg-purple-50/40 text-purple-900 font-bold border-x border-purple-100">כן! מופע של מטה-מחלקה ייעודית (Metaclass)</td>
+                                        <td class="p-3 text-slate-600">רק ייצוג מוגבל דרך Reflection (המחלקה <code>Class</code>)</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3 font-semibold text-slate-800">תחביר השפה</td>
+                                        <td class="p-3 bg-purple-50/40 text-purple-900 border-x border-purple-100">תחביר מינימליסטי בן עמוד אחד בלבד (שליחת הודעות)</td>
+                                        <td class="p-3 text-slate-600">תחביר מורכב, עמוס אופרטורים ומילות שמורות</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: Course Roadmap (7 Parts & 18 Chapters) -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">2</span>
+                            מפת הדרכים: 7 חלקי הקורס ו-18 הפרקים
+                        </h2>
+                        <p class="text-slate-600 mb-6">
+                            הקורס בנוי בצורה הדרגתית, החל מהבנת ההיסטוריה והצורך בהפשטה, דרך תכנות מעשי, ועד למודלים מתמטיים מופשטים:
+                        </p>
+
+                        <!-- Visual Grid of Course Modules -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <!-- Part 1 -->
+                            <div class="p-4 rounded-xl border border-orange-200 bg-orange-50/40 hover:bg-orange-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-orange-200 text-orange-900">חלק I • פרקים 1–2</span>
+                                    <span class="text-xs text-orange-700 font-bold">מבוא והפשטה</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">הפשטה ופילוסופיית Smalltalk</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    למה Smalltalk, בעיית הקבועים החוזרים, 7 שלבי ההתפתחות ההיסטורית (משתנים, שגרות, מודולים, ADT ועד ל-Class ב-OOP).
+                                </p>
+                            </div>
+
+                            <!-- Part 2 -->
+                            <div class="p-4 rounded-xl border border-red-200 bg-red-50/40 hover:bg-red-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-red-200 text-red-900">חלק II • פרק 3</span>
+                                    <span class="text-xs text-red-700 font-bold">מודל העצם</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">המושג "עצם" וסוגי העתקות</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    שלושת מאפייני העצם (זהות ==, מצב פנימי והתנהגות), ו-4 סוגי העתקה קריטיים לבחינה (זהותית, רדודה, עמוקה ורקורסיבית).
+                                </p>
+                            </div>
+
+                            <!-- Part 3 -->
+                            <div class="p-4 rounded-xl border border-blue-200 bg-blue-50/40 hover:bg-blue-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-blue-200 text-blue-900">חלק III • פרקים 4–5</span>
+                                    <span class="text-xs text-blue-700 font-bold">סביבת Squeak</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">כלי הפיתוח והמשחק Quinto</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    מבנה ה-Image וה-Changes, כלי העבודה (Workspace, Browser, Debugger), ומימוש משחק הלוח Quinto ב-Smalltalk.
+                                </p>
+                            </div>
+
+                            <!-- Part 4 -->
+                            <div class="p-4 rounded-xl border border-teal-200 bg-teal-50/40 hover:bg-teal-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-teal-200 text-teal-900">חלק IV • פרקים 6–9</span>
+                                    <span class="text-xs text-teal-700 font-bold">תחביר ושליחת הודעות</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">תחביר, בלוקים והורשה</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    3 סוגי הודעות, Cascade (;), בלוקים ואיטרטורים, 3 סוגי עצמים בזיכרון, מתודות מחלקה מול static, משתני מופע של מחלקה, ו-self מול super.
+                                </p>
+                            </div>
+
+                            <!-- Part 5 -->
+                            <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/40 hover:bg-purple-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-purple-200 text-purple-900">חלק V • פרקים 10–12</span>
+                                    <span class="text-xs text-purple-700 font-bold">מחלקות ואוספים</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">המחלקות, בבואה (Reflection) ואוספים</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    3 תפקידים ו-5 מרכיבים של מחלקה, בבואה ב-Java וב-Smalltalk, היררכיית האוספים (Collection, Array, Set, Dictionary) ואיטרטורים.
+                                </p>
+                            </div>
+
+                            <!-- Part 6 -->
+                            <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 hover:bg-emerald-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-emerald-200 text-emerald-900">חלק VI • פרקים 13–17</span>
+                                    <span class="text-xs text-emerald-700 font-bold">סימולציה וגרפיקה</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">חידת המלכות והסביבה הגרפית Morphic</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    סימולציית 8 המלכות ו-8 הסימטריות, פתרון מונחה עצמים עם QueenTerminator, הכללה לתלת-ממד, וסביבת Morphic האינטראקטיבית.
+                                </p>
+                            </div>
+
+                            <!-- Part 7 -->
+                            <div class="p-4 rounded-xl border border-indigo-300 bg-indigo-50/60 hover:bg-indigo-50 transition md:col-span-2 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2.5 py-0.5 rounded bg-indigo-600 text-white">חלק VII • פרק 18 (גולת הכותרת!)</span>
+                                    <span class="text-xs text-indigo-900 font-extrabold">נושא המפתח במבחן</span>
+                                </div>
+                                <h3 class="font-bold text-indigo-950 text-lg mb-1">מטה-מחלקות (Metaclasses) ומודל 5 הרמות</h3>
+                                <p class="text-sm text-slate-700 leading-relaxed">
+                                    איך מחלקות עצמן מיוצגות כעצמים? מהי המחלקה של מחלקה? 10 חוקי המודל האקסיומטיים, סיווג השפות ל-5 רמות, היררכיית המטה-מחלקות המקבילה, ומסלול יצירת מופע חדש (<code class="text-indigo-800 font-bold">TranslucentColor new</code>).
+                                </p>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- =================================================================== -->
+            <!-- TAB 2: ABOUT SITE (קצת על האתר) -->
+            <!-- =================================================================== -->
+            <div class="tab-content" id="about-site">
+                
+                <!-- Hero Header -->
+                <header class="mb-10 pb-6 border-b border-purple-200">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>מדריך השימוש בפורטל הלימודי</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
+                        קצת על האתר: חוויית למידה אינטראקטיבית
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
+                        האתר תוכנן ונבנה במיוחד כדי לגשר על הפער שבין תיאוריה מופשטת לבין הבנה אינטואיטיבית עמוקה. כאן תמצאו מעטפת למידה מלאה לכל שלב בסמסטר.
+                    </p>
+                </header>
+
+                <div class="space-y-10 text-slate-700 text-base leading-relaxed">
+                    
+                    <!-- Vision Box -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">1</span>
+                            החזון: למידה אקטיבית וחיה
+                        </h2>
+                        <p class="mb-4">
+                            שפת Smalltalk היא סביבה חיה (Living System). ללמוד אותה מתוך דפי נייר סטטיים זה כמו ללמוד שחייה בהתכתבות. לכן, הפורטל נבנה כדי להעניק לכם:
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center mt-6">
+                            <div class="p-4 rounded-xl bg-purple-50/60 border border-purple-200">
+                                <div class="text-3xl mb-2">👁️</div>
+                                <strong class="text-purple-950 block text-sm mb-1">המחשה ויזואלית</strong>
+                                <p class="text-xs text-slate-600">דיאגרמות אינטראקטיביות של אובייקטים בזיכרון, שרשראות ירושה ועצי מחלקות.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-indigo-50/60 border border-indigo-200">
+                                <div class="text-3xl mb-2">⚡</div>
+                                <strong class="text-indigo-950 block text-sm mb-1">משוב מיידי</strong>
+                                <p class="text-xs text-slate-600">שאלות אמריקאיות עם בדיקה אוטומטית והסבר מעמיק על כל מסיח נכון או שגוי.</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-fuchsia-50/60 border border-fuchsia-200">
+                                <div class="text-3xl mb-2">🎯</div>
+                                <strong class="text-fuchsia-950 block text-sm mb-1">הכנה ממוקדת</strong>
+                                <p class="text-xs text-slate-600">הפרדה חדה בין עיקר לטפל, סיכום מקיף, ותרגול מסיבי של בחינות גמר אמיתיות.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Features of the Site -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">2</span>
+                            ארגז הכלים הייחודי באתר
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            
+                            <!-- Feature 1: Chapters -->
+                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl flex-shrink-0">
+                                        📖
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 text-lg mb-1">18 פרקי לימוד מקיפים</h3>
+                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                            כל פרק בקורס זוכה לדף ייעודי מלא, עם הסברים בהירים, קטעי קוד מוארים בתחביר צבעוני, כרטיסיות הבנה (Flashcards) ושאלות מנחות.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feature 2: Interactive Simulations -->
+                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl flex-shrink-0">
+                                        🕹️
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 text-lg mb-1">סימולטורים אינטראקטיביים</h3>
+                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                            משחק Quinto חי, סימולטור ביצוע הודעות ו-Cascade, מעקב אחר חיפוש מתודות (<code class="text-xs">self/super</code>), לוח 8 המלכות, ומעבדת Morphic גרפית.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feature 3: Sidebar Questions -->
+                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-2xl flex-shrink-0">
+                                        ❓
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 text-lg mb-1">שאלות אמריקאיות בסרגל הצד</h3>
+                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                            בכל פרק משולבות עשרות שאלות רב-ברירתיות לבדיקה עצמית, עם רמזים, הסברים מפורטים למסיחים ושמירת התקדמות ב-Local Storage.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Feature 4: Summary & Exams -->
+                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl flex-shrink-0">
+                                        🏆
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-900 text-lg mb-1">סיכום מקיף ומאגר מבחנים</h3>
+                                        <p class="text-sm text-slate-600 leading-relaxed">
+                                            קובץ <a href="summary.html" class="text-purple-700 font-bold underline">summary.html</a> העצמאי שמסכם את כל החומר לימי החזרה, ומאגר <a href="exams.html" class="text-purple-700 font-bold underline">exams.html</a> המכיל בחינות פתורות ומנותחות.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- =================================================================== -->
+            <!-- TAB 3: ABOUT EXAM (קצת על המבחן) -->
+            <!-- =================================================================== -->
+            <div class="tab-content" id="about-exam">
+                
+                <!-- Hero Header -->
+                <header class="mb-10 pb-6 border-b border-purple-200">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <span>סודות ההצלחה בבחינת הגמר</span>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
+                        קצת על המבחן: איך מוציאים 100?
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
+                        המבחן ב"תכנות מונחה עצמים" (20906) ידוע כמבחן מדויק, הוגן אך מתגמל מאוד למי ששולט בעקרונות הברזל. כאן ריכזנו את מבנה הבחינה, חלוקת הניקוד, 5 המלכודות הנפוצות ביותר וטיפים להצלחה.
+                    </p>
+                </header>
+
+                <div class="space-y-10 text-slate-700 text-base leading-relaxed">
+                    
+                    <!-- Section 1: Exam Structure -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-black">1</span>
+                            מבנה הבחינה וחלוקת הניקוד
+                        </h2>
+                        
+                        <p class="mb-4">
+                            משך הבחינה הוא <strong>3 שעות</strong> (בתוספת הארכת זמן לזכאים). המבחן משלב שאלות רב-ברירתיות (אמריקאיות) לצד שאלות פתוחות של ניתוח קוד וכתיבת מתודות:
+                        </p>
+
+                        <!-- Exam Breakdown Table -->
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
+                            <table class="w-full text-right text-sm">
+                                <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+                                    <tr>
+                                        <th class="p-3.5">חלק בבחינה</th>
+                                        <th class="p-3.5">נושאי מפתח ודגשים</th>
+                                        <th class="p-3.5 w-1/4">ניקוד משוער</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3.5 font-bold text-slate-900">חלק א': שאלות הבנה ואמריקאיות</td>
+                                        <td class="p-3.5 text-slate-600">
+                                            תחביר Smalltalk, סדר קדימויות ו-Cascade, בלוקים, סוגי העתקה (רדודה/עמוקה ב-Java וב-Smalltalk), תפקידי מחלקה, ובבואה (Reflection).
+                                        </td>
+                                        <td class="p-3.5 font-bold text-purple-700">30–40 נקודות</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-3.5 font-bold text-slate-900">חלק ב': ניתוח קוד וירושה</td>
+                                        <td class="p-3.5 text-slate-600">
+                                            מעקב אחר איתור מתודות (<code class="text-xs">self</code> מול <code class="text-xs">super</code>), טיפול ב-<code>doesNotUnderstand:</code>, משתני מופע של מחלקה (דוגמת Dog ו-Hyena), תבנית Singleton, והרחבה מול דריסה.
+                                        </td>
+                                        <td class="p-3.5 font-bold text-indigo-700">30–35 נקודות</td>
+                                    </tr>
+                                    <tr class="hover:bg-emerald-50/40">
+                                        <td class="p-3.5 font-black text-emerald-950">חלק ג': מטה-מחלקות (פרק 18) ★</td>
+                                        <td class="p-3.5 text-emerald-900">
+                                            <strong>שאלת חובה קבועה בכל מבחן!</strong> שרשראות שליחת הודעת <code class="text-xs">class</code> ו-<code class="text-xs">superclass</code>, 10 חוקי המודל האקסיומטיים, ומסלול יצירת מופע (<code class="text-xs">TranslucentColor new</code>).
+                                        </td>
+                                        <td class="p-3.5 font-black text-emerald-800">25–35 נקודות!</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: 5 Golden Traps -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-black">2</span>
+                            5 מלכודות המבחן הנפוצות ביותר (חובה לדעת!)
+                        </h2>
+                        <p class="text-slate-600 mb-6">
+                            הסגל של הקורס אוהב לבחון על נקודות עדינות שבהן מי שאינו מדייק נופל מיד:
+                        </p>
+
+                        <div class="space-y-4">
+                            
+                            <!-- Trap 1 -->
+                            <div class="p-4 rounded-xl border-r-4 border-rose-500 bg-rose-50/40">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl mt-0.5">⚠️</span>
+                                    <div>
+                                        <strong class="text-rose-950 block text-base mb-1">מלכודת 1: אין קדימות לכפל על פני חיבור ב-Smalltalk!</strong>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            ב-Smalltalk כל האופרטורים הבינריים הם בעלי <strong>אותה קדימות בדיוק</strong> ומוערכים משמאל לימין. הביטוי <code class="font-mono font-bold text-rose-900">2 + 3 * 4</code> יחזיר <strong class="text-rose-900">20</strong> (ולא 14!), כי תחילה מבוצע <code class="font-mono">2 + 3 = 5</code> ואז <code class="font-mono">5 * 4 = 20</code>!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trap 2 -->
+                            <div class="p-4 rounded-xl border-r-4 border-amber-500 bg-amber-50/40">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl mt-0.5">⚠️</span>
+                                    <div>
+                                        <strong class="text-amber-950 block text-base mb-1">מלכודת 2: משתנה המקבל בשליחה ל-super נשאר תמיד self!</strong>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            השליחה ל-<code class="font-mono font-bold text-amber-900">super</code> משנה אך ורק את <strong>מקום תחילת חיפוש המתודה</strong> (במחלקת-העל), אך המקבל (העצם שעליו מופעלת המתודה) נשאר <strong>העצם המקורי (self)</strong>! אם המתודה שנמצאה ב-super קוראת למתודה אחרת דרך <code class="font-mono">self</code>, החיפוש יתחיל שוב מהמחלקה המקורית של העצם!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trap 3 -->
+                            <div class="p-4 rounded-xl border-r-4 border-purple-500 bg-purple-50/40">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl mt-0.5">⚠️</span>
+                                    <div>
+                                        <strong class="text-purple-950 block text-base mb-1">מלכודת 3: ערך החזרה ברירת מחדל ממתודה הוא ^ self!</strong>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            אם מתודה בסמולטוק אינה כוללת חץ החזרה (<code class="font-mono">^</code>) מפורש, היא מחזירה כברירת מחדל את <strong>self (העצם המקבל)</strong> ולא <code class="font-mono">nil</code>! (כמו שראינו בבאג המפורסם של <code class="font-mono">newCellAt:at:</code> בפרק 5).
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trap 4 -->
+                            <div class="p-4 rounded-xl border-r-4 border-indigo-500 bg-indigo-50/40">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl mt-0.5">⚠️</span>
+                                    <div>
+                                        <strong class="text-indigo-950 block text-base mb-1">מלכודת 4: שרשרת class על Metaclass נסגרת במעגל!</strong>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            המחלקה של כל מטה-מחלקה היא המחלקה <code class="font-mono font-bold text-indigo-900">Metaclass</code>. ומהי המחלקה של <code class="font-mono">Metaclass</code>? היא <code class="font-mono font-bold text-indigo-900">Metaclass class</code>! ומהי המחלקה של <code class="font-mono">Metaclass class</code>? היא חוזרת שוב להיות <strong class="text-indigo-950 font-mono">Metaclass</strong>! המעגל הזה מבטיח שאין אינסוף רמות במערכת.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Trap 5 -->
+                            <div class="p-4 rounded-xl border-r-4 border-blue-500 bg-blue-50/40">
+                                <div class="flex items-start gap-3">
+                                    <span class="text-xl mt-0.5">⚠️</span>
+                                    <div>
+                                        <strong class="text-blue-950 block text-base mb-1">מלכודת 5: אופרטור Cascade (;) פועל תמיד על אותו המקבל המקורי!</strong>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            נקודה-פסיק (<code class="font-mono font-bold text-blue-900">;</code>) שולחת את ההודעה הבאה <strong>לאותו המקבל של ההודעה הקודמת</strong> ולא לתוצאת ההודעה! בביטוי <code class="font-mono">OrderedCollection new add: 1; add: 2; size</code>, תוצאת הביטוי היא <strong class="text-blue-950">2</strong> (האוסף עם 2 איברים), בעוד שללא נקודה-פסיק היה ניסיון לשלוח add לתוצאת ה-add הקודם!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Section 3: Principles for Exam Success -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
+                            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-black">3</span>
+                            איך להתכונן בפועל? המלצות זהב
+                        </h2>
+
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                                <span class="text-xl">1️⃣</span>
+                                <div class="text-sm">
+                                    <strong class="text-slate-900 block font-bold mb-0.5">שליטה ללא עוררין בפרק 18:</strong>
+                                    שבו ושרטטו ביד את היררכיית המטה-מחלקות המקבילה, את 10 חוקי המודל ואת מסלול החיפוש של <code class="font-mono text-purple-700">TranslucentColor new</code>. 25–30 נקודות בכיס!
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                                <span class="text-xl">2️⃣</span>
+                                <div class="text-sm">
+                                    <strong class="text-slate-900 block font-bold mb-0.5">פתרון מבחנים עם דף ועיפרון:</strong>
+                                    אל תסתפקו בקריאת פתרונות מוכנים! פתחו את <a href="exams.html" class="text-purple-700 font-bold underline">מאגר המבחנים</a>, פתרו בעצמכם ורק לאחר מכן השוו לפתרון המפורט.
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                                <span class="text-xl">3️⃣</span>
+                                <div class="text-sm">
+                                    <strong class="text-slate-900 block font-bold mb-0.5">חזרה מהירה בעזרת הסיכום המקיף:</strong>
+                                    ביומיים שלפני המבחן, עברו על <a href="summary.html" class="text-purple-700 font-bold underline">summary.html</a>. כל ההגדרות, הטבלאות והחוקים מרוכזים שם ללא בזבוז זמן.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Interactive Tabs & Sidebar Script -->
+    <script>
+        function showTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            
+            // Deactivate all nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+
+            // Show selected tab
+            const target = document.getElementById(tabId);
+            if (target) {
+                target.classList.add('active');
+                // Scroll main area to top
+                document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Highlight corresponding button
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('active-nav');
+            }
+        }
+
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+        }
+
+        // Keyboard navigation (1, 2, 3 to switch tabs)
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.key === '1') showTab('about-course');
+            if (e.key === '2') showTab('about-site');
+            if (e.key === '3') showTab('about-exam');
+        });
+    </script>
+</body>
+
+</html>

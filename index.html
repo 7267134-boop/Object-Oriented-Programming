@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="ai-document-summary"
+        content="דף הבית ואינדקס הקורס תכנות מונחה עצמים (20906) - האוניברסיטה הפתוחה. מפת הקורס והיררכיית המחלקות והעצמים בשפת Smalltalk וסביבת Squeak. כולל 5 יחידות מונחות עצמים בעיצוב זכוכית שקוף כמעט מלא (Ultra-Translucent Glassmorphism), אנימציית ציפה עדינה, רקע כולל שחור-לבן נקי, כפתור קורסים נוספים עם מעגל סגול מסתובב, וחלון אובייקט אינטראקטיבי שקוף לבחירת פרקים 1 עד 18.">
+    <title>תכנות מונחה עצמים (20906) | מפת הקורס והיררכיית המחלקות - האוניברסיטה הפתוחה</title>
+
+    <!-- Google Fonts: Heebo (Exact font of all course chapters) & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS & Lucide Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#7c3aed',
+                        'primary-dark': '#5b21b6',
+                        accent: '#d946ef',
+                        brandviolet: '#8b5cf6',
+                        brandfuchsia: '#d946ef',
+                        brandindigo: '#4f46e5',
+                        brandrose: '#ec4899',
+                        highlight: '#c084fc',
+                        dark: '#0f172a',
+                        darker: '#1e1b4b',
+                        codebg: '#0f172a'
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+                        code: ['JetBrains Mono', 'Consolas', 'monospace'],
+                    },
+                    animation: {
+                        'spin-purple': 'spinPurple 4s linear infinite',
+                        'wave-slow': 'silverWaves 3.2s linear infinite'
+                    },
+                    keyframes: {
+                        spinPurple: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        },
+                        silverWaves: {
+                            '0%': { backgroundPosition: '200% center' },
+                            '100%': { backgroundPosition: '-200% center' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+        }
+
+        /* Clean Black & White / Neutral Background (NO purple ambient background) */
+        body {
+            background-color: var(--bg-page);
+            background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.055) 1px, transparent 0);
+            background-size: 26px 26px;
+            font-family: 'Heebo', sans-serif;
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .font-cursive,
+        .font-designer {
+            font-family: 'Heebo', sans-serif !important;
+        }
+
+        /* Grayscale Black & White Background Image (No purple tints) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('Gemini_Generated_Image_h6tf15h6tf15h6tf.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            filter: grayscale(100%) contrast(1.15) brightness(1.02);
+            opacity: 0.13;
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.5);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.8);
+        }
+
+        /* Silver Waves Shimmer Animation Layer */
+        @keyframes silver-waves {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+        .silver-waves-bg {
+            background: linear-gradient(105deg,
+                    transparent 20%, rgba(255, 255, 255, 0.35) 25%,
+                    transparent 30%, rgba(255, 255, 255, 0.75) 45%,
+                    rgba(255, 255, 255, 0.35) 50%, transparent 55%,
+                    rgba(255, 255, 255, 0.3) 70%, transparent 75%);
+            background-size: 200% 100%;
+            animation: silver-waves 3s linear infinite;
+        }
+
+        /* Rotating Purple Border for "Other Courses" (User Requirement: NO RAINBOW, ONLY SHADES OF PURPLE) */
+        @keyframes spinPurple {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .purple-spin-bg {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 3.5px;
+            background: conic-gradient(from 0deg, 
+                #7c3aed, #a855f7, #c084fc, #e879f9, #d946ef, #9333ea, #6366f1, #818cf8, #a855f7, #7c3aed);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinPurple 4s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Subtle Gentle Floating Animation for Units ("אנימציית תנועה קלה") */
+        @keyframes floatUnitA {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-7px); }
+        }
+        @keyframes floatUnitB {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-9px); }
+        }
+        @keyframes floatUnitC {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes floatUnitD {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .float-anim-root {
+            animation: floatUnitA 6.5s ease-in-out infinite;
+        }
+        .float-anim-1 {
+            animation: floatUnitB 5.8s ease-in-out infinite 0.3s;
+        }
+        .float-anim-2 {
+            animation: floatUnitC 6.2s ease-in-out infinite 1.1s;
+        }
+        .float-anim-3 {
+            animation: floatUnitA 6.0s ease-in-out infinite 1.8s;
+        }
+        .float-anim-4 {
+            animation: floatUnitD 6.4s ease-in-out infinite 2.5s;
+        }
+
+        .float-anim-root:hover,
+        .float-anim-1:hover,
+        .float-anim-2:hover,
+        .float-anim-3:hover,
+        .float-anim-4:hover {
+            animation-play-state: paused;
+        }
+
+        /* Animated Shifting Delicate Purple Border for the Two Main Boxes */
+        @keyframes purple-border-shift {
+            0% {
+                border-color: rgba(124, 58, 237, 0.45);
+                box-shadow: 0 14px 40px -10px rgba(124, 58, 237, 0.12), inset 0 0 15px rgba(124, 58, 237, 0.03);
+            }
+            25% {
+                border-color: rgba(192, 132, 252, 0.70);
+                box-shadow: 0 14px 45px -10px rgba(192, 132, 252, 0.18), inset 0 0 20px rgba(192, 132, 252, 0.05);
+            }
+            50% {
+                border-color: rgba(217, 70, 239, 0.55);
+                box-shadow: 0 14px 40px -10px rgba(217, 70, 239, 0.14), inset 0 0 15px rgba(217, 70, 239, 0.04);
+            }
+            75% {
+                border-color: rgba(99, 102, 241, 0.65);
+                box-shadow: 0 14px 45px -10px rgba(99, 102, 241, 0.18), inset 0 0 20px rgba(99, 102, 241, 0.05);
+            }
+            100% {
+                border-color: rgba(124, 58, 237, 0.45);
+                box-shadow: 0 14px 40px -10px rgba(124, 58, 237, 0.12), inset 0 0 15px rgba(124, 58, 237, 0.03);
+            }
+        }
+
+        .animated-purple-border {
+            border: 1.5px solid rgba(124, 58, 237, 0.45) !important;
+            animation: purple-border-shift 7s ease-in-out infinite;
+        }
+
+        /* Gentle Shifting Purple Color Waves / Aurora for all Inner Unit Cards */
+        @keyframes purple-aurora-ripple {
+            0% {
+                background-position: 0% 50%;
+                opacity: 0.16;
+                transform: scale(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                opacity: 0.42;
+                transform: scale(1.02);
+            }
+            100% {
+                background-position: 0% 50%;
+                opacity: 0.16;
+                transform: scale(1);
+            }
+        }
+
+        .purple-wave-aura {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(circle at 25% 25%, rgba(168, 85, 247, 0.28), transparent 58%),
+                        radial-gradient(circle at 75% 75%, rgba(217, 70, 239, 0.22), transparent 55%),
+                        linear-gradient(135deg, 
+                            rgba(124, 58, 237, 0.14) 0%, 
+                            rgba(217, 70, 239, 0.24) 30%, 
+                            rgba(192, 132, 252, 0.18) 55%, 
+                            rgba(99, 102, 241, 0.22) 80%, 
+                            rgba(124, 58, 237, 0.12) 100%);
+            background-size: 260% 260%;
+            animation: purple-aurora-ripple 8.5s ease-in-out infinite;
+            transition: opacity 0.4s ease;
+        }
+
+        .uml-unit-card:hover .purple-wave-aura,
+        .modal-chapter-card:hover .purple-wave-aura {
+            opacity: 0.55;
+        }
+
+        /* Main Workspace Glass Board - Almost Full Transparency (User Requirement) */
+        .content-canvas-board {
+            position: relative;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 32px;
+            box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            transition: all 0.35s ease;
+        }
+
+        /* UML Connectors SVG Layer */
+        #uml-connectors-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: visible;
+        }
+
+        .inheritance-path {
+            fill: none;
+            stroke-width: 2.2;
+            stroke: #a855f7;
+            opacity: 0.65;
+            transition: all 0.25s ease;
+        }
+
+        /* UML Unit Cards - Almost Full Transparency (User Requirement) */
+        .uml-unit-card {
+            position: relative;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid var(--unit-border, rgba(255, 255, 255, 0.4));
+            border-radius: 28px;
+            box-shadow:
+                0 10px 25px -8px rgba(0, 0, 0, 0.05),
+                0 2px 6px -1px rgba(0, 0, 0, 0.02);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s ease, background-color 0.3s ease;
+            cursor: default;
+            z-index: 20;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Clickable interactive root and summary/exam cards have explicit pointer cursor and strong hover response */
+        a.uml-unit-card,
+        #uml-root-tab0,
+        #uml-summary-card,
+        #uml-exam-card {
+            cursor: pointer !important;
+        }
+
+        .uml-unit-card:hover,
+        .uml-unit-card.is-active {
+            transform: translateY(-8px) scale(1.01) !important;
+            background: rgba(255, 255, 255, 0.28);
+            border-color: var(--unit-accent, #7c3aed);
+            box-shadow: 0 22px 42px -10px var(--unit-glow, rgba(124, 58, 237, 0.28));
+        }
+
+        #uml-summary-card:hover,
+        #uml-exam-card:hover {
+            transform: translateY(-8px) scale(1.015) !important;
+            background: rgba(255, 255, 255, 0.35) !important;
+            border-color: var(--unit-accent, #7c3aed) !important;
+            box-shadow: 0 24px 45px -8px var(--unit-glow, rgba(168, 85, 247, 0.38)) !important;
+        }
+
+        /* Shifting Delicate Purple Spectrum - Soft, changing colors like the circular button */
+        @keyframes delicate-purple-flow {
+            0% {
+                border-color: rgba(168, 85, 247, 0.55);
+                box-shadow: 0 10px 32px -6px rgba(168, 85, 247, 0.18);
+            }
+            25% {
+                border-color: rgba(217, 70, 239, 0.50);
+                box-shadow: 0 10px 32px -6px rgba(217, 70, 239, 0.18);
+            }
+            50% {
+                border-color: rgba(129, 140, 248, 0.55);
+                box-shadow: 0 10px 32px -6px rgba(129, 140, 248, 0.18);
+            }
+            75% {
+                border-color: rgba(192, 132, 252, 0.55);
+                box-shadow: 0 10px 32px -6px rgba(192, 132, 252, 0.18);
+            }
+            100% {
+                border-color: rgba(168, 85, 247, 0.55);
+                box-shadow: 0 10px 32px -6px rgba(168, 85, 247, 0.18);
+            }
+        }
+
+        /* 4 Main Units Dynamic Meshes in Delicate Pastel Purple / Violet Spectrum */
+        .unit-mesh-0 {
+            background: radial-gradient(circle at 15% 15%, rgba(168, 85, 247, 0.15), transparent 50%),
+                        radial-gradient(circle at 85% 85%, rgba(192, 132, 252, 0.16), transparent 55%),
+                        linear-gradient(135deg, rgba(250, 245, 255, 0.55) 0%, rgba(243, 232, 255, 0.42) 50%, rgba(253, 244, 255, 0.50) 100%);
+            background-size: 220% 220%;
+            animation: unit-mesh-drift-1 12s ease-in-out infinite alternate;
+        }
+
+        .unit-mesh-1 {
+            background: radial-gradient(circle at 20% 80%, rgba(129, 140, 248, 0.15), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.16), transparent 55%),
+                        linear-gradient(135deg, rgba(238, 242, 255, 0.55) 0%, rgba(243, 232, 255, 0.42) 50%, rgba(250, 245, 255, 0.50) 100%);
+            background-size: 220% 220%;
+            animation: unit-mesh-drift-2 13s ease-in-out infinite alternate;
+        }
+
+        .unit-mesh-2 {
+            background: radial-gradient(circle at 15% 25%, rgba(192, 132, 252, 0.15), transparent 50%),
+                        radial-gradient(circle at 85% 75%, rgba(217, 70, 239, 0.16), transparent 55%),
+                        linear-gradient(135deg, rgba(250, 245, 255, 0.55) 0%, rgba(253, 242, 248, 0.42) 50%, rgba(243, 232, 255, 0.50) 100%);
+            background-size: 220% 220%;
+            animation: unit-mesh-drift-3 12s ease-in-out infinite alternate;
+        }
+
+        .unit-mesh-3 {
+            background: radial-gradient(circle at 25% 75%, rgba(217, 70, 239, 0.15), transparent 50%),
+                        radial-gradient(circle at 75% 25%, rgba(168, 85, 247, 0.16), transparent 55%),
+                        linear-gradient(135deg, rgba(253, 242, 248, 0.55) 0%, rgba(245, 243, 255, 0.42) 50%, rgba(250, 245, 255, 0.50) 100%);
+            background-size: 220% 220%;
+            animation: unit-mesh-drift-4 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes unit-mesh-drift-1 { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+        @keyframes unit-mesh-drift-2 { 0% { background-position: 100% 0%; } 100% { background-position: 0% 100%; } }
+        @keyframes unit-mesh-drift-3 { 0% { background-position: 0% 100%; } 100% { background-position: 100% 0%; } }
+        @keyframes unit-mesh-drift-4 { 0% { background-position: 50% 0%; } 100% { background-position: 50% 100%; } }
+
+        /* 4 Main Units Uniform Height with delicate shifting color border */
+        #four-units-grid .uml-unit-card {
+            height: 535px;
+            min-height: 535px;
+            animation: delicate-purple-flow 8s ease-in-out infinite alternate;
+        }
+
+        /* Face A: Overview State (Visible by default, fades out on card hover) */
+        .unit-face-overview {
+            position: absolute;
+            inset: 0;
+            padding: 1.25rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: auto;
+            z-index: 5;
+        }
+
+        .uml-unit-card:hover .unit-face-overview,
+        .uml-unit-card.is-active .unit-face-overview {
+            opacity: 0;
+            transform: translateY(-12px) scale(0.96);
+            pointer-events: none;
+        }
+
+        /* Technical Schematic Background in Face A */
+        .unit-schematic-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0.12;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Face B: Chapters Squares Grid (Revealed on card hover, fills from top to bottom) */
+        .unit-face-chapters {
+            position: absolute;
+            inset: 0;
+            padding: 1rem 1rem 0.65rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 0.4rem;
+            opacity: 0;
+            transform: translateY(14px) scale(0.96);
+            transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.40);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .uml-unit-card:hover .unit-face-chapters,
+        .uml-unit-card.is-active .unit-face-chapters {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Dynamic Upper Preview Area in Face B - Stretches all the way down to divider and chapters */
+        .unit-preview-box {
+            position: relative;
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(196, 181, 253, 0.65);
+            border-radius: 18px;
+            padding: 0.75rem 0.85rem;
+            flex: 1 1 auto;
+            min-height: 145px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-shadow: 0 8px 24px -4px rgba(168, 85, 247, 0.12);
+            transition: all 0.22s ease;
+            overflow-y: auto;
+        }
+
+        /* Delicate Hairline Divider - Sits right between preview and chapters */
+        .unit-preview-divider {
+            width: 100%;
+            height: 1.5px;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.5), rgba(217, 70, 239, 0.5), transparent);
+            margin: 0.2rem 0;
+            flex-shrink: 0;
+        }
+
+        /* Lower Chapters Grid in Face B - Positioned directly beneath divider */
+        .unit-chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem;
+            flex-shrink: 0;
+            margin-bottom: 0.15rem;
+        }
+
+        /* Chapter Square Tile */
+        .chapter-square-tile {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.55rem 0.65rem;
+            background: rgba(255, 255, 255, 0.52);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.2px solid rgba(255, 255, 255, 0.85);
+            border-radius: 14px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+            transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+        }
+
+        .chapter-square-tile:hover {
+            transform: translateY(-2.5px) scale(1.03);
+            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--tile-accent, #7c3aed);
+            box-shadow: 0 8px 20px -3px var(--tile-glow, rgba(124, 58, 237, 0.30));
+        }
+
+        .uml-unit-header {
+            position: relative;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.16);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1.05rem 1.25rem;
+        }
+
+        .uml-unit-fields {
+            position: relative;
+            z-index: 5;
+            padding: 0.65rem 1.25rem;
+            background: rgba(255, 255, 255, 0.10);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.28);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: #3b0764;
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* Custom Violet Scrollbar */
+        .custom-violet-scroll::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-violet-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+        }
+        .custom-violet-scroll::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.45);
+            border-radius: 9999px;
+        }
+        .custom-violet-scroll::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        /* Modal Container - Almost Full Transparency (User Requirement) */
+        #unit-modal-container {
+            background: rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1.5px solid rgba(255, 255, 255, 0.45);
+            box-shadow: 0 25px 70px -15px rgba(0, 0, 0, 0.25);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+        }
+
+        /* Modal Chapter Cards - Almost Full Transparency */
+        .modal-chapter-card {
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(255, 255, 255, 0.35);
+            border-radius: 20px;
+            padding: 1.15rem 1.25rem;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-chapter-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: #a855f7;
+            background: rgba(255, 255, 255, 0.38);
+            box-shadow: 0 16px 32px -8px rgba(124, 58, 237, 0.22);
+        }
+
+        /* Smooth Modal Animation */
+        #unit-modal-overlay {
+            transition: opacity 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
+
+    <!-- Theme Manager Script -->
+    <script>
+        (function () {
+            let currentTheme = localStorage.getItem('site-theme') || 'normal';
+
+            function applyTheme() {
+                const existing = document.getElementById('dynamic-theme-style');
+                if (existing) existing.remove();
+
+                if (currentTheme !== 'normal') {
+                    const style = document.createElement('style');
+                    style.id = 'dynamic-theme-style';
+                    let css = '';
+
+                    if (currentTheme === 'dark') {
+                        css = `
+                            html {
+                                filter: invert(0.9) hue-rotate(180deg);
+                            }
+                            img, video, iframe, aside, pre, .no-invert {
+                                filter: invert(1) hue-rotate(180deg);
+                            }
+                        `;
+                    } else if (currentTheme === 'reading') {
+                        css = `
+                            html {
+                                filter: sepia(0.5) brightness(0.95);
+                            }
+                        `;
+                    }
+
+                    style.textContent = css;
+                    document.head.appendChild(style);
+                }
+                updateThemeIcon();
+            }
+
+            function updateThemeIcon() {
+                const btn = document.getElementById('theme-toggle-btn');
+                if (!btn) return;
+                let iconHtml = '☀️';
+                if (currentTheme === 'dark') iconHtml = '🌙';
+                else if (currentTheme === 'reading') iconHtml = '📖';
+                btn.innerHTML = iconHtml;
+            }
+
+            window.toggleTheme = function () {
+                if (currentTheme === 'normal') currentTheme = 'dark';
+                else if (currentTheme === 'dark') currentTheme = 'reading';
+                else currentTheme = 'normal';
+                localStorage.setItem('site-theme', currentTheme);
+                applyTheme();
+            };
+
+            applyTheme();
+            window.addEventListener('DOMContentLoaded', updateThemeIcon);
+        })();
+    </script>
+</head>
+
+<body class="min-h-screen flex flex-col selection:bg-purple-200 selection:text-purple-900">
+
+    <!-- Top-Right Controls: Theme Toggle Button -->
+    <div class="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-2">
+        <button id="theme-toggle-btn" onclick="toggleTheme()" title="החלפת ערכת נושא (רגיל -> כהה -> קריאה)"
+            class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center text-xl sm:text-2xl bg-white/20 backdrop-blur-xl border border-white/40 text-slate-800 shadow-md hover:scale-105 hover:bg-white/35 transition-all duration-300">
+            ☀️
+        </button>
+    </div>
+
+    <!-- Top-Left Floating Button: Other Courses (PURPLE CONIC SPIN & SILVER WAVES, NO RAINBOW) -->
+    <a href="https://all-the-courses.pages.dev/"
+        class="absolute top-4 left-4 sm:top-6 sm:left-6 z-50 group block bg-transparent rounded-full p-[3px] transition-all duration-500 hover:shadow-2xl hover:shadow-purple-400/40 hover:-translate-y-1 hover:scale-105 w-32 h-32 sm:w-36 sm:h-36 overflow-hidden"
+        title="מעבר לכל הקורסים">
+        
+        <!-- Rotating Purple Conic Gradient (No Rainbow!) -->
+        <div class="purple-spin-bg"></div>
+
+        <!-- Inner Glass Container (Semi-transparent) -->
+        <div
+            class="bg-white/20 backdrop-blur-xl rounded-full w-full h-full relative z-10 flex flex-col items-center justify-center border border-white/40 group-hover:bg-white/30 transition-all duration-500 shadow-inner text-center p-2 overflow-hidden">
+            <!-- Silver Waves Shimmer -->
+            <div class="absolute inset-0 silver-waves-bg pointer-events-none z-0"></div>
+
+            <!-- Icon -->
+            <div
+                class="w-11 h-11 sm:w-13 sm:h-13 mb-1 rounded-full bg-white/35 flex items-center justify-center text-purple-700 group-hover:bg-gradient-to-br group-hover:from-purple-600 group-hover:to-fuchsia-600 group-hover:text-white transition-all duration-500 shadow-xs relative z-20">
+                <i data-lucide="library" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </div>
+
+            <!-- Text -->
+            <span
+                class="text-xs sm:text-[14px] font-black text-slate-800 group-hover:text-purple-950 transition-colors leading-tight relative z-20">
+                לקורסים<br>נוספים
+            </span>
+        </div>
+    </a>
+
+    <!-- ========================================================================= -->
+    <!-- HERO SECTION (Central Glass Bubble Box - Semi-Transparent)                  -->
+    <!-- ========================================================================= -->
+    <section class="relative w-full flex flex-col items-center justify-center overflow-hidden z-30 pt-12 sm:pt-16 pb-6">
+        <div class="relative z-10 text-center px-4 w-full flex flex-col items-center max-w-4xl">
+            
+            <!-- Main Title Glass Bubble Box (Animated Delicate Purple Border) -->
+            <div
+                class="animated-purple-border bg-white/22 backdrop-blur-xl rounded-3xl shadow-xl px-6 md:px-12 py-8 md:py-10 w-full mb-6 transition-all duration-300 hover:shadow-2xl">
+                
+                <!-- Pill Badge (Hover/Click Trigger) -->
+                <div id="course-badge" onclick="toggleWhyCourse()"
+                    class="inline-flex items-center gap-2 cursor-pointer mb-4 px-4 py-1.5 rounded-full bg-white/30 backdrop-blur-md text-purple-800 font-bold tracking-wider text-xs border border-purple-300/40 shadow-sm transition-all duration-300 hover:bg-purple-600 hover:text-white">
+                    <span class="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
+                    <span>ברוכים הבאים :) לחצו עלי לקבלת מידע על האתר</span>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4 text-slate-900">
+                    תכנות מונחה עצמים
+                </h1>
+
+                <div class="inline-block px-3.5 py-1 mb-3 rounded-xl bg-white/35 backdrop-blur-md border border-purple-200/60 text-xs sm:text-sm font-code font-bold text-purple-900" dir="ltr">
+                    ProtoObject subclass: #Course20906 (Smalltalk-80 & Squeak)
+                </div>
+
+                <p class="text-base md:text-lg text-slate-700 max-w-2xl mx-auto font-normal leading-relaxed">
+                    ברוכים הבאים לאתר הקורס תכנות מונחה עצמים, באתר תמצאו לימוד באופן ויזואלי וחי של כל חומרי הקורס, שפת Smalltalk וסביבת Squeak, ובנוסף סיכומים מקיפים, הדמיות אינטראקטיביות ותרגול מבחנים, בהצלחה!
+                </p>
+            </div>
+
+            <!-- "Why do we need this course?" Separate Glass Bubble -->
+            <div id="why-course-card"
+                class="max-h-0 opacity-0 overflow-hidden w-full transition-all duration-500 ease-in-out">
+                <div
+                    class="bg-white/22 backdrop-blur-lg rounded-2xl shadow-lg px-6 md:px-10 py-6 md:py-8 border border-white/35 text-right mb-6">
+                    <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-3 flex items-center justify-start gap-2">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                        אז למה צריך אתר לקורס? הסבר קצר על האתר:
+                    </h3>
+                    <p class="text-sm md:text-base text-slate-700 leading-relaxed font-normal">
+                        הקורס תכנות מונחה עצמים (20906) הוא אחד מקורסי היסוד המרתקים והעמוקים ביותר במדעי המחשב, אך דורש שינוי פרדיגמה מחשבתי מוחלט מפרדיגמה פרוצדורלית או מונחית-עצמים מורכבת (כמו C++ או Java) אל עבר תכנות מונחה-עצמים טהור ("Pure OOP") באמצעות שפת Smalltalk-80 וסביבת Squeak.
+                        <br><br>
+                        כדי להפוך את הלמידה מסיזיפית לחווייתית ואינטואיטיבית, האתר מסכם את כל חומרי המדריך (ת' בניה, ד' לורנץ, ר' מנור) והספרים המלווים (Budd ו-Squeak by Example), ומפרק אותם ל-5 יחידות היררכיה מונחות עצמים ו-18 פרקי לימוד מקיפים עם שאלות מנחות, מעקבי Dispatch דינמיים, כרטיסיות חזרה אינטראקטיביות ומאגר בחינות פתורות – בהצלחה!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Down Arrow Indicator -->
+            <div class="mt-1 animate-bounce">
+                <i data-lucide="chevron-down" class="w-7 h-7 text-purple-700"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- MAIN WORKSPACE: THE OOP 5 UNITS (ALMOST FULL TRANSPARENCY TO BACKGROUND)   -->
+    <!-- ========================================================================= -->
+    <main class="relative w-full max-w-[1440px] mx-auto px-4 sm:px-8 py-2 z-20 mb-10 flex-1">
+        
+        <!-- Board with Almost Full Transparency & Animated Delicate Purple Border -->
+        <div class="content-canvas-board animated-purple-border p-5 sm:p-8">
+
+            <div id="uml-workspace" class="relative z-10 flex flex-col gap-6">
+
+                <!-- Dynamic SVG Inheritance Connectors Layer -->
+                <svg id="uml-connectors-svg">
+                    <defs>
+                        <marker id="uml-arrow-violet" viewBox="0 0 16 16" refX="8" refY="2" markerWidth="11"
+                            markerHeight="11" orient="auto">
+                            <path d="M 8 2 L 14 13 L 2 13 Z" fill="rgba(255,255,255,0.7)" stroke="#8b5cf6" stroke-width="2" />
+                        </marker>
+                    </defs>
+                    <g id="uml-svg-Dynamic-group"></g>
+                </svg>
+
+                <!-- ================= TIER 1: UNIT 0 (ROOT SUPERCLASS) ================= -->
+                <div class="max-w-3xl mx-auto w-full relative z-20 float-anim-root">
+                    <!-- Root Superclass: Tab 0 (Introduction & Course/Exam Overview) -->
+                    <a href="0_intro.html" id="uml-root-tab0"
+                        class="uml-unit-card block group"
+                        style="--unit-border: rgba(196, 181, 253, 0.7); --unit-accent: #7c3aed; --unit-glow: rgba(124, 58, 237, 0.25);">
+
+                        <!-- Delicate shifting purple aura wave layer -->
+                        <div class="purple-wave-aura" style="animation-delay: 0s;"></div>
+
+                        <!-- Header Compartment -->
+                        <div class="uml-unit-header flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+                            <div class="flex items-center gap-3.5">
+                                <span
+                                    class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white font-sans font-black text-base flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                                    0
+                                </span>
+                                <div class="text-right">
+                                    <span class="font-sans text-[11px] font-extrabold text-purple-700 tracking-wide block">
+                                        «מבוא כללי • אתר הקורס והמבחן»
+                                    </span>
+                                    <h2 class="text-lg sm:text-xl font-black text-slate-900 font-sans">
+                                        פתיחה והסבר כללי על אתר הקורס והמבחן
+                                    </h2>
+                                </div>
+                            </div>
+                            <div
+                                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition font-sans group-hover:bg-purple-700">
+                                <span>כניסה לפתיחה והסבר כללי</span>
+                                <i data-lucide="arrow-left"
+                                    class="w-4 h-4 transition-transform group-hover:-translate-x-1"></i>
+                            </div>
+                        </div>
+
+                        <!-- Info Compartment -->
+                        <div class="uml-unit-fields flex flex-wrap items-center justify-between gap-2 px-6 py-2.5 font-sans text-xs">
+                            <span class="font-bold text-purple-900">מבוא מתודולוגי לקורס ולמבחן הסופי</span>
+                            <span class="text-slate-600 font-medium">סביבת Squeak 5.1 / Smalltalk-80 • טהרת ה-OOP</span>
+                            <span class="font-bold text-fuchsia-700">3 מדריכי יסוד: קורס, אתר ומבחן</span>
+                        </div>
+
+                        <!-- Description Compartment -->
+                        <div class="px-6 py-3.5 bg-white/10 text-xs sm:text-sm text-slate-700 flex items-center justify-between gap-4 relative z-[5] font-sans">
+                            <span>מדריך פתיחה מקיף ב-3 לשוניות: פילוסופיית ה-Pure OOP של הקורס, היכרות עם כלי האתר והסימולציות, ומבנה הבחינה, הניקוד ומלכודות המבחן הנפוצות.</span>
+                            <span class="font-bold text-purple-700 whitespace-nowrap hidden sm:inline text-xs">כניסה למבוא ◄</span>
+                        </div>
+                    </a>
+
+                    <!-- Inheritance Connector Badge Below Root -->
+                    <div class="flex justify-center mt-3.5 mb-1 select-none pointer-events-none">
+                        <span
+                            class="font-code text-[11px] font-bold text-purple-800 bg-white/30 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/40 shadow-xs flex items-center gap-2"
+                            dir="ltr">
+                            <span>◁─── Object subclass: #CourseUnits</span>
+                            <span class="text-slate-600 font-sans font-semibold">(העבירו עכבר על יחידה לבחירת פרק)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- ================= TIER 2: THE 4 MAIN SUBCLASS UNITS ================= -->
+                <div id="four-units-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 relative z-20 pt-2">
+                    <!-- Populated dynamically with strong vibrant modern colors & hover-reveal chapter squares -->
+                </div>
+
+                <!-- ================= TIER 3: SUMMARY & EXAMS TILES ================= -->
+                <div class="pt-4 relative z-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+
+                        <!-- Complete Course Summary Card -->
+                        <a href="summary.html" id="uml-summary-card"
+                            class="uml-unit-card group block"
+                            style="--unit-border: rgba(240, 171, 252, 0.7); --unit-accent: #d946ef; --unit-glow: rgba(217, 70, 239, 0.25);">
+                            <!-- Delicate shifting purple aura wave layer -->
+                            <div class="purple-wave-aura" style="animation-delay: 2.2s;"></div>
+                            <div class="uml-unit-header flex items-center justify-between px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="w-10 h-10 rounded-2xl bg-gradient-to-br from-fuchsia-600 to-pink-600 text-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+                                        <i data-lucide="book-marked" class="w-5 h-5"></i>
+                                    </span>
+                                    <div class="text-right">
+                                        <span class="font-code text-[11px] font-bold text-fuchsia-900 block" dir="ltr">
+                                            «Trait» #CourseSummary
+                                        </span>
+                                        <h3 class="text-base sm:text-lg font-black text-slate-900 font-sans">
+                                            סיכום קורס מקיף ומלא
+                                        </h3>
+                                    </div>
+                                </div>
+                                <span
+                                    class="font-sans text-xs font-bold text-fuchsia-900 bg-white/40 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/40">
+                                    סיכום מלא (18 פרקים)
+                                </span>
+                            </div>
+                            <div class="px-5 py-3.5 bg-white/10 text-xs sm:text-sm text-slate-700 flex items-center justify-between gap-3 relative z-[5] font-sans">
+                                <span>סיכום מלא ב-100% של כל 18 פרקי הקורס (עמ' 1–266), ספרי הלימוד, עקרונות OOP, Smalltalk ו-Squeak.</span>
+                                <span class="font-bold text-fuchsia-700 whitespace-nowrap group-hover:-translate-x-1 transition-transform font-sans text-xs">
+                                    לסיכום המלא ◄
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- Exam Rules & Prep Card -->
+                        <a href="exams.html" id="uml-exam-card"
+                            class="uml-unit-card group block"
+                            style="--unit-border: rgba(196, 181, 253, 0.7); --unit-accent: #7c3aed; --unit-glow: rgba(124, 58, 237, 0.25);">
+                            <!-- Delicate shifting purple aura wave layer -->
+                            <div class="purple-wave-aura" style="animation-delay: 3.5s;"></div>
+                            <div class="uml-unit-header flex items-center justify-between px-5 py-3.5">
+                                <div class="flex items-center gap-3">
+                                    <span
+                                        class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-600 to-indigo-600 text-white flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+                                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+                                    </span>
+                                    <div class="text-right">
+                                        <span class="font-code text-[11px] font-bold text-purple-900 block" dir="ltr">
+                                            «Trait» #ExamRegulations
+                                        </span>
+                                        <h3 class="text-base sm:text-lg font-black text-slate-900 font-sans">
+                                            מאגר מבחנים ופתרונות
+                                        </h3>
+                                    </div>
+                                </div>
+                                <span
+                                    class="font-sans text-xs font-bold text-purple-900 bg-white/40 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/40">
+                                    6 מבחנים מלאים
+                                </span>
+                            </div>
+                            <div class="px-5 py-3.5 bg-white/10 text-xs sm:text-sm text-slate-700 flex items-center justify-between gap-3 relative z-[5] font-sans">
+                                <span>תרגול שאלות בחינה אינטראקטיביות, מודלים מנטליים, מעקב איתור מתודות (self/super), ומבחנים פתורים.</span>
+                                <span class="font-bold text-purple-700 whitespace-nowrap group-hover:-translate-x-1 transition-transform font-sans text-xs">
+                                    למאגר המבחנים ◄
+                                </span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ========================================================================= -->
+    <!-- THE GRAND 80%-90% OBJECT MODAL (TRANSLUCENT GLASS OVERLAY & CONTAINER)     -->
+    <!-- ========================================================================= -->
+    <div id="unit-modal-overlay"
+        class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-8 bg-slate-950/40 backdrop-blur-md opacity-0 pointer-events-none"
+        onclick="handleBackdropClick(event)">
+
+        <div id="unit-modal-container"
+            class="w-[92vw] max-w-7xl h-[88vh] max-h-[90vh] flex flex-col rounded-3xl sm:rounded-[36px] overflow-hidden transform scale-95"
+            onclick="event.stopPropagation()">
+
+            <!-- Top Title Bar (Smalltalk Object Browser Chrome) -->
+            <div class="flex items-center justify-between px-5 sm:px-7 py-3.5 bg-white/20 backdrop-blur-xl border-b border-white/30 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <!-- Mac/Smalltalk Window Dots -->
+                    <div class="flex items-center gap-1.5 ml-2">
+                        <button onclick="closeUnitModal()" class="w-3.5 h-3.5 rounded-full bg-rose-400 hover:bg-rose-500 transition-colors shadow-xs" title="סגור חלון (Esc)"></button>
+                        <span class="w-3.5 h-3.5 rounded-full bg-amber-300"></span>
+                        <span class="w-3.5 h-3.5 rounded-full bg-emerald-400"></span>
+                    </div>
+
+                    <!-- Breadcrumbs -->
+                    <div class="flex items-center gap-2 text-xs sm:text-sm font-code font-bold text-purple-950" dir="ltr">
+                        <span class="text-slate-500">ProtoObject</span>
+                        <span class="text-slate-400">▷</span>
+                        <span class="text-purple-700">Object</span>
+                        <span class="text-slate-400">▷</span>
+                        <span id="modal-breadcrumb-unit" class="text-purple-950 font-black">#AbstractionAndObjects</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-code font-bold bg-white/30 text-purple-950 border border-white/40" dir="ltr">
+                        <span>self inspect</span>
+                    </span>
+
+                    <button onclick="closeUnitModal()"
+                        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/35 hover:bg-white/60 border border-white/40 text-purple-950 font-bold text-xs sm:text-sm transition-colors shadow-xs">
+                        <span>סגור</span>
+                        <span class="text-[10px] text-purple-600 font-code">[Esc]</span>
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Unit Selector Navigation Tabs Strip Inside Modal -->
+            <div class="flex items-center gap-2 px-5 sm:px-7 py-2.5 bg-white/15 border-b border-white/20 overflow-x-auto flex-shrink-0 custom-violet-scroll">
+                <span class="text-xs font-bold text-purple-950 whitespace-nowrap ml-2">מעבר מהיר בין חטיבות:</span>
+                <div id="modal-unit-tabs" class="flex items-center gap-2">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Modal Content Header: Selected Unit Info & Smalltalk Definition Box -->
+            <div class="px-5 sm:px-7 pt-4 pb-3 bg-white/15 border-b border-white/20 flex-shrink-0">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div id="modal-unit-badge-icon"
+                            class="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-code font-black text-xl shadow-md flex-shrink-0">
+                            I
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span id="modal-unit-badge-text"
+                                    class="font-code text-xs font-bold px-2.5 py-0.5 rounded-md bg-white/35 text-purple-950 border border-white/40"
+                                    dir="ltr">
+                                    «Superclass Object»
+                                </span>
+                                <span id="modal-unit-pages" class="text-xs font-bold text-slate-700"></span>
+                                <span id="modal-unit-ch-count" class="text-xs font-extrabold text-purple-900 bg-white/40 px-2 py-0.5 rounded-full border border-white/40"></span>
+                            </div>
+                            <h2 id="modal-unit-title" class="text-xl sm:text-2xl md:text-3xl font-black text-slate-900 mt-0.5">
+                                חטיבה 1: יסודות ההפשטה והעצמים
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Smalltalk Class Definition Box -->
+                    <div id="modal-unit-code-box"
+                        class="bg-slate-900/85 text-purple-200 font-code text-xs p-3 sm:p-3.5 rounded-2xl border border-slate-700/60 shadow-inner max-w-xl text-left"
+                        dir="ltr">
+                        <div class="text-purple-300 font-bold truncate" id="modal-code-subclass">CourseUnit subclass: #AbstractionAndObjects</div>
+                        <div class="text-emerald-400 text-[11px] truncate mt-0.5" id="modal-code-instvars">instanceVariableNames: 'identity state behavior'</div>
+                        <div class="text-amber-300 text-[11px] truncate mt-0.5" id="modal-code-category">category: 'OpenU-Course-20906'</div>
+                    </div>
+                </div>
+
+                <!-- Unit Overview Text -->
+                <p id="modal-unit-description" class="text-xs sm:text-sm text-slate-800 mt-3 leading-relaxed max-w-5xl font-medium">
+                    הסבר החטיבה...
+                </p>
+            </div>
+
+            <!-- Scrollable Chapters Grid -->
+            <div class="flex-1 overflow-y-auto p-5 sm:p-7 bg-white/10 custom-violet-scroll">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-purple-600"></span>
+                        <h3 class="text-base sm:text-lg font-black text-slate-900">
+                            בחרו פרק לכניסה לחומר הלימוד:
+                        </h3>
+                    </div>
+                    <span class="text-xs font-bold text-slate-600 hidden sm:inline">
+                        כל פרק מכיל סיכום לימודי עשיר, סימולציות אינטראקטיביות ושאלות חזרה
+                    </span>
+                </div>
+
+                <div id="modal-chapters-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pb-6">
+                    <!-- Chapters populated by JS -->
+                </div>
+            </div>
+
+            <!-- Modal Footer Status Bar -->
+            <div class="px-6 py-3 bg-white/25 border-t border-white/30 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-700 flex-shrink-0">
+                <div class="flex items-center gap-2 font-semibold">
+                    <i data-lucide="info" class="w-4 h-4 text-purple-700"></i>
+                    <span id="modal-footer-stats">חטיבה זו כוללת 5 פרקים</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="exams.html" class="font-bold text-purple-800 hover:text-purple-950 transition flex items-center gap-1">
+                        <span>מעבר ישיר למאגר המבחנים</span>
+                        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                    </a>
+                    <span>•</span>
+                    <button onclick="closeUnitModal()" class="font-bold text-slate-700 hover:text-slate-950 transition">
+                        סגירת חלון
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer (Matching OS & Computational Models Standard - Glassmorphism LinkedIn & WhatsApp + Disclaimer) -->
+    <footer class="bg-transparent pb-10 pt-4 relative z-30 mt-auto">
+        <div class="container mx-auto px-4 flex flex-col items-center">
+
+            <h4 class="text-center text-slate-600 font-extrabold text-sm uppercase tracking-widest mb-4 font-designer">
+                קישורים מהירים ויצירת קשר
+            </h4>
+
+            <!-- רשתות חברתיות ויצירת קשר (Glassmorphism Buttons - LinkedIn & WhatsApp בלבד) -->
+            <div class="flex justify-center items-center gap-5 mb-8">
+                <!-- לינקדאין -->
+                <a href="https://linkedin.com/in/yair-kurtzman-382417247" target="_blank" title="LinkedIn"
+                    class="group w-14 h-14 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm border border-white/40 hover:border-sky-400 hover:bg-sky-500/20 hover:shadow-lg hover:-translate-y-2 hover:scale-105 transition-all duration-300 text-slate-600">
+                    <svg class="w-6 h-6 group-hover:text-sky-600 transition-colors" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M12.51 8.796v1.697a3.738 3.738 0 0 1 3.288-1.684c3.455 0 4.202 2.16 4.202 4.97V19.5h-3.2v-5.072c0-1.21-.244-2.766-2.128-2.766-1.827 0-2.139 1.317-2.139 2.676V19.5h-3.19V8.796h3.168ZM7.2 6.106a1.61 1.61 0 0 1-1.61 1.61h-.022A1.61 1.61 0 0 1 3.96 6.106a1.61 1.61 0 1 1 3.24 0ZM7.18 19.5H4V8.796h3.18V19.5Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </a>
+
+                <!-- וואטסאפ -->
+                <a href="https://wa.me/972586736525" target="_blank" title="WhatsApp"
+                    class="group w-14 h-14 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-sm border border-white/40 hover:border-green-400 hover:bg-green-500/20 hover:shadow-lg hover:-translate-y-2 hover:scale-105 transition-all duration-300 text-slate-600">
+                    <svg class="w-6 h-6 group-hover:text-green-500 transition-colors" fill="currentColor"
+                        viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+                    </svg>
+                </a>
+            </div>
+
+            <div class="max-w-3xl text-center px-4">
+                <p class="text-slate-700 text-base md:text-lg leading-relaxed mb-4 font-semibold drop-shadow-sm font-designer">
+                    למידה מהנה ובהצלחה! <br>
+                    התוכן של האתר נערך ונסקר מכל הכיוונים על ידי, אבל עדיין האתר נבנה בעזרת בינה מלאכותית ולכן יתכנו
+                    טעויות, אשמח לעדכון אם מצאתם על מנת שאוכל לתקן. <br>
+                </p>
+                <div class="w-16 h-1 bg-white/40 mx-auto rounded-full mb-4"></div>
+                <p class="text-slate-600 text-xs sm:text-sm font-semibold font-designer">
+                    © כל הזכויות על המבחנים וחומרי הלמידה שמורות לאוניברסיטה הפתוחה.
+                    האתר מיועד לתלמידי האוניברסיטה הפתוחה בלבד ואין לעשות אף שימוש חיצוני בתכנים
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Interactive Logic Script -->
+    <script>
+        // Exact 4 Main Superclass Units & 18 Chapters with Strong Modern Colors & Hover-Reveal Squares
+                        const unitsData = [
+          {
+                    "id": "unit-1",
+                    "index": 0,
+                    "roman": "I–III",
+                    "unitNumberText": "יחידה 1",
+                    "chaptersRangeText": "פרקים 1 עד 5",
+                    "badge": "חטיבה 1 • פרקים 1–5",
+                    "stereo": "«חטיבה 1 • יחידות I–III»",
+                    "className": "#AbstractionAndObjects",
+                    "title": "יסודות ההפשטה, עצמים ו־Squeak",
+                    "storyDesc": "ביחידה זו נפתח את הדלת לעולם התכנות מונחה העצמים הטהור: נלמד כיצד לעבור מחשיבה תכנותית רגילה לעולם שבו הכל מורכב מעצמים עצמאיים המשוחחים זה עם זה בהודעות. נכיר את סביבת העבודה החיה Squeak, נבין מה מעניק לעצם את זהותו, מצבו והתנהגותו, ונבנה פרויקט משחק אינטראקטיבי שלם (Quinto).",
+                    "borderColor": "rgba(168, 85, 247, 0.55)",
+                    "accentColor": "#a855f7",
+                    "accentGradient": "from-purple-500 via-fuchsia-500 to-indigo-500",
+                    "glowColor": "rgba(168, 85, 247, 0.28)",
+                    "meshClass": "unit-mesh-0",
+                    "floatClass": "float-anim-1",
+                    "schematicSvg": "<svg class=\"w-full h-full text-purple-600/18\" viewBox=\"0 0 200 200\" fill=\"none\" stroke=\"currentColor\">\n        <rect x=\"20\" y=\"35\" width=\"65\" height=\"48\" rx=\"10\" stroke-width=\"2\" stroke-dasharray=\"3 3\"/>\n        <text x=\"52\" y=\"58\" font-size=\"9\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Object A</text>\n        <text x=\"52\" y=\"70\" font-size=\"7.5\" text-anchor=\"middle\" fill=\"currentColor\">state/data</text>\n        \n        <rect x=\"115\" y=\"115\" width=\"65\" height=\"48\" rx=\"10\" stroke-width=\"2\"/>\n        <text x=\"147\" y=\"138\" font-size=\"9\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Object B</text>\n        <text x=\"147\" y=\"150\" font-size=\"7.5\" text-anchor=\"middle\" fill=\"currentColor\">behavior</text>\n        \n        <path d=\"M68,83 Q92,108 114,124\" stroke-width=\"2.2\"/>\n        <polygon points=\"115,124 105,122 110,116\" fill=\"currentColor\"/>\n        <text x=\"96\" y=\"98\" font-size=\"8\" font-weight=\"bold\" fill=\"currentColor\">#message</text>\n        \n        <circle cx=\"152\" cy=\"46\" r=\"20\" stroke-width=\"1.5\" stroke-dasharray=\"2 2\"/>\n        <text x=\"152\" y=\"49\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Squeak</text>\n    </svg>",
+                    "chapters": [
+                              {
+                                        "num": 1,
+                                        "shortTitle": "יסודות ופילוסופיית Smalltalk",
+                                        "title": "פרק 1: יסודות החשיבה מונחית העצמים, Smalltalk ו־Squeak",
+                                        "concept": "Pure OOP • הכל-הוא-עצם • Squeak Image",
+                                        "tag": "מבוא ופילוסופיה",
+                                        "synopsis": "יסודות תכנות מונחה עצמים טהור (Pure OOP), סביבת העבודה Squeak, עקרון הכל-הוא-עצם ב-Smalltalk, ומעבר מחשיבה פרוצדורלית לחשיבת ישויות אוטונומיות המתקשרות באמצעות הודעות בלבד.",
+                                        "link": "1_smalltalk_squeak.html"
+                              },
+                              {
+                                        "num": 2,
+                                        "shortTitle": "מנגנוני הפשטה ו-ADT",
+                                        "title": "פרק 2: מנגנוני הפשטה והתפתחותם",
+                                        "concept": "בעיית הקבועים • 7 שלבי הפשטה • מודולים ו-ADT",
+                                        "tag": "התפתחות ההפשטה",
+                                        "synopsis": "בעיית הקבועים החוזרים ומנגנון ההפשטה: 7 שלבי ההתפתחות בתוכנה – מפקודות מכונה, דרך משתנים, שגרות, מודולים וטיפוסי נתונים מופשטים (ADT), ועד למחלקות ועצמים חיים.",
+                                        "link": "2.html"
+                              },
+                              {
+                                        "num": 3,
+                                        "shortTitle": "המושג עצם והעתקות",
+                                        "title": "פרק 3: המושג \"עצם\" (Object)",
+                                        "concept": "Identity (==) • State • Behavior ושליחת הודעות",
+                                        "tag": "מודל העצם",
+                                        "synopsis": "שלושת עמודי התווך של עצם: זהות (Identity מול שוויון == לעומת =), מצב פנימי (State במשתני מופע), והתנהגות (Behavior) הנגישה אך ורק דרך שליחת הודעות והכמסה מלאה.",
+                                        "link": "3_object.html"
+                              },
+                              {
+                                        "num": 4,
+                                        "shortTitle": "סביבת העבודה Squeak",
+                                        "title": "פרק 4: היכרות עם סביבת העבודה Squeak",
+                                        "concept": "System Browser • Workspace • Transcript • Inspector",
+                                        "tag": "סביבת Squeak",
+                                        "synopsis": "הכרות מעשית עם סביבת העבודה Squeak: ניווט בדפדפן המערכת (System Browser), הרצת פקודות ב-Workspace, הדפסת ערכים (Print it), חקירת עצמים ב-Inspector וכתיבה ל-Transcript.",
+                                        "link": "4_squeak.html"
+                              },
+                              {
+                                        "num": 5,
+                                        "shortTitle": "משחק Quinto שלם ב-Squeak",
+                                        "title": "פרק 5: בניית משחק ראשון בסביבת Squeak (Quinto)",
+                                        "concept": "SBBCell • מחלקת Quinto • אירועי עכבר • גרפיקה",
+                                        "tag": "פרויקט משחק",
+                                        "synopsis": "פרויקט מעשי מלא – המשחק Quinto ב-Squeak: מבנה לוח המשחק, מחלקות התאים והמשחק (SBBCell ו-Quinto), תגובה לאירועי לחיצת עכבר, ציור גרפי של תאים והרצת תוכנה ראשונה שלמה.",
+                                        "link": "5_quinto_squeak.html"
+                              }
+                    ]
+          },
+          {
+                    "id": "unit-2",
+                    "index": 1,
+                    "roman": "IV",
+                    "unitNumberText": "יחידה 2",
+                    "chaptersRangeText": "פרקים 6 עד 9",
+                    "badge": "חטיבה 2 • פרקים 6–9",
+                    "stereo": "«חטיבה 2 • יחידה IV»",
+                    "className": "#SyntaxAndMessages",
+                    "title": "תחביר Smalltalk, הודעות ובלוקים",
+                    "storyDesc": "ביחידה זו נרכוש שליטה מלאה בשפת Smalltalk ובחוקיה האלגנטיים: נגלה שפה נקייה ללא מילות מפתח מורכבות שבה כל פעולה היא שליחת הודעה. נבין את שלושת סוגי ההודעות וסדר העדיפויות ביניהן, נכיר את כוחם האדיר של בלוקים (קלוז'רים) למבני בקרה ולולאות גמישות, ונצא לסיור מודרך במחלקות הגרפיות של Squeak.",
+                    "borderColor": "rgba(129, 140, 248, 0.55)",
+                    "accentColor": "#818cf8",
+                    "accentGradient": "from-indigo-500 via-purple-500 to-pink-500",
+                    "glowColor": "rgba(129, 140, 248, 0.28)",
+                    "meshClass": "unit-mesh-1",
+                    "floatClass": "float-anim-2",
+                    "schematicSvg": "<svg class=\"w-full h-full text-indigo-600/18\" viewBox=\"0 0 200 200\" fill=\"none\" stroke=\"currentColor\">\n        <path d=\"M25,25 L15,25 L15,175 L25,175\" stroke-width=\"2.5\"/>\n        <path d=\"M175,25 L185,25 L185,175 L175,175\" stroke-width=\"2.5\"/>\n        <text x=\"100\" y=\"48\" font-size=\"10\" text-anchor=\"middle\" font-weight=\"bold\" fill=\"currentColor\">[ :item | item * 2 ]</text>\n        \n        <line x1=\"45\" y1=\"75\" x2=\"155\" y2=\"75\" stroke-width=\"1.5\" stroke-dasharray=\"3 3\"/>\n        <rect x=\"22\" y=\"90\" width=\"45\" height=\"26\" rx=\"6\" stroke-width=\"1.5\"/>\n        <text x=\"44\" y=\"106\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Unary</text>\n        \n        <rect x=\"77\" y=\"90\" width=\"45\" height=\"26\" rx=\"6\" stroke-width=\"1.5\"/>\n        <text x=\"100\" y=\"106\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Binary +</text>\n        \n        <rect x=\"132\" y=\"90\" width=\"46\" height=\"26\" rx=\"6\" stroke-width=\"1.5\"/>\n        <text x=\"155\" y=\"106\" font-size=\"7.5\" text-anchor=\"middle\" fill=\"currentColor\" font-weight=\"bold\">Keyword:</text>\n        \n        <path d=\"M55,138 Q100,165 145,138\" stroke-width=\"1.8\"/>\n        <text x=\"100\" y=\"156\" font-size=\"8\" text-anchor=\"middle\" font-weight=\"bold\" fill=\"currentColor\">Cascade (;)</text>\n    </svg>",
+                    "chapters": [
+                              {
+                                        "num": 6,
+                                        "shortTitle": "תחביר השפה וליטרלים",
+                                        "title": "פרק 6: תחביר שפת Smalltalk",
+                                        "concept": "ליטרלים • Symbols • השמה (:=) • בלוקים [ :x | ]",
+                                        "tag": "תחביר Smalltalk",
+                                        "synopsis": "תחביר שפת Smalltalk: ליטרלים (מספרים, תווים, מחרוזות, Symbols ייחודיים), משתנים מקומיים וגלובליים, השמה (:=), ובלוקים של קוד כעצמים מהשורה הראשונה (BlockClosure).",
+                                        "link": "6.html"
+                              },
+                              {
+                                        "num": 7,
+                                        "shortTitle": "ביטויי הודעות וקדימויות",
+                                        "title": "פרק 7: ביטויי הודעות (Message Expressions)",
+                                        "concept": "Unary • Binary • Keyword • קדימויות • Cascading (;)",
+                                        "tag": "שליחת הודעות",
+                                        "synopsis": "שליחת הודעות: 3 סוגי ההודעות (Unary, Binary ו-Keyword), סדרי קדימויות מוחלטים משמאל לימין, שימוש בסוגריים, ושרשור הודעות לאותו נמען (Cascading עם ;) לחיסכון והפשטה.",
+                                        "link": "7_smalltalk.html"
+                              },
+                              {
+                                        "num": 8,
+                                        "shortTitle": "בלוקים ומבני בקרה",
+                                        "title": "פרק 8: בלוקים (Blocks)",
+                                        "concept": "Method Lookup • self vs super • doesNotUnderstand:",
+                                        "tag": "מודל התכנות",
+                                        "synopsis": "מודל התכנות ופיענוח הודעות: אלגוריתם Method Lookup, ההבדל המהותי בין self (חיפוש ממחלקת המופע) ל-super (חיפוש מעל המחלקה המגדירה), וטיפול בשגיאות עם doesNotUnderstand:.",
+                                        "link": "8_smalltalk.html"
+                              },
+                              {
+                                        "num": 9,
+                                        "shortTitle": "סיור במחלקות Squeak",
+                                        "title": "פרק 9: סיור במחלקות של Squeak",
+                                        "concept": "Squeak Debugger • SUnit • בדיקות יחידה • חקר ריצה",
+                                        "tag": "כלי פיתוח ודיבוג",
+                                        "synopsis": "כלי פיתוח ודיבוג מתקדמים: הדיבגר החי בזמן ריצה (Squeak Debugger), כתיבת בדיקות יחידה אוטומטיות ב-SUnit, פילוסופיית TDD ושימוש ב-Inspector לחקר מופעים חיים.",
+                                        "link": "9_squeak.html"
+                              }
+                    ]
+          },
+          {
+                    "id": "unit-3",
+                    "index": 2,
+                    "roman": "V",
+                    "unitNumberText": "יחידה 3",
+                    "chaptersRangeText": "פרקים 10 עד 12",
+                    "badge": "חטיבה 3 • פרקים 10–12",
+                    "stereo": "«חטיבה 3 • יחידה V»",
+                    "className": "#ClassesAndCollections",
+                    "title": "מחלקות ואוספי נתונים ב־Squeak",
+                    "storyDesc": "ביחידה זו נצלול אל לב המבנה ונבין מהי באמת 'מחלקה': כיצד היא משמשת תבנית ליצירת עצמים ומתפקדת בעצמה כעצם חי בזמן ריצה. נחקור לעומק את מחלקות היסוד (מספרים, מחרוזות ובוליאניים), ונשתלט על אוספי הנתונים העשירים ועל איטרטורים מתקדמים שחוסכים כתיבת לולאות מסורבלות.",
+                    "borderColor": "rgba(192, 132, 252, 0.55)",
+                    "accentColor": "#c084fc",
+                    "accentGradient": "from-purple-500 via-violet-500 to-indigo-500",
+                    "glowColor": "rgba(192, 132, 252, 0.28)",
+                    "meshClass": "unit-mesh-2",
+                    "floatClass": "float-anim-3",
+                    "schematicSvg": "<svg class=\"w-full h-full text-purple-600/18\" viewBox=\"0 0 200 200\" fill=\"none\" stroke=\"currentColor\">\n        <rect x=\"62\" y=\"25\" width=\"76\" height=\"26\" rx=\"6\" stroke-width=\"2\"/>\n        <text x=\"100\" y=\"42\" font-size=\"9\" text-anchor=\"middle\" font-weight=\"bold\" fill=\"currentColor\">Collection</text>\n        \n        <line x1=\"100\" y1=\"51\" x2=\"100\" y2=\"72\" stroke-width=\"1.5\"/>\n        <line x1=\"42\" y1=\"72\" x2=\"158\" y2=\"72\" stroke-width=\"1.5\"/>\n        <line x1=\"42\" y1=\"72\" x2=\"42\" y2=\"88\" stroke-width=\"1.5\"/>\n        <line x1=\"158\" y1=\"72\" x2=\"158\" y2=\"88\" stroke-width=\"1.5\"/>\n        \n        <rect x=\"18\" y=\"88\" width=\"48\" height=\"24\" rx=\"5\" stroke-width=\"1.5\"/>\n        <text x=\"42\" y=\"103\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\">Array</text>\n        \n        <rect x=\"76\" y=\"88\" width=\"48\" height=\"24\" rx=\"5\" stroke-width=\"1.5\"/>\n        <text x=\"100\" y=\"103\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\">Set</text>\n        \n        <rect x=\"134\" y=\"88\" width=\"50\" height=\"24\" rx=\"5\" stroke-width=\"1.5\"/>\n        <text x=\"159\" y=\"103\" font-size=\"7.5\" text-anchor=\"middle\" fill=\"currentColor\">Dictionary</text>\n        \n        <circle cx=\"100\" cy=\"148\" r=\"26\" stroke-width=\"1.5\" stroke-dasharray=\"4 2\"/>\n        <text x=\"100\" y=\"145\" font-size=\"8\" text-anchor=\"middle\" font-weight=\"bold\" fill=\"currentColor\">do: / collect:</text>\n        <text x=\"100\" y=\"157\" font-size=\"7.5\" text-anchor=\"middle\" fill=\"currentColor\">select: / inject:</text>\n    </svg>",
+                    "chapters": [
+                              {
+                                        "num": 10,
+                                        "shortTitle": "המושג \"מחלקה\" ו-Mill",
+                                        "title": "פרק 10: המושג \"מחלקה\" (Class)",
+                                        "concept": "Class תבנית ועצם • ירושת שדות ומתודות • מודל Mill",
+                                        "tag": "מבנה מחלקה",
+                                        "synopsis": "מושג המחלקה (Class): מחלקה כתבנית ליצירת עצמים וכעצם חי בפני עצמו, מנגנון הירושה (שדות ומתודות), פולימורפיזם דינמי, ומודל הטחנה (Mill) הממחיש ייצור מופעים.",
+                                        "link": "10.html"
+                              },
+                              {
+                                        "num": 11,
+                                        "shortTitle": "מחלקות יסוד (Object)",
+                                        "title": "פרק 11: מחלקות בסיסיות ב־Squeak",
+                                        "concept": "Magnitude • Number • Integer • Float • שברים מדויקים",
+                                        "tag": "מחלקות יסוד",
+                                        "synopsis": "מחלקות היסוד ב-Squeak: היררכיית המספרים המלאה (Magnitude, Number, Integer, Float, שברים מדויקים Fraction), תווים ומחרוזות, ופעולות השוואה ומיון.",
+                                        "link": "11_squeak.html"
+                              },
+                              {
+                                        "num": 12,
+                                        "shortTitle": "אוספים ואיטרטורים",
+                                        "title": "פרק 12: אוספים ב־Squeak (Collections)",
+                                        "concept": "Array • OrderedCollection • Set • do: / collect: / select:",
+                                        "tag": "אוספים ואיטרטורים",
+                                        "synopsis": "עולם האוספים (Collections): היררכיית האוספים ב-Squeak, השוואה בין Array, OrderedCollection, Set, Dictionary, ואיטרטורים אלגנטיים (do:, collect:, select:, reject:, detect:, inject:into:).",
+                                        "link": "12_squeak.html"
+                              }
+                    ]
+          },
+          {
+                    "id": "unit-4",
+                    "index": 3,
+                    "roman": "VI–VII",
+                    "unitNumberText": "יחידה 4",
+                    "chaptersRangeText": "פרקים 13 עד 18",
+                    "badge": "חטיבה 4 • פרקים 13–18",
+                    "stereo": "«חטיבה 4 • יחידות VI–VII»",
+                    "className": "#SimulationAndMetaclass",
+                    "title": "סימולציה, Morphic ומטה־מחלקות",
+                    "storyDesc": "ביחידה מסכמת זו נגיע לשיא היכולת התכנותית וההפשטה: נפתור את חידת 8 ו-N המלכות בגישת עצמים מבריקה ללא לולאות מקוננות, נבנה ממשקים גרפיים דינמיים בסביבת Morphic החיה עם אנימציות, ונחשוף את סוד המטה-מחלקות שמסביר כיצד הכל במערכת הוא עצם שלם ומושלם.",
+                    "borderColor": "rgba(217, 70, 239, 0.55)",
+                    "accentColor": "#d946ef",
+                    "accentGradient": "from-fuchsia-500 via-pink-500 to-purple-500",
+                    "glowColor": "rgba(217, 70, 239, 0.28)",
+                    "meshClass": "unit-mesh-3",
+                    "floatClass": "float-anim-4",
+                    "schematicSvg": "<svg class=\"w-full h-full text-fuchsia-600/18\" viewBox=\"0 0 200 200\" fill=\"none\" stroke=\"currentColor\">\n        <g stroke-width=\"1.2\">\n            <rect x=\"25\" y=\"32\" width=\"16\" height=\"16\" fill=\"currentColor\"/>\n            <rect x=\"41\" y=\"32\" width=\"16\" height=\"16\"/>\n            <rect x=\"25\" y=\"48\" width=\"16\" height=\"16\"/>\n            <rect x=\"41\" y=\"48\" width=\"16\" height=\"16\" fill=\"currentColor\"/>\n        </g>\n        <text x=\"75\" y=\"44\" font-size=\"8.5\" font-weight=\"bold\" fill=\"currentColor\">N-Queens (8×8)</text>\n        <text x=\"75\" y=\"56\" font-size=\"7.5\" fill=\"currentColor\">OOP Backtracking</text>\n        \n        <rect x=\"25\" y=\"80\" width=\"70\" height=\"34\" rx=\"6\" stroke-width=\"1.5\" stroke-dasharray=\"3 2\"/>\n        <text x=\"60\" y=\"98\" font-size=\"8\" text-anchor=\"middle\" fill=\"currentColor\">Morph World</text>\n        <circle cx=\"85\" cy=\"95\" r=\"4\" fill=\"currentColor\"/>\n        \n        <path d=\"M125,125 A35,35 0 1,1 170,145\" stroke-width=\"2\" stroke-dasharray=\"4 3\"/>\n        <polygon points=\"172,142 176,151 166,150\" fill=\"currentColor\"/>\n        <text x=\"145\" y=\"130\" font-size=\"8\" text-anchor=\"middle\" font-weight=\"bold\" fill=\"currentColor\">Metaclass</text>\n        <text x=\"145\" y=\"142\" font-size=\"7\" text-anchor=\"middle\" fill=\"currentColor\">5-Level Loop</text>\n    </svg>",
+                    "chapters": [
+                              {
+                                        "num": 13,
+                                        "shortTitle": "חידת 8 המלכות והיסטוריה",
+                                        "title": "פרק 13: חידת 8 המלכות",
+                                        "concept": "היסטוריה • Backtracking פרוצדורלי לעומת OOP מבוזר",
+                                        "tag": "חידת המלכות",
+                                        "synopsis": "חידת 8 המלכות: ניתוח החידה ההיסטורית, וההבדל המהותי בין גישת נסיגה (Backtracking) פרוצדורלית מונוליטית לבין מודל תכנות מונחה עצמים מבוזר שבו כל מלכה היא עצם עצמאי.",
+                                        "link": "13_8.html"
+                              },
+                              {
+                                        "num": 14,
+                                        "shortTitle": "ייצוג חידת N המלכות",
+                                        "title": "פרק 14: ייצוג חידת N המלכות",
+                                        "concept": "מחלקת Queen • findFirstRow • advance • NullQueen",
+                                        "tag": "ייצוג ופרוטוקול",
+                                        "synopsis": "ייצוג חידת N המלכות: תכנון מחלקת Queen, הגדרת פרוטוקול ההודעות בין מלכות שכנות (findFirstRow, advance, canAttack:), וייצוג מלכת הקצה NullQueen.",
+                                        "link": "14_n.html"
+                              },
+                              {
+                                        "num": 15,
+                                        "shortTitle": "פתרון OOP לחידת 8 המלכות",
+                                        "title": "פרק 15: פתרון מונחה עצמים לחידת 8 המלכות",
+                                        "concept": "שרשרת מלכות • 92 פתרונות • תיאום עצמים מקבילי",
+                                        "tag": "פתרון אלגוריתמי",
+                                        "synopsis": "פתרון מונחה עצמים מלא לחידת המלכות: הרצה חיה של שרשרת מלכות המשוחחות בהודעות בלבד, מציאת כל 92 הפתרונות של לוח 8×8, וניתוח היתרונות של הגישה המבוזרת.",
+                                        "link": "15_8.html"
+                              },
+                              {
+                                        "num": 16,
+                                        "shortTitle": "הכללת מלכות ושחמט 3D",
+                                        "title": "פרק 16: הכללה של חידת המלכות (N×N ותלת־ממד)",
+                                        "concept": "לוח N×N כללי • לוח תלת-ממדי N×N×N • אלכסונים מרחביים",
+                                        "tag": "הכללה ל-3D",
+                                        "synopsis": "הכללת חידת המלכות: התאמת האלגוריתם ללוח N×N כללי, והרחבה מבריקה לחידת מלכות בלוח תלת-ממדי N×N×N עם שכבות עומק ואלכסונים מרחביים.",
+                                        "link": "16_n_n_n_n_n.html"
+                              },
+                              {
+                                        "num": 17,
+                                        "shortTitle": "עולם הגרפיקה של Morphic",
+                                        "title": "פרק 17: הסביבה הגרפית Morphic",
+                                        "concept": "Morph • אירועי עכבר ומקלדת • אנימציה • step",
+                                        "tag": "ממשק גרפי Morphic",
+                                        "synopsis": "עולם הגרפיקה Morphic: עולם המורפים הוויזואלי, מודל טיפול באירועי עכבר (2 שלבים) ומקלדת (3 שלבים), גרירה ושחרור (Drag & Drop), אנימציות חיות ומנגנון step.",
+                                        "link": "17_morphic.html"
+                              },
+                              {
+                                        "num": 18,
+                                        "shortTitle": "מטה-מחלקות (Metaclass)",
+                                        "title": "פרק 18: המושג \"מטה־מחלקה\" (Metaclass)",
+                                        "concept": "מחלקה כעצם • 5 רמות • 10 חוקי המודל • מעגל Metaclass",
+                                        "tag": "מטה-מחלקות",
+                                        "synopsis": "מטה-מחלקות (Metaclass): סוד השלמות של Smalltalk – מחלקה כעצם לכל דבר, מערכת 5 הרמות, 10 כללי היסוד של המודל, היררכיה מקבילה, וסגירת המעגל בין Metaclass class ל-Metaclass.",
+                                        "link": "18_metaclass.html"
+                              }
+                    ]
+          }
+];
+
+        let currentActiveUnitIndex = 0;
+
+        // Toggle "Why do we need this course?" Glass Bubble
+        function toggleWhyCourse() {
+            const card = document.getElementById('why-course-card');
+            if (!card) return;
+            const isClosed = card.classList.contains('max-h-0');
+
+            if (isClosed) {
+                card.classList.remove('max-h-0', 'opacity-0');
+                card.classList.add('max-h-[800px]', 'opacity-100');
+            } else {
+                card.classList.remove('max-h-[800px]', 'opacity-100');
+                card.classList.add('max-h-0', 'opacity-0');
+            }
+        }
+
+                        // Render the 4 Unit Cards on the Main Workspace
+        function renderUnits() {
+            const grid = document.getElementById('four-units-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            unitsData.forEach((unit, idx) => {
+                const card = document.createElement('div');
+                card.id = unit.id;
+                card.className = `uml-unit-card group ${unit.meshClass} ${unit.floatClass}`;
+                card.style.setProperty('--unit-border', unit.borderColor);
+                card.style.setProperty('--unit-accent', unit.accentColor);
+                card.style.setProperty('--unit-glow', unit.glowColor);
+
+                // Build square tiles for Face B (Shifted Downwards, directly beneath divider)
+                const squaresHtml = unit.chapters.map((ch, chIdx) => {
+                    const isLastOdd = (unit.chapters.length % 2 !== 0 && chIdx === unit.chapters.length - 1);
+                    const colSpanClass = isLastOdd ? 'col-span-2' : '';
+                    return `
+                        <a href="${ch.link}" 
+                           class="chapter-square-tile group/tile ${colSpanClass}" 
+                           data-unit-id="${unit.id}"
+                           data-ch-num="${ch.num}"
+                           data-ch-title="${ch.title}"
+                           data-ch-tag="${ch.tag}"
+                           data-ch-concept="${ch.concept}"
+                           data-ch-synopsis="${ch.synopsis}"
+                           style="--tile-accent: ${unit.accentColor}; --tile-glow: ${unit.glowColor};" 
+                           title="${ch.title}">
+                            <div class="flex items-center justify-between gap-1 mb-0.5">
+                                <span class="text-[10px] font-black px-2 py-0.5 rounded-full text-white shadow-xs font-sans bg-gradient-to-r from-purple-500/90 via-fuchsia-500/90 to-indigo-500/90">
+                                    פרק ${ch.num}
+                                </span>
+                                <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-purple-400 group-hover/tile:text-purple-700 transition-transform group-hover/tile:-translate-x-1"></i>
+                            </div>
+                            <div class="text-[11.5px] font-extrabold text-slate-900 group-hover/tile:text-purple-950 line-clamp-1 my-0.5 leading-snug font-sans">
+                                ${ch.shortTitle}
+                            </div>
+                        </a>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <!-- Shifting delicate purple wave layer & Silver Waves Shimmer -->
+                    <div class="purple-wave-aura" style="animation-delay: ${(idx * 1.5).toFixed(1)}s;"></div>
+                    <div class="silver-waves-bg absolute inset-0 opacity-25 pointer-events-none z-0"></div>
+
+                    <!-- Face A: Initial Overview State (Visible by default, fades out on card hover) -->
+                    <div class="unit-face-overview relative z-10">
+                        <!-- Background Thematic Technical Diagram SVG -->
+                        <div class="unit-schematic-bg">
+                            ${unit.schematicSvg}
+                        </div>
+
+                        <!-- Top Header Compartment -->
+                        <div class="relative z-10">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-9 h-9 rounded-xl text-white font-sans font-black text-xs flex items-center justify-center shadow-xs bg-gradient-to-br from-purple-500 via-fuchsia-500 to-indigo-500">
+                                        ${unit.roman}
+                                    </span>
+                                    <div>
+                                        <span class="text-xl sm:text-2xl font-black text-slate-900 block leading-tight tracking-tight font-sans">
+                                            ${unit.unitNumberText}
+                                        </span>
+                                        <span class="text-xs sm:text-[13px] font-bold tracking-wide font-sans text-purple-700">
+                                            ${unit.chaptersRangeText}
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="text-[11px] font-sans font-black px-2.5 py-1 rounded-full bg-gradient-to-r from-purple-500/85 via-fuchsia-500/85 to-indigo-500/85 text-white shadow-2xs border border-white/40">
+                                    ${unit.chapters.length} פרקים
+                                </span>
+                            </div>
+
+                            <h3 class="font-sans text-sm sm:text-[15px] font-black text-slate-900 mt-2 leading-snug">
+                                ${unit.title}
+                            </h3>
+                        </div>
+
+                        <!-- Middle Narrative Story (Heebo Font - Crisp, Highly Legible & Engaging) -->
+                        <div class="my-auto py-2 relative z-10">
+                            <p class="font-sans text-xs sm:text-[13.5px] text-slate-800 leading-relaxed font-normal">
+                                ${unit.storyDesc}
+                            </p>
+                        </div>
+
+                        <!-- Bottom Hover Indicator Prompt -->
+                        <div class="pt-2.5 border-t border-purple-200/50 flex items-center justify-between text-xs font-bold text-purple-900 font-sans relative z-10">
+                            <span class="flex items-center gap-1.5">
+                                <span class="w-2 h-2 rounded-full animate-ping bg-purple-500"></span>
+                                <span>העבירו עכבר לצפייה בפרקים ובתקצירים</span>
+                            </span>
+                            <span class="text-sm transition-transform group-hover:-translate-x-1 text-purple-600">◄</span>
+                        </div>
+                    </div>
+
+                    <!-- Face B: Chapters Squares Grid (Revealed on card hover) -->
+                    <div class="unit-face-chapters">
+                        <!-- Top Mini Header -->
+                        <div class="flex items-center justify-between pb-1 border-b border-purple-200/50 flex-shrink-0">
+                            <div class="flex items-center gap-1.5">
+                                <span class="font-sans text-sm font-black text-slate-900">${unit.unitNumberText}</span>
+                                <span class="text-[11px] font-sans font-bold text-slate-600">• ${unit.chaptersRangeText}</span>
+                            </div>
+                            <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full text-white font-sans shadow-xs bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500">
+                                ${unit.chapters.length} פרקים
+                            </span>
+                        </div>
+
+                        <!-- Dynamic Live Preview / Synopsis Bar - Stretches right down to divider -->
+                        <div class="unit-preview-box">
+                            <div class="flex items-center justify-between gap-1.5 pb-1 border-b border-purple-200/40 flex-shrink-0">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="unit-preview-badge text-[10px] font-black px-2 py-0.5 rounded-full text-white font-sans shadow-xs bg-gradient-to-r from-purple-500 via-fuchsia-500 to-indigo-500">
+                                        💡 תקציר ממוקד
+                                    </span>
+                                    <span class="unit-preview-tag text-[10px] font-bold text-purple-800 bg-purple-100/80 px-2 py-0.5 rounded-full">
+                                        ${unit.unitNumberText}
+                                    </span>
+                                </div>
+                                <span class="text-[10px] text-slate-500 font-semibold font-sans flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+                                    <span>רחיפה חיה</span>
+                                </span>
+                            </div>
+                            <div class="unit-preview-title text-xs sm:text-[13px] font-black text-slate-900 font-sans leading-tight mt-1 flex-shrink-0">
+                                רחפו מעל פרק לצפייה בתקציר
+                            </div>
+                            <p class="unit-preview-text text-[11px] sm:text-[11.5px] text-slate-700 leading-relaxed font-sans mt-0.5">
+                                העבירו את העכבר על אחד מפרקי היחידה בריבוע למטה כדי לקרוא תקציר ממוקד, עקרונות מרכזיים והסבר מלא על הנושאים הנלמדים בו.
+                            </p>
+                            <div class="unit-preview-concepts mt-auto pt-1 text-[10px] text-purple-950 font-bold font-sans flex items-center gap-1">
+                                <span>✨ עקרון מנחה:</span>
+                                <span class="unit-preview-concept-text font-normal text-slate-600">בחרו פרק כדי לחקור את עקרונות ה-OOP</span>
+                            </div>
+                        </div>
+
+                        <!-- Delicate Hairline Divider (Directly connecting preview to chapters) -->
+                        <div class="unit-preview-divider"></div>
+
+                        <!-- Lower Chapters Grid (Shifted Downwards, directly beneath divider) -->
+                        <div class="unit-chapters-grid">
+                            ${squaresHtml}
+                        </div>
+
+                        <!-- Bottom Status / Hint -->
+                        <div class="pt-1 border-t border-purple-200/40 text-center text-[10px] font-bold text-slate-600 font-sans flex items-center justify-center gap-1 flex-shrink-0">
+                            <span>לחצו על כל פרק לכניסה ישירה</span>
+                            <i data-lucide="external-link" class="w-3 h-3 text-purple-600"></i>
+                        </div>
+                    </div>
+                `;
+
+                // Interactive Hover Logic: update preview bar when hovering over any chapter square
+                const defaultTitle = 'רחפו מעל פרק לצפייה בתקציר';
+                const defaultText = 'העבירו את העכבר על אחד מפרקי היחידה בריבוע למטה כדי לקרוא תקציר ממוקד, עקרונות מרכזיים והסבר מלא על הנושאים הנלמדים בו.';
+                const defaultTag = unit.unitNumberText;
+                const defaultConcept = 'בחרו פרק כדי לחקור את עקרונות ה-OOP';
+
+                const previewTitleEl = card.querySelector('.unit-preview-title');
+                const previewTextEl = card.querySelector('.unit-preview-text');
+                const previewBadgeEl = card.querySelector('.unit-preview-badge');
+                const previewTagEl = card.querySelector('.unit-preview-tag');
+                const previewConceptEl = card.querySelector('.unit-preview-concept-text');
+
+                card.querySelectorAll('.chapter-square-tile').forEach(tile => {
+                    tile.addEventListener('mouseenter', () => {
+                        const title = tile.getAttribute('data-ch-title');
+                        const synopsis = tile.getAttribute('data-ch-synopsis');
+                        const num = tile.getAttribute('data-ch-num');
+                        const tag = tile.getAttribute('data-ch-tag');
+                        const concept = tile.getAttribute('data-ch-concept');
+
+                        if (previewTitleEl) previewTitleEl.textContent = title;
+                        if (previewTextEl) previewTextEl.textContent = synopsis;
+                        if (previewBadgeEl) previewBadgeEl.textContent = `פרק ${num}`;
+                        if (previewTagEl) previewTagEl.textContent = tag || `פרק ${num}`;
+                        if (previewConceptEl) previewConceptEl.textContent = concept || '';
+                    });
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    if (previewTitleEl) previewTitleEl.textContent = defaultTitle;
+                    if (previewTextEl) previewTextEl.textContent = defaultText;
+                    if (previewBadgeEl) previewBadgeEl.textContent = '💡 תקציר ממוקד';
+                    if (previewTagEl) previewTagEl.textContent = defaultTag;
+                    if (previewConceptEl) previewConceptEl.textContent = defaultConcept;
+                });
+
+                // Touch support: Tap on card toggles .is-active on mobile/tablet
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a')) return;
+                    const wasActive = card.classList.contains('is-active');
+                    document.querySelectorAll('.uml-unit-card').forEach(c => c.classList.remove('is-active'));
+                    if (!wasActive) card.classList.add('is-active');
+                });
+
+                grid.appendChild(card);
+            });
+
+            if (window.lucide) lucide.createIcons();
+            updateUMLConnectors();
+        }
+
+        // Render Unit Navigation Tabs inside the Modal
+        function renderModalUnitTabs() {
+            const container = document.getElementById('modal-unit-tabs');
+            if (!container) return;
+            container.innerHTML = '';
+
+            unitsData.forEach((u, idx) => {
+                const tab = document.createElement('button');
+                tab.id = `modal-tab-${idx}`;
+                tab.className = `px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap ${
+                    idx === currentActiveUnitIndex
+                        ? 'bg-purple-600 text-white shadow-sm scale-105'
+                        : 'bg-white/30 hover:bg-white/60 text-purple-950 border border-white/40'
+                }`;
+                tab.onclick = () => switchModalUnit(idx);
+                tab.innerHTML = `
+                    <span class="w-5 h-5 rounded-md flex items-center justify-center font-code text-[11px] ${
+                        idx === currentActiveUnitIndex ? 'bg-white/25 text-white' : 'bg-purple-100/70 text-purple-900'
+                    }">${u.roman}</span>
+                    <span>${u.badge}</span>
+                `;
+                container.appendChild(tab);
+            });
+        }
+
+        // Open the Grand 80%-90% Object Modal
+        function openUnitModal(unitIdx) {
+            currentActiveUnitIndex = unitIdx;
+            const unit = unitsData[unitIdx];
+
+            renderModalUnitTabs();
+            populateModalContent(unit);
+
+            const overlay = document.getElementById('unit-modal-overlay');
+            const container = document.getElementById('unit-modal-container');
+
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            overlay.classList.add('opacity-100', 'pointer-events-auto');
+
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+
+            document.body.style.overflow = 'hidden';
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // Switch Unit while inside the Modal
+        function switchModalUnit(unitIdx) {
+            currentActiveUnitIndex = unitIdx;
+            const unit = unitsData[unitIdx];
+            renderModalUnitTabs();
+            populateModalContent(unit);
+            if (window.lucide) lucide.createIcons();
+        }
+
+        // Populate content inside the Modal
+        function populateModalContent(unit) {
+            document.getElementById('modal-breadcrumb-unit').textContent = unit.className;
+
+            const iconEl = document.getElementById('modal-unit-badge-icon');
+            iconEl.textContent = unit.roman;
+            iconEl.className = `w-14 h-14 rounded-2xl flex items-center justify-center text-white font-code font-black text-xl shadow-md flex-shrink-0 bg-gradient-to-br ${unit.accentGradient}`;
+
+            document.getElementById('modal-unit-badge-text').textContent = `${unit.className} (${unit.stereo})`;
+            const pagesEl = document.getElementById('modal-unit-pages'); if (pagesEl) pagesEl.style.display = 'none';
+            document.getElementById('modal-unit-ch-count').textContent = `פרקים ${unit.chapters[0].num}–${unit.chapters[unit.chapters.length - 1].num} (${unit.chapters.length} פרקים)`;
+            document.getElementById('modal-unit-title').textContent = `${unit.badge}: ${unit.title}`;
+
+            document.getElementById('modal-code-subclass').textContent = `CourseUnit subclass: ${unit.className}`;
+            document.getElementById('modal-code-instvars').textContent = unit.instVars;
+            document.getElementById('modal-unit-description').textContent = unit.shortDesc;
+
+            document.getElementById('modal-footer-stats').textContent = `${unit.badge} • ${unit.chapters.length} פרקי לימוד אינטראקטיביים`;
+
+            // Populate Chapters Grid
+            const chaptersGrid = document.getElementById('modal-chapters-grid');
+            chaptersGrid.innerHTML = '';
+
+            unit.chapters.forEach(ch => {
+                const card = document.createElement('a');
+                card.href = ch.link;
+                card.className = 'modal-chapter-card group';
+
+                card.innerHTML = `
+                    <!-- Delicate shifting purple aura wave layer -->
+                    <div class="purple-wave-aura" style="animation-delay: ${(ch.num * 0.4).toFixed(1)}s; opacity: 0.20;"></div>
+
+                    <div class="relative z-[5] flex-1 flex flex-col justify-between">
+                        <div>
+                            <!-- Chapter Top Meta Bar -->
+                            <div class="flex items-center justify-between gap-2 mb-2.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-8 h-8 rounded-xl text-white font-code font-black text-sm flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform bg-gradient-to-br ${unit.accentGradient}">
+                                        ${ch.num}
+                                    </span>
+                                    <span class="font-code text-[11px] font-bold text-purple-800" dir="ltr">
+                                        ${ch.cls}
+                                    </span>
+                                </div>
+                                <span class="font-code text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-white/40 text-purple-950 border border-white/50">
+                                    ${ch.pages}
+                                </span>
+                            </div>
+
+                            <!-- Chapter Title -->
+                            <h4 class="text-base sm:text-[17px] font-black text-slate-900 mb-2 group-hover:text-purple-700 transition-colors leading-snug">
+                                ${ch.title}
+                            </h4>
+
+                            <!-- Chapter Description -->
+                            <p class="text-xs sm:text-[13px] text-slate-800 font-medium leading-relaxed mb-4">
+                                ${ch.desc}
+                            </p>
+                        </div>
+
+                        <!-- Chapter Method Selector & Action Button -->
+                        <div class="pt-3 border-t border-white/20 flex items-center justify-between mt-auto">
+                            <span class="font-code text-[11px] font-bold px-2 py-0.5 rounded bg-white/30 text-purple-800" dir="ltr">
+                                &gt;&gt; #${ch.selector}
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white transition-all duration-200 group-hover:-translate-x-1 shadow-xs"
+                                  style="background-color: ${unit.accentColor}">
+                                <span>כניסה לפרק ${ch.num}</span>
+                                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                chaptersGrid.appendChild(card);
+            });
+        }
+
+        // Close the Modal
+        function closeUnitModal() {
+            const overlay = document.getElementById('unit-modal-overlay');
+            const container = document.getElementById('unit-modal-container');
+
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+
+            overlay.classList.remove('opacity-100', 'pointer-events-auto');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+
+            document.body.style.overflow = '';
+        }
+
+        function handleBackdropClick(e) {
+            if (e.target.id === 'unit-modal-overlay') {
+                closeUnitModal();
+            }
+        }
+
+        // Listen for Esc key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeUnitModal();
+            }
+        });
+
+        // Dynamic SVG Inheritance Connectors Calculation
+        function updateUMLConnectors() {
+            const svg = document.getElementById('uml-connectors-svg');
+            const group = document.getElementById('uml-svg-Dynamic-group');
+            const rootCard = document.getElementById('uml-root-tab0');
+            const workspace = document.getElementById('uml-workspace');
+
+            if (!svg || !group || !rootCard || !workspace) return;
+
+            const wsRect = workspace.getBoundingClientRect();
+            const rootRect = rootCard.getBoundingClientRect();
+
+            // Root bottom center coordinates
+            const startX = (rootRect.left + rootRect.width / 2) - wsRect.left;
+            const startY = (rootRect.bottom) - wsRect.top;
+
+            group.innerHTML = '';
+
+            unitsData.forEach(u => {
+                const el = document.getElementById(u.id);
+                if (!el) return;
+
+                const r = el.getBoundingClientRect();
+                const endX = (r.left + r.width / 2) - wsRect.left;
+                const endY = (r.top) - wsRect.top;
+
+                const midY = startY + (endY - startY) * 0.45;
+                const d = `M ${startX} ${startY} C ${startX} ${midY}, ${endX} ${midY}, ${endX} ${endY - 6}`;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'inheritance-path');
+                path.setAttribute('marker-end', 'url(#uml-arrow-violet)');
+
+                group.appendChild(path);
+            });
+        }
+
+        // Init on DOM ready
+        window.addEventListener('DOMContentLoaded', () => {
+            renderUnits();
+            window.addEventListener('resize', updateUMLConnectors);
+            
+            // Continuous smooth connector positioning tracking
+            function loopConnectors() {
+                updateUMLConnectors();
+                requestAnimationFrame(loopConnectors);
+            }
+            requestAnimationFrame(loopConnectors);
+        });
+    </script>
+</body>
+
+</html>
