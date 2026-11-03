@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>יחידה 0: מבוא והקדמה - תכנות מונחה עצמים (20906)</title>
-    <meta name="ai-document-summary" content="יחידת פתיחה ומבוא מקיפה לקורס תכנות מונחה עצמים (20906) של האוניברסיטה הפתוחה. הדף מחולק ל-3 לשוניות אינטראקטיביות: 1. 'קצת על הקורס' – מטרות הקורס, פילוסופיית Pure OOP מול שפות היברידיות, שפת Smalltalk וסביבת Squeak, 7 חלקי הקורס ו-18 הפרקים. 2. 'קצת על האתר' – מדריך לשימוש בפורטל הלימודי, סיכומי הפרקים, הסימולציות האינטראקטיביות, מאגר השאלות האמריקאיות, קובץ הסיכום המקיף ומאגר המבחנים. 3. 'קצת על המבחן' – מבנה בחינת הגמר, ניקוד, ניתוח קוד ושרשראות ירושה, שאלת המטה-מחלקות של פרק 18, 5 מלכודות נפוצות וטיפים להצלחה.">
+    <title>יחידה 0: מבוא והקדמה – תכנות מונחה עצמים (20906)</title>
+    <meta name="ai-document-summary" content="יחידת פתיחה ומבוא מקיפה ומעמיקה לקורס תכנות מונחה עצמים (20906) של האוניברסיטה הפתוחה. הדף מחולק ל-3 לשוניות אינטראקטיביות: 1. 'קצת על הקורס' – מטרות הקורס, פילוסופיית Pure OOP מול שפות היברידיות, שפת Smalltalk-80 וסביבת Squeak, 4 חטיבות הידע ו-9 פרקי הליבה. 2. 'קצת על האתר' – מדריך מקיף לפורטל הלמידה, שלושת מצבי הלימוד (מעמיק, בסיסי, מהיר), סימולציות גרפיות, שאלות אמריקאיות, מאגר המבחנים וה-AI Widget. 3. 'קצת על המבחן' – ניתוח מעמיק של בחינת הגמר, ארכיטקטורת הניקוד, 7 ארכיטיפי השאלות, 5 מלכודות המבחן הנפוצות ואסטרטגיית הזהב להוצאת 100.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -33,7 +33,7 @@
                         highlight: '#c084fc'
                     },
                     fontFamily: {
-                        sans: ['Heebo', 'sans-serif'],
+                        sans: ['Heebo', 'system-ui', '-apple-system', 'sans-serif'],
                         mono: ['JetBrains Mono', 'Consolas', 'monospace']
                     }
                 }
@@ -59,13 +59,13 @@
         .tab-content.active {
             display: block;
             opacity: 1;
-            animation: slideUp 0.4s ease-out;
+            animation: slideUp 0.35s ease-out;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(16px);
+                transform: translateY(14px);
             }
             to {
                 opacity: 1;
@@ -101,13 +101,13 @@
             align-items: center;
             width: 100%;
             padding: 0.85rem 1rem;
-            border-radius: 0.75rem;
+            border-radius: 0.85rem;
             font-size: 0.92rem;
             font-weight: 600;
             color: #1e293b;
-            border: 1px solid rgba(196, 181, 253, 0.4);
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(6px);
+            border: 1px solid rgba(196, 181, 253, 0.45);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             text-align: right;
             line-height: 1.35;
@@ -115,7 +115,7 @@
         }
 
         .nav-btn:hover {
-            background: rgba(237, 233, 254, 0.9);
+            background: rgba(237, 233, 254, 0.92);
             color: #4c1d95;
             border-color: #a78bfa;
             transform: translateX(-2px);
@@ -126,7 +126,7 @@
             color: #3b0764 !important;
             font-weight: 800 !important;
             border-color: #8b5cf6 !important;
-            box-shadow: 0 4px 14px -2px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+            box-shadow: 0 4px 14px -2px rgba(124, 58, 237, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
             transform: translateX(-3px);
         }
 
@@ -185,8 +185,8 @@
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
         }
 
         ::-webkit-scrollbar-track {
@@ -220,9 +220,9 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.82);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
             box-shadow: 0 4px 20px -2px rgba(124, 58, 237, 0.05);
         }
 
@@ -235,7 +235,14 @@
             box-shadow: 0 10px 25px -4px rgba(124, 58, 237, 0.12);
             border-color: rgba(167, 139, 250, 0.6);
         }
+
+        .code-tag {
+            font-family: 'JetBrains Mono', Consolas, monospace;
+            direction: ltr;
+            display: inline-block;
+        }
     </style>
+    <script src="theme-manager.js"></script>
 </head>
 
 <body class="antialiased h-screen flex overflow-hidden text-slate-800">
@@ -253,7 +260,7 @@
         
         <!-- Header / Notebook Box -->
         <div class="p-4 border-b border-purple-200/80 bg-white/40 backdrop-blur-md">
-            <div class="relative bg-gradient-to-br from-white to-purple-50/60 p-3.5 border border-purple-200 shadow-[2px_2px_0px_#c4b5fd] rounded-xl mb-3">
+            <div class="relative bg-gradient-to-br from-white to-purple-50/70 p-3.5 border border-purple-200 shadow-[2px_2px_0px_#c4b5fd] rounded-xl mb-3">
                 <div class="flex items-center gap-2 mb-1">
                     <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center shadow-sm">
                         0
@@ -266,11 +273,13 @@
             </div>
 
             <!-- Back to Main Menu Button -->
-            <a class="group relative overflow-hidden flex items-center justify-between px-3 py-2 bg-purple-50/80 border border-purple-200 rounded-xl transition-all hover:bg-purple-100 hover:border-purple-300 text-purple-950 font-bold text-xs shadow-sm"
+            <a class="group relative overflow-hidden flex items-center justify-between p-2.5 bg-white/70 hover:bg-white border border-purple-200/90 hover:border-purple-300 rounded-xl transition-all shadow-xs"
                 href="index.html">
-                <i class="fa-solid fa-arrow-right text-purple-500 group-hover:translate-x-0.5 transition-transform"></i>
-                <span>חזרה לתפריט הראשי (אינדקס)</span>
-                <div class="bg-purple-200/70 p-1 rounded-lg text-purple-700">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                    <span class="font-bold text-xs text-slate-800 group-hover:text-purple-900">חזרה לתפריט הראשי</span>
+                </div>
+                <div class="w-6 h-6 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 group-hover:bg-purple-100 group-hover:text-purple-700">
                     <i class="fa-solid fa-house text-xs"></i>
                 </div>
             </a>
@@ -284,8 +293,8 @@
             <button class="nav-btn active-nav" id="btn-about-course" onclick="showTab('about-course')">
                 <span class="text-xl ml-2.5">🎓</span>
                 <div class="text-right flex-1">
-                    <div class="font-bold text-[0.92rem]">קצת על הקורס</div>
-                    <div class="text-[0.74rem] text-purple-800/70 font-normal">Pure OOP, Smalltalk ו-18 הפרקים</div>
+                    <div class="font-bold text-[0.92rem]">1. קצת על הקורס</div>
+                    <div class="text-[0.74rem] text-purple-800/80 font-normal">Pure OOP, Smalltalk ו-9 הפרקים</div>
                 </div>
                 <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
             </button>
@@ -294,8 +303,8 @@
             <button class="nav-btn" id="btn-about-site" onclick="showTab('about-site')">
                 <span class="text-xl ml-2.5">🌐</span>
                 <div class="text-right flex-1">
-                    <div class="font-bold text-[0.92rem]">קצת על האתר</div>
-                    <div class="text-[0.74rem] text-slate-500 font-normal">סימולציות, שאלות וארגז כלים</div>
+                    <div class="font-bold text-[0.92rem]">2. קצת על האתר</div>
+                    <div class="text-[0.74rem] text-slate-500 font-normal">3 מצבי לימוד, סימולציות ו-AI</div>
                 </div>
                 <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
             </button>
@@ -304,8 +313,8 @@
             <button class="nav-btn" id="btn-about-exam" onclick="showTab('about-exam')">
                 <span class="text-xl ml-2.5">📝</span>
                 <div class="text-right flex-1">
-                    <div class="font-bold text-[0.92rem]">קצת על המבחן</div>
-                    <div class="text-[0.74rem] text-slate-500 font-normal">מבנה, מלכודות וסודות פרק 18</div>
+                    <div class="font-bold text-[0.92rem]">3. קצת על המבחן</div>
+                    <div class="text-[0.74rem] text-slate-500 font-normal">מבנה, 7 ארכיטיפים ואסטרטגיה ל-100</div>
                 </div>
                 <i class="fa-solid fa-chevron-left text-xs opacity-60"></i>
             </button>
@@ -315,11 +324,11 @@
                 <div class="nav-group-title">קיצורי דרך מרכזיים</div>
                 <div class="space-y-1.5 text-xs font-medium">
                     <a href="summary.html" class="flex items-center justify-between p-2 rounded-lg bg-white/60 hover:bg-purple-100/70 text-slate-700 hover:text-purple-900 border border-purple-100 transition">
-                        <span>📑 הסיכום המקיף של כל 18 הפרקים</span>
+                        <span>📑 מחברת הסיכום המלאה (9 הפרקים)</span>
                         <i class="fa-solid fa-arrow-left text-[10px] text-purple-400"></i>
                     </a>
                     <a href="exams.html" class="flex items-center justify-between p-2 rounded-lg bg-white/60 hover:bg-purple-100/70 text-slate-700 hover:text-purple-900 border border-purple-100 transition">
-                        <span>🏆 מאגר בחינות גמר ופתרונות</span>
+                        <span>🏆 מאגר בחינות גמר ופתרונות מלאים</span>
                         <i class="fa-solid fa-arrow-left text-[10px] text-purple-400"></i>
                     </a>
                 </div>
@@ -329,8 +338,8 @@
         <!-- Sidebar Bottom Footer -->
         <div class="mt-auto p-3 border-t border-purple-200/80 bg-white/50 backdrop-blur-md flex flex-col gap-2">
             <a class="group relative overflow-hidden flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white rounded-xl transition-all font-bold text-xs shadow-md"
-                href="1_smalltalk_squeak.html">
-                <span>כניסה לפרק 1: יסודות ו-Smalltalk</span>
+                href="20906_1.html">
+                <span>כניסה לפרק 1: יסודות ה-OOP</span>
                 <i class="fa-solid fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
             </a>
         </div>
@@ -352,7 +361,7 @@
                         <span>מדריך ומבוא לקורס 20906</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
-                        קצת על הקורס: תכנות מונחה עצמים
+                        1. קצת על הקורס: תכנות מונחה עצמים
                     </h1>
                     <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
                         ברוכים הבאים לאחד הקורסים המרתקים, הפילוסופיים והמעצבים ביותר בתואר למדעי המחשב. כאן לא לומדים עוד שפת תכנות שגרתית – כאן לומדים <strong class="text-purple-900">לחשוב מונחה עצמים באופן טהור (Pure OOP)</strong>.
@@ -365,11 +374,11 @@
                     <section class="glass-card p-6 sm:p-8 rounded-2xl">
                         <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
                             <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">1</span>
-                            מהות הקורס: מודל טהור מול מודל היברידי
+                            מהות הקורס: מודל טהור (Pure OOP) מול שפות היברידיות
                         </h2>
                         
                         <p class="mb-4">
-                            רוב הסטודנטים מגיעים לקורס כשהם מכירים שפות כגון <strong>Java, C++ או Python</strong>. שפות אלו מוגדרות כ-<strong>שפות היברידיות (Hybrid OOP)</strong>: הן משלבות מנגנוני עצמים לצד תכנות פרוצדורלי קלאסי (משתנים פרימיטיביים כמו <code>int</code> ו-<code>boolean</code> שאינם עצמים, פקודות בקרה חיצוניות כמו <code>if</code> ו-<code>for</code>, ופונקציות סטטיות).
+                            רוב הסטודנטים מגיעים לקורס כשהם מכירים שפות כגון <strong>Java, C++, C# או Python</strong>. שפות אלו מוגדרות כ-<strong>שפות היברידיות (Hybrid OOP)</strong>: הן משלבות מנגנוני עצמים לצד תכנות פרוצדורלי קלאסי (משתנים פרימיטיביים כמו <code class="code-tag text-purple-700">int</code> ו-<code class="code-tag text-purple-700">boolean</code> שאינם עצמים, פקודות בקרה חיצוניות כמו <code class="code-tag text-purple-700">if</code> ו-<code class="code-tag text-purple-700">for</code>, ופונקציות סטטיות שאינן שייכות לאף מופע).
                         </p>
 
                         <p class="mb-6">
@@ -381,144 +390,167 @@
                             <div class="flex items-start gap-3">
                                 <span class="text-2xl mt-0.5">💡</span>
                                 <div>
-                                    <strong class="text-purple-950 text-lg block mb-1">חוק היסוד של Smalltalk: הכל הוא עצם!</strong>
+                                    <strong class="text-purple-950 text-lg block mb-1">חוק היסוד של Smalltalk: הכל הוא עצם! (Everything is an Object)</strong>
                                     <p class="text-purple-900/90 text-sm leading-relaxed">
-                                        ב-Smalltalk אין שום דבר שאינו עצם. מספר שלם הוא עצם; מחרוזת היא עצם; קטע קוד בתוך סוגריים מרובעים הוא עצם (בלוק); תנאים ולולאות אינם מילות מפתח של השפה אלא <strong>הודעות שנשלחות לעצמים</strong>; ואפילו המחלקות עצמן הן עצמים חיים בזיכרון!
+                                        ב-Smalltalk אין שום דבר שאינו עצם. מספר שלם (<code class="code-tag font-bold">5</code>) הוא עצם; מחרוזת היא עצם; קטע קוד בתוך סוגריים מרובעים הוא עצם מסוג <code class="code-tag font-bold">BlockClosure</code>; תנאים ולולאות אינם מילות מפתח תחביריות אלא <strong>הודעות שנשלחות לעצמים בוליאניים</strong>; ואפילו המחלקות עצמן הן עצמים חיים בזיכרון המחזיקים מופעים של מטה-מחלקות!
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Pure vs Hybrid Table -->
-                        <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
                             <table class="w-full text-right text-sm">
-                                <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
+                                <thead class="bg-purple-100/70 text-purple-950 font-bold border-b border-purple-200">
                                     <tr>
-                                        <th class="p-3.5">מאפיין השוואה</th>
-                                        <th class="p-3.5 bg-purple-50 text-purple-950 border-x border-purple-100">Smalltalk (מודל טהור)</th>
-                                        <th class="p-3.5">Java / C++ (מודל היברידי)</th>
+                                        <th class="p-3.5">מאפיין</th>
+                                        <th class="p-3.5">שפות היברידיות (Java, C++, Python)</th>
+                                        <th class="p-3.5 bg-purple-200/50 text-purple-900">Smalltalk-80 / Squeak (טהורה)</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold text-slate-800">האם הכל עצם?</td>
-                                        <td class="p-3 bg-purple-50/40 text-purple-900 font-bold border-x border-purple-100">כן, 100% ללא יוצא מן הכלל</td>
-                                        <td class="p-3 text-slate-600">לא (טיפוסים פרימיטיביים <code>int</code>, <code>char</code>)</td>
+                                    <tr class="hover:bg-slate-50/80">
+                                        <td class="p-3.5 font-bold text-slate-900">האם הכל עצם?</td>
+                                        <td class="p-3.5">לא. טיפוסים פרימיטיביים (<code class="code-tag">int, double, char</code>) אינם עצמים.</td>
+                                        <td class="p-3.5 font-bold text-purple-800 bg-purple-50/30">כן! אפילו המספר 3, הסימן השווה, ו-nil הם עצמים.</td>
                                     </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold text-slate-800">מבני בקרה (תנאים ולולאות)</td>
-                                        <td class="p-3 bg-purple-50/40 text-purple-900 border-x border-purple-100">הודעות רגילות הנשלחות לבוליאנים ולבלוקים (<code>ifTrue:</code>, <code>whileTrue:</code>)</td>
-                                        <td class="p-3 text-slate-600">מילות מפתח קבועות מראש במהדר (<code>if</code>, <code>while</code>, <code>for</code>)</td>
+                                    <tr class="hover:bg-slate-50/80">
+                                        <td class="p-3.5 font-bold text-slate-900">מבני בקרה (<code class="code-tag">if, while</code>)</td>
+                                        <td class="p-3.5">מילות מפתח שמורות של הקומפיילר השולטות בזרימה.</td>
+                                        <td class="p-3.5 font-bold text-purple-800 bg-purple-50/30">שליחת הודעות פולימורפיות (<code class="code-tag">ifTrue:ifFalse:</code>) לבוליאנים!</td>
                                     </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold text-slate-800">האם מחלקה היא עצם?</td>
-                                        <td class="p-3 bg-purple-50/40 text-purple-900 font-bold border-x border-purple-100">כן! מופע של מטה-מחלקה ייעודית (Metaclass)</td>
-                                        <td class="p-3 text-slate-600">רק ייצוג מוגבל דרך Reflection (המחלקה <code>Class</code>)</td>
+                                    <tr class="hover:bg-slate-50/80">
+                                        <td class="p-3.5 font-bold text-slate-900">מחלקות בזיכרון</td>
+                                        <td class="p-3.5">תבניות סטטיות בזמן הידור (עם תמיכה חלקית ברפלקציה).</td>
+                                        <td class="p-3.5 font-bold text-purple-800 bg-purple-50/30">עצמים חיים בזמן ריצה, מופעים של מטה-מחלקות ייעודיות!</td>
                                     </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3 font-semibold text-slate-800">תחביר השפה</td>
-                                        <td class="p-3 bg-purple-50/40 text-purple-900 border-x border-purple-100">תחביר מינימליסטי בן עמוד אחד בלבד (שליחת הודעות)</td>
-                                        <td class="p-3 text-slate-600">תחביר מורכב, עמוס אופרטורים ומילות שמורות</td>
+                                    <tr class="hover:bg-slate-50/80">
+                                        <td class="p-3.5 font-bold text-slate-900">סביבת העבודה</td>
+                                        <td class="p-3.5">קובצי קוד טקסטואליים (.java, .cpp) הרצים בקונסולה.</td>
+                                        <td class="p-3.5 font-bold text-purple-800 bg-purple-50/30">עולם גרפי חי ומתמשך (Image & Changes) שאינו "מתכבה".</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </section>
 
-                    <!-- Section 2: Course Roadmap (7 Parts & 18 Chapters) -->
+                    <!-- Section 2: Roadmap of the 9 Chapters -->
                     <section class="glass-card p-6 sm:p-8 rounded-2xl">
                         <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2.5">
                             <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">2</span>
-                            מפת הדרכים: 7 חלקי הקורס ו-18 הפרקים
+                            מפת המסע של הקורס: 4 החטיבות ו-9 פרקי הליבה
                         </h2>
-                        <p class="text-slate-600 mb-6">
-                            הקורס בנוי בצורה הדרגתית, החל מהבנת ההיסטוריה והצורך בהפשטה, דרך תכנות מעשי, ועד למודלים מתמטיים מופשטים:
+                        <p class="text-sm text-slate-600 mb-6">
+                            הקורס מחולק בתוכנית הלימודים החדשה ל-<strong>9 פרקי ליבה מקיפים</strong>, הבנויים בשרשרת ידע הרמטית ומדורגת:
                         </p>
 
-                        <!-- Visual Grid of Course Modules -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             
                             <!-- Part 1 -->
-                            <div class="p-4 rounded-xl border border-orange-200 bg-orange-50/40 hover:bg-orange-50 transition">
+                            <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/40 hover:bg-purple-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-orange-200 text-orange-900">חלק I • פרקים 1–2</span>
-                                    <span class="text-xs text-orange-700 font-bold">מבוא והפשטה</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-purple-200 text-purple-900">חטיבה א' • פרק 1</span>
+                                    <span class="text-xs text-purple-700 font-bold">יסודות והפשטה</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">הפשטה ופילוסופיית Smalltalk</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">יסודות ה-OOP, התפתחות ההפשטה והמושג 'עצם'</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    למה Smalltalk, בעיית הקבועים החוזרים, 7 שלבי ההתפתחות ההיסטורית (משתנים, שגרות, מודולים, ADT ועד ל-Class ב-OOP).
+                                    משבר התוכנה, תזת צ'רץ'-טיורינג מול ספיר-וורף, משל הפרחים של באד, 7 רמות ההפשטה, ADT מול מחלקה, זהות/מצב/התנהגות, ניהול זיכרון ו-GC, זהות (<code class="code-tag">==</code>) מול שוויון מבני (<code class="code-tag">=</code>), ושלוש רמות העתקה (<code class="code-tag">shallowCopy, copyTwoLevel, deepCopy</code>).
                                 </p>
                             </div>
 
                             <!-- Part 2 -->
-                            <div class="p-4 rounded-xl border border-red-200 bg-red-50/40 hover:bg-red-50 transition">
+                            <div class="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-red-200 text-red-900">חלק II • פרק 3</span>
-                                    <span class="text-xs text-red-700 font-bold">מודל העצם</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-indigo-200 text-indigo-900">חטיבה א' • פרק 2</span>
+                                    <span class="text-xs text-indigo-700 font-bold">סביבת הפיתוח Squeak</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">המושג "עצם" וסוגי העתקות</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">סביבת Squeak, כלי הפיתוח ופרויקט Quinto</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    שלושת מאפייני העצם (זהות ==, מצב פנימי והתנהגות), ו-4 סוגי העתקה קריטיים לבחינה (זהותית, רדודה, עמוקה ורקורסיבית).
+                                    ארכיטקטורת המכונה הווירטואלית ו-3 קובצי הליבה (.image, .changes, .sources), ממשק 3 כפתורי העכבר, System Browser, Workspace, Transcript, ופיתוח פרויקט המשחק Quinto מתחילתו ועד סופו.
                                 </p>
                             </div>
 
                             <!-- Part 3 -->
-                            <div class="p-4 rounded-xl border border-blue-200 bg-blue-50/40 hover:bg-blue-50 transition">
+                            <div class="p-4 rounded-xl border border-fuchsia-200 bg-fuchsia-50/40 hover:bg-fuchsia-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-blue-200 text-blue-900">חלק III • פרקים 4–5</span>
-                                    <span class="text-xs text-blue-700 font-bold">סביבת Squeak</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-fuchsia-200 text-fuchsia-900">חטיבה ב' • פרק 3</span>
+                                    <span class="text-xs text-fuchsia-700 font-bold">תחביר וסדרי קדימויות</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">כלי הפיתוח והמשחק Quinto</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">תחביר Smalltalk, סוגי הודעות וקדימויות</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    מבנה ה-Image וה-Changes, כלי העבודה (Workspace, Browser, Debugger), ומימוש משחק הלוח Quinto ב-Smalltalk.
+                                    ליטרלים, מערכים סטטיים <code class="code-tag">#()</code> מול דינמיים <code class="code-tag">{}</code>, 6 הפסאודו-משתנים (self, super, nil, true, false, thisContext), 3 סוגי ההודעות: Unary, Binary, Keyword, חוקי קדימות משמאל לימין ללא קדימות לכפל, ושרשור Cascading (<code class="code-tag">;</code>).
                                 </p>
                             </div>
 
                             <!-- Part 4 -->
-                            <div class="p-4 rounded-xl border border-teal-200 bg-teal-50/40 hover:bg-teal-50 transition">
+                            <div class="p-4 rounded-xl border border-pink-200 bg-pink-50/40 hover:bg-pink-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-teal-200 text-teal-900">חלק IV • פרקים 6–9</span>
-                                    <span class="text-xs text-teal-700 font-bold">תחביר ושליחת הודעות</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-pink-200 text-pink-900">חטיבה ב' • פרק 4</span>
+                                    <span class="text-xs text-pink-700 font-bold">בלוקים ובדיקות</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">תחביר, בלוקים והורשה</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">מתודות, בלוקים (BlockClosure) ו-SUnit</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    3 סוגי הודעות, Cascade (;), בלוקים ואיטרטורים, 3 סוגי עצמים בזיכרון, מתודות מחלקה מול static, משתני מופע של מחלקה, ו-self מול super.
+                                    תחביר מתודות, איסור השמה לפרמטרים, סגורים לקסיקליים (Blocks), יציאה לא-מקומית (<code class="code-tag">^</code>), מימוש תנאים ולולאות כהודעות פולימורפיות, וכתיבת בדיקות יחידה ב-SUnit.
                                 </p>
                             </div>
 
                             <!-- Part 5 -->
                             <div class="p-4 rounded-xl border border-purple-200 bg-purple-50/40 hover:bg-purple-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-purple-200 text-purple-900">חלק V • פרקים 10–12</span>
-                                    <span class="text-xs text-purple-700 font-bold">מחלקות ואוספים</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-purple-200 text-purple-900">חטיבה ב' • פרק 5</span>
+                                    <span class="text-xs text-purple-700 font-bold">מחלקות והורשה</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">המחלקות, בבואה (Reflection) ואוספים</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">המושג 'מחלקה', הורשה, Traits ו-Method Lookup</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    3 תפקידים ו-5 מרכיבים של מחלקה, בבואה ב-Java וב-Smalltalk, היררכיית האוספים (Collection, Array, Set, Dictionary) ואיטרטורים.
+                                    3 תפקידי המחלקה ו-5 מרכיביה, כמוסות מבוססת-עצם, משתני מופע מול מחלקה, אלגוריתם ה-Method Lookup בעץ הירושה, ההבדל הקריטי בין self ל-super, שימוש ב-Traits, וטיפול ב-doesNotUnderstand:.
                                 </p>
                             </div>
 
                             <!-- Part 6 -->
-                            <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 hover:bg-emerald-50 transition">
+                            <div class="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40 hover:bg-indigo-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-emerald-200 text-emerald-900">חלק VI • פרקים 13–17</span>
-                                    <span class="text-xs text-emerald-700 font-bold">סימולציה וגרפיקה</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-indigo-200 text-indigo-900">חטיבה ג' • פרק 6</span>
+                                    <span class="text-xs text-indigo-700 font-bold">אוספים ומספרים</span>
                                 </div>
-                                <h3 class="font-bold text-slate-900 text-base mb-1">חידת המלכות והסביבה הגרפית Morphic</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">היררכיות הליבה, מספרים ומערכת האוספים</h3>
                                 <p class="text-xs text-slate-600 leading-relaxed">
-                                    סימולציית 8 המלכות ו-8 הסימטריות, פתרון מונחה עצמים עם QueenTerminator, הכללה לתלת-ממד, וסביבת Morphic האינטראקטיבית.
+                                    המחלקה Object, היררכיית המספרים וכפייה מותאמת (adaptToNumber:andSend:), עץ ה-Collections, שמונת המאפיינים, Set/Bag מול IdentitySet/IdentityBag, ואיטרטורים עשירים (<code class="code-tag">do:, collect:, select:, reject:, inject:into:</code>).
                                 </p>
                             </div>
 
                             <!-- Part 7 -->
-                            <div class="p-4 rounded-xl border border-indigo-300 bg-indigo-50/60 hover:bg-indigo-50 transition md:col-span-2 shadow-sm">
+                            <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 hover:bg-emerald-50 transition">
                                 <div class="flex items-center justify-between mb-2">
-                                    <span class="text-xs font-black px-2.5 py-0.5 rounded bg-indigo-600 text-white">חלק VII • פרק 18 (גולת הכותרת!)</span>
-                                    <span class="text-xs text-indigo-900 font-extrabold">נושא המפתח במבחן</span>
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-emerald-200 text-emerald-900">חטיבה ג' • פרק 7</span>
+                                    <span class="text-xs text-emerald-700 font-bold">תכנון מבוזר</span>
                                 </div>
-                                <h3 class="font-bold text-indigo-950 text-lg mb-1">מטה-מחלקות (Metaclasses) ומודל 5 הרמות</h3>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">תכנון מונחה עצמים מבוזר – חידת 8 המלכות</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    פתרון מבוזר לחידת 8 המלכות ללא לולאות מקוננות, העברת אחריות ואלגוריתם נסיגה (Backtracking) בין אובייקטים, מודל ה-QueenTerminator, הכללה ללוחות $N 	imes N$, וניתוח 8 הסימטריות וגרפים.
+                                </p>
+                            </div>
+
+                            <!-- Part 8 -->
+                            <div class="p-4 rounded-xl border border-amber-200 bg-amber-50/40 hover:bg-amber-50 transition">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2 py-0.5 rounded bg-amber-200 text-amber-900">חטיבה ד' • פרק 8</span>
+                                    <span class="text-xs text-amber-700 font-bold">ממשק גרפי חי</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base mb-1">ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    ישירות וחיות, ממשק ה-Halo, עץ ההכלה submorphs ו-owner, מערכת הצירים והמרחב, שחזור טקסטואלי initString, טיפול באירועי עכבר ומקלדת, ואנימציה חיה באמצעות Stepping (step ו-stepTime).
+                                </p>
+                            </div>
+
+                            <!-- Part 9 (Highlight!) -->
+                            <div class="p-4 rounded-xl border-2 border-purple-400 bg-gradient-to-br from-purple-50 via-indigo-50/60 to-fuchsia-50 hover:bg-purple-50 transition md:col-span-2 shadow-sm">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-black px-2.5 py-0.5 rounded bg-purple-700 text-white shadow-xs">חטיבה ד' • פרק 9 (גולת הכותרת האקדמית!)</span>
+                                    <span class="text-xs text-purple-900 font-extrabold">25–30 נקודות בטוחות בבחינה</span>
+                                </div>
+                                <h3 class="font-black text-purple-950 text-lg mb-1">מודל מטה-המחלקות (Metaclass), 5 הרמות ורפלקציה</h3>
                                 <p class="text-sm text-slate-700 leading-relaxed">
-                                    איך מחלקות עצמן מיוצגות כעצמים? מהי המחלקה של מחלקה? 10 חוקי המודל האקסיומטיים, סיווג השפות ל-5 רמות, היררכיית המטה-מחלקות המקבילה, ומסלול יצירת מופע חדש (<code class="text-indigo-800 font-bold">TranslucentColor new</code>).
+                                    סוד השלמות של מודל האובייקטים: מחלקה כעצם חי, אבולוציית 5 הרמות, 10 חוקי המודל האקסיומטיים, היררכיית ה-Metaclass המקבילה, מסלול השיגור ויצירת מופע חדש (<code class="code-tag font-bold text-purple-900">TranslucentColor new</code>), ורפלקציה מלאה באמצעות Execution Contexts.
                                 </p>
                             </div>
 
@@ -536,113 +568,207 @@
                 <!-- Hero Header -->
                 <header class="mb-10 pb-6 border-b border-purple-200">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
-                        <i class="fa-solid fa-globe"></i>
+                        <i class="fa-solid fa-laptop-code"></i>
                         <span>מדריך השימוש בפורטל הלימודי</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
-                        קצת על האתר: חוויית למידה אינטראקטיבית
+                        2. קצת על האתר: מערכת למידה ותרגול אינטראקטיבית מקיפה
                     </h1>
                     <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
-                        האתר תוכנן ונבנה במיוחד כדי לגשר על הפער שבין תיאוריה מופשטת לבין הבנה אינטואיטיבית עמוקה. כאן תמצאו מעטפת למידה מלאה לכל שלב בסמסטר.
+                        האתר תוכנן מהיסוד כפלטפורמת למידה עצמאית ומדויקת, המשלבת כיסוי מלא של הסילבוס, סימולציות גרפיות להבנה מעמיקה, שאלות אמריקאיות עם משוב מיידי ומצבי לימוד מותאמים.
                     </p>
                 </header>
 
                 <div class="space-y-10 text-slate-700 text-base leading-relaxed">
                     
-                    <!-- Vision Box -->
+                    <!-- 1. The Three Pillars -->
                     <section class="glass-card p-6 sm:p-8 rounded-2xl">
                         <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
                             <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">1</span>
-                            החזון: למידה אקטיבית וחיה
+                            שלושת עמודי התווך של האתר
                         </h2>
-                        <p class="mb-4">
-                            שפת Smalltalk היא סביבה חיה (Living System). ללמוד אותה מתוך דפי נייר סטטיים זה כמו ללמוד שחייה בהתכתבות. לכן, הפורטל נבנה כדי להעניק לכם:
-                        </p>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center mt-6">
-                            <div class="p-4 rounded-xl bg-purple-50/60 border border-purple-200">
-                                <div class="text-3xl mb-2">👁️</div>
-                                <strong class="text-purple-950 block text-sm mb-1">המחשה ויזואלית</strong>
-                                <p class="text-xs text-slate-600">דיאגרמות אינטראקטיביות של אובייקטים בזיכרון, שרשראות ירושה ועצי מחלקות.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                            
+                            <div class="p-4 rounded-xl bg-purple-50/50 border border-purple-200 space-y-2">
+                                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 flex items-center justify-center font-black text-sm">
+                                    100%
+                                </div>
+                                <h3 class="font-black text-slate-900 text-sm">כיסוי הרמטי ומדויק של הסילבוס</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    התאמה מלאה ומדויקת לתוכנית הלימודים הרשמית של האו"פ. כל מודל פורמלי, חוק יסוד, כלל קדימות, היררכיית מחלקות ומתודת Smalltalk מוסברים בצורה בהירה ללא חוסרים וללא קיצורי דרך.
+                                </p>
                             </div>
-                            <div class="p-4 rounded-xl bg-indigo-50/60 border border-indigo-200">
-                                <div class="text-3xl mb-2">⚡</div>
-                                <strong class="text-indigo-950 block text-sm mb-1">משוב מיידי</strong>
-                                <p class="text-xs text-slate-600">שאלות אמריקאיות עם בדיקה אוטומטית והסבר מעמיק על כל מסיח נכון או שגוי.</p>
+
+                            <div class="p-4 rounded-xl bg-indigo-50/50 border border-indigo-200 space-y-2">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 flex items-center justify-center font-black text-sm">
+                                    ⚡
+                                </div>
+                                <h3 class="font-black text-slate-900 text-sm">סימולציות ומעבדות גרפיות חיות</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    מעבדות ויזואליות אינטראקטיביות המאפשרות "לראות בעיניים" תהליכים מופשטים: סימולטור Method Lookup חי, עצי מטה-מחלקות אינטראקטיביים, פתרון חידת 8 המלכות ב-Backtracking, וסביבת Morphic.
+                                </p>
                             </div>
-                            <div class="p-4 rounded-xl bg-fuchsia-50/60 border border-fuchsia-200">
-                                <div class="text-3xl mb-2">🎯</div>
-                                <strong class="text-fuchsia-950 block text-sm mb-1">הכנה ממוקדת</strong>
-                                <p class="text-xs text-slate-600">הפרדה חדה בין עיקר לטפל, סיכום מקיף, ותרגול מסיבי של בחינות גמר אמיתיות.</p>
+
+                            <div class="p-4 rounded-xl bg-fuchsia-50/50 border border-fuchsia-200 space-y-2">
+                                <div class="w-8 h-8 rounded-lg bg-fuchsia-100 text-fuchsia-800 flex items-center justify-center font-black text-sm">
+                                    ❓
+                                </div>
+                                <h3 class="font-black text-slate-900 text-sm">שאלות אמריקאיות ותרגול מודרך</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    מאגר שאלות רב-ברירה עשיר בסרגל הצד של כל פרק, המאפשר בדיקה עצמית מיידית עם משוב אוטומטי ונימוק מפורט לכל מסיח ותשובה, להטמעת החומר וחידוד התובנות לקראת הבחינה.
+                                </p>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Features of the Site -->
-                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
-                        <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
-                            <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">2</span>
-                            ארגז הכלים הייחודי באתר
-                        </h2>
+                    <!-- 2. Three Study Modes (Detailed) -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-purple-50/40 via-white to-indigo-50/20">
+                        <div class="border-b border-purple-200/80 pb-3 mb-6">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">2</span>
+                                שלושת מצבי הלימוד באתר: התאמה לכל שלב במסע
+                            </h2>
+                            <p class="text-xs text-slate-600">
+                                בראש סרגל הניווט של כל פרק תמצאו בורר המאפשר מעבר מיידי ודינמי בין שלושת מצבי הלימוד המותאמים אישית לשלב הלמידה שלכם:
+                            </p>
+                        </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                             
-                            <!-- Feature 1: Chapters -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
-                                <div class="flex items-start gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-violet-100 text-violet-700 flex items-center justify-center text-2xl flex-shrink-0">
-                                        📖
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 text-lg mb-1">18 פרקי לימוד מקיפים</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
-                                            כל פרק בקורס זוכה לדף ייעודי מלא, עם הסברים בהירים, קטעי קוד מוארים בתחביר צבעוני, כרטיסיות הבנה (Flashcards) ושאלות מנחות.
-                                        </p>
-                                    </div>
+                            <!-- Deep Mode -->
+                            <div class="p-5 rounded-2xl bg-white border-2 border-purple-200 shadow-sm space-y-3 relative overflow-hidden">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-purple-100 text-purple-900 text-xs font-black">
+                                    <span>📚</span>
+                                    <span>מצב מעמיק (לימוד ראשוני)</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base">הבנה תיאורטית והנדסית מלאה</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    הסבר מלא ומקיף של כל תתי-הסעיפים, דוגמאות אינטואיטיביות, מודלים מנטליים, רקע עיוני רחב, ניתוח קוד שורה-אחר-שורה וכל הסימולציות האינטראקטיביות.
+                                </p>
+                                <div class="pt-2 border-t border-slate-100 text-[11px] text-purple-800 font-semibold space-y-1">
+                                    <div>✓ מתאים לתחילת הסמסטר והבנה שורשית</div>
+                                    <div>✓ כולל את כל ענפי ההוכחות והדיאגרמות</div>
                                 </div>
                             </div>
 
-                            <!-- Feature 2: Interactive Simulations -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
-                                <div class="flex items-start gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl flex-shrink-0">
-                                        🕹️
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 text-lg mb-1">סימולטורים אינטראקטיביים</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
-                                            משחק Quinto חי, סימולטור ביצוע הודעות ו-Cascade, מעקב אחר חיפוש מתודות (<code class="text-xs">self/super</code>), לוח 8 המלכות, ומעבדת Morphic גרפית.
-                                        </p>
-                                    </div>
+                            <!-- Core Mode -->
+                            <div class="p-5 rounded-2xl bg-white border-2 border-indigo-200 shadow-sm space-y-3 relative overflow-hidden">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-900 text-xs font-black">
+                                    <span>📖</span>
+                                    <span>מצב בסיסי (חזרה ממוקדת)</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base">הגדרות ליבה ותרגול ממ"נים</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    התמקדות בהגדרות הליבה, תחביר השפה המחייב, טבלאות קדימויות ותרשימי זרימה חיוניים. מנקה רעשי רקע ומספק את התמצית המעשית הדרושה לפתרון מטלות הקורס.
+                                </p>
+                                <div class="pt-2 border-t border-slate-100 text-[11px] text-indigo-800 font-semibold space-y-1">
+                                    <div>✓ אידיאלי לקראת כתיבת והגשת ממ"נים</div>
+                                    <div>✓ מיקוד בתחביר תקני וכללי Smalltalk</div>
                                 </div>
                             </div>
 
-                            <!-- Feature 3: Sidebar Questions -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
-                                <div class="flex items-start gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-2xl flex-shrink-0">
-                                        ❓
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 text-lg mb-1">שאלות אמריקאיות בסרגל הצד</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
-                                            בכל פרק משולבות עשרות שאלות רב-ברירתיות לבדיקה עצמית, עם רמזים, הסברים מפורטים למסיחים ושמירת התקדמות ב-Local Storage.
-                                        </p>
-                                    </div>
+                            <!-- Fast Mode -->
+                            <div class="p-5 rounded-2xl bg-white border-2 border-fuchsia-200 shadow-sm space-y-3 relative overflow-hidden">
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-fuchsia-100 text-fuchsia-900 text-xs font-black">
+                                    <span>⚡</span>
+                                    <span>מצב מהיר (מרתון לקראת מבחן)</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 text-base">רענון בזק ומלכודות מפתח</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    הצגת נקודות מפתח בלבד, טבלאות השוואה מסכמות, כרטיסיות אזהרה מפני מלכודות נפוצות (Pitfalls), חוקי ברזל לבחינה ורשימות תיוג מהירות לשינון יעיל.
+                                </p>
+                                <div class="pt-2 border-t border-slate-100 text-[11px] text-fuchsia-800 font-semibold space-y-1">
+                                    <div>✓ מיועד לימים האחרונים שלפני המבחן</div>
+                                    <div>✓ מעבר "תכל'ס" על חוקי המפתח ומלכודות</div>
                                 </div>
                             </div>
 
-                            <!-- Feature 4: Summary & Exams -->
-                            <div class="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm glass-card-hover">
-                                <div class="flex items-start gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl flex-shrink-0">
-                                        🏆
+                        </div>
+                    </section>
+
+                    <!-- 3. Complementary Hubs -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
+                        <div class="border-b border-purple-200/80 pb-3 mb-6">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">3</span>
+                                מרכזי הלמידה המשלימים באתר
+                            </h2>
+                            <p class="text-xs text-slate-600">
+                                משאבי העזר המקיפים לתרגול מעמיק, חזרה מרוכזת, סיוע מבוסס בינה מלאכותית והתאמה אישית:
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            
+                            <a href="index.html" class="p-4 rounded-xl bg-purple-50/40 border border-purple-200 hover:border-purple-400 hover:shadow-xs transition-all flex flex-col justify-between group">
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-2xl group-hover:scale-110 transition-transform">🐭</span>
+                                        <div class="font-black text-slate-900 text-sm group-hover:text-purple-700 transition-colors">
+                                            פורטל הבית
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 class="font-bold text-slate-900 text-lg mb-1">סיכום מקיף ומאגר מבחנים</h3>
-                                        <p class="text-sm text-slate-600 leading-relaxed">
-                                            קובץ <a href="summary.html" class="text-purple-700 font-bold underline">summary.html</a> העצמאי שמסכם את כל החומר לימי החזרה, ומאגר <a href="exams.html" class="text-purple-700 font-bold underline">exams.html</a> המכיל בחינות פתורות ומנותחות.
-                                        </p>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        מפת הדרכים האינטראקטיבית לפי סמל עכבר Squeak, ניווט ישיר לכל 9 הפרקים וכפתור Zen Manager.
+                                    </p>
+                                </div>
+                                <div class="text-[11px] font-bold text-purple-700 pt-3 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    <span>כניסה לאינדקס</span>
+                                    <span>←</span>
+                                </div>
+                            </a>
+
+                            <a href="summary.html" class="p-4 rounded-xl bg-indigo-50/40 border border-indigo-200 hover:border-indigo-400 hover:shadow-xs transition-all flex flex-col justify-between group">
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-2xl group-hover:scale-110 transition-transform">📑</span>
+                                        <div class="font-black text-slate-900 text-sm group-hover:text-indigo-700 transition-colors">
+                                            מחברת הסיכום המלאה
+                                        </div>
                                     </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        סיכום הרמטי, מרוכז וכולל של כל 9 פרקי הקורס בפורמט מחברת מסודר עם טבלאות והדגשים.
+                                    </p>
+                                </div>
+                                <div class="text-[11px] font-bold text-indigo-700 pt-3 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    <span>מעבר לסיכום</span>
+                                    <span>←</span>
+                                </div>
+                            </a>
+
+                            <a href="exams.html" class="p-4 rounded-xl bg-fuchsia-50/40 border border-fuchsia-200 hover:border-fuchsia-400 hover:shadow-xs transition-all flex flex-col justify-between group">
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-2xl group-hover:scale-110 transition-transform">⚔️</span>
+                                        <div class="font-black text-slate-900 text-sm group-hover:text-fuchsia-700 transition-colors">
+                                            מאגר הבחינות והפתרונות
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        עשרות מועדי בחינה מלאים (כולל מועדי 2026), פתרונות מלאים ומנומקים ל-100%, ומסנני נושאים ודרגות קושי.
+                                    </p>
+                                </div>
+                                <div class="text-[11px] font-bold text-fuchsia-700 pt-3 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                    <span>למאגר המבחנים</span>
+                                    <span>←</span>
+                                </div>
+                            </a>
+
+                            <div class="p-4 rounded-xl bg-pink-50/40 border border-pink-200 hover:border-pink-400 hover:shadow-xs transition-all flex flex-col justify-between">
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-2.5">
+                                        <span class="text-2xl">🤖</span>
+                                        <div class="font-black text-slate-900 text-sm text-pink-900">
+                                            סייע AI ו-Zen Manager
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-slate-600 leading-relaxed">
+                                        כפתור AI צף בכל דפי הקורס לשאלות וניתוח אזורים מסומנים עם 4 פרסונות, לצד ערכות נושא (יום/לילה/קריאה).
+                                    </p>
+                                </div>
+                                <div class="text-[11px] font-bold text-pink-700 pt-3">
+                                    <span>זמין בכל עמודי הקורס</span>
                                 </div>
                             </div>
 
@@ -659,177 +785,299 @@
                 
                 <!-- Hero Header -->
                 <header class="mb-10 pb-6 border-b border-purple-200">
-                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
-                        <i class="fa-solid fa-clipboard-check"></i>
-                        <span>סודות ההצלחה בבחינת הגמר</span>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full font-bold text-xs mb-3 shadow-sm tracking-wide">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>הכנה אסטרטגית לבחינת הגמר</span>
                     </div>
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight font-sans mb-3">
-                        קצת על המבחן: איך מוציאים 100?
+                        3. קצת על המבחן: מבנה, ארכיטקטורה ואסטרטגיית ה-100
                     </h1>
                     <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-3xl">
-                        המבחן ב"תכנות מונחה עצמים" (20906) ידוע כמבחן מדויק, הוגן אך מתגמל מאוד למי ששולט בעקרונות הברזל. כאן ריכזנו את מבנה הבחינה, חלוקת הניקוד, 5 המלכודות הנפוצות ביותר וטיפים להצלחה.
+                        בחינת הגמר בקורס 20906 ידועה כבחינה הוגנת אך קפדנית ביותר. מי שמבין את מודל העצמים והתחביר יקבל ציון מעולה, ומי שמסתמך על אינטואיציה משפות אחרות עלול ליפול במלכודות קלאסיות.
                     </p>
                 </header>
 
                 <div class="space-y-10 text-slate-700 text-base leading-relaxed">
                     
-                    <!-- Section 1: Exam Structure -->
+                    <!-- 1. Exam Structure & Scoring Architecture -->
                     <section class="glass-card p-6 sm:p-8 rounded-2xl">
-                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
-                            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-black">1</span>
-                            מבנה הבחינה וחלוקת הניקוד
-                        </h2>
-                        
-                        <p class="mb-4">
-                            משך הבחינה הוא <strong>3 שעות</strong> (בתוספת הארכת זמן לזכאים). המבחן משלב שאלות רב-ברירתיות (אמריקאיות) לצד שאלות פתוחות של ניתוח קוד וכתיבת מתודות:
-                        </p>
+                        <div class="border-b border-purple-200/80 pb-3 mb-6">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">1</span>
+                                מבנה הבחינה וארכיטקטורת הניקוד (על פי בחינות הקורס)
+                            </h2>
+                            <p class="text-xs text-slate-600">
+                                הבחינה בודקת שליטה מעמיקה במודל התיאורטי של Smalltalk, יכולת כתיבת קוד תקני ומעקב הרצה מדויק:
+                            </p>
+                        </div>
 
-                        <!-- Exam Breakdown Table -->
-                        <div class="overflow-x-auto rounded-xl border border-slate-200 mb-6">
-                            <table class="w-full text-right text-sm">
-                                <thead class="bg-slate-100 text-slate-800 font-bold border-b border-slate-200">
-                                    <tr>
-                                        <th class="p-3.5">חלק בבחינה</th>
-                                        <th class="p-3.5">נושאי מפתח ודגשים</th>
-                                        <th class="p-3.5 w-1/4">ניקוד משוער</th>
+                        <!-- 3 Stat Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+                            <div class="p-3.5 rounded-xl bg-purple-50/60 border border-purple-200 text-center space-y-1">
+                                <div class="text-[10px] text-purple-800 font-extrabold uppercase tracking-wider">משך הבחינה</div>
+                                <div class="text-xl font-black text-slate-900">3 שעות</div>
+                                <div class="text-[10px] text-slate-500">180 דקות (כ-1.8 דק' בממוצע לכל נקודה)</div>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-200 text-center space-y-1">
+                                <div class="text-[10px] text-indigo-800 font-extrabold uppercase tracking-wider">סך הניקוד</div>
+                                <div class="text-xl font-black text-slate-900">100 נקודות</div>
+                                <div class="text-[10px] text-slate-500">שאלות חובה ללא בחירה רחבה</div>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-fuchsia-50/60 border border-fuchsia-200 text-center space-y-1">
+                                <div class="text-[10px] text-fuchsia-800 font-extrabold uppercase tracking-wider">אופי הבדיקה</div>
+                                <div class="text-xl font-black text-slate-900">דיוק תחבירי ופורמלי</div>
+                                <div class="text-[10px] text-slate-500">מעקב קוד מדויק ושרטוט היררכיות</div>
+                            </div>
+                        </div>
+
+                        <!-- Exam Sections Table -->
+                        <div class="overflow-x-auto pt-2">
+                            <table class="w-full text-right border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-purple-100/70 text-purple-950 border-b border-purple-200">
+                                        <th class="p-3 font-black">סוג השאלה בבחינה</th>
+                                        <th class="p-3 font-black">תיאור ואופי המטלה הנדרשת</th>
+                                        <th class="p-3 font-black">משקל ממוצע</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-100">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3.5 font-bold text-slate-900">חלק א': שאלות הבנה ואמריקאיות</td>
-                                        <td class="p-3.5 text-slate-600">
-                                            תחביר Smalltalk, סדר קדימויות ו-Cascade, בלוקים, סוגי העתקה (רדודה/עמוקה ב-Java וב-Smalltalk), תפקידי מחלקה, ובבואה (Reflection).
-                                        </td>
-                                        <td class="p-3.5 font-bold text-purple-700">30–40 נקודות</td>
+                                <tbody class="divide-y divide-purple-100 text-slate-700">
+                                    <tr class="hover:bg-purple-50/30">
+                                        <td class="p-3 font-bold text-purple-950">שאלת עוגן מטה-מחלקות ו-5 הרמות (פרק 9)</td>
+                                        <td class="p-3">שרטוט היררכיית מטה-מחלקות מקבילה, קשרי "מופע של" מול "ירושה", מעקב שיגור הודעות למחלקות (Class Methods) מול מופעים (Instance Methods), ניתוח מסלול <code class="code-tag font-bold">Color new</code> ויישום 10 חוקי המודל.</td>
+                                        <td class="p-3 font-black text-purple-800">25–30 נק'</td>
                                     </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3.5 font-bold text-slate-900">חלק ב': ניתוח קוד וירושה</td>
-                                        <td class="p-3.5 text-slate-600">
-                                            מעקב אחר איתור מתודות (<code class="text-xs">self</code> מול <code class="text-xs">super</code>), טיפול ב-<code>doesNotUnderstand:</code>, משתני מופע של מחלקה (דוגמת Dog ו-Hyena), תבנית Singleton, והרחבה מול דריסה.
-                                        </td>
-                                        <td class="p-3.5 font-bold text-indigo-700">30–35 נקודות</td>
+                                    <tr class="hover:bg-purple-50/30">
+                                        <td class="p-3 font-bold text-slate-900">מימוש וכתיבת קוד Smalltalk מאפס (פרקים 4, 6, 7)</td>
+                                        <td class="p-3">הרחבת מחלקות האוספים (SequenceableCollection, Dictionary), כתיבת מתודות רקורסיביות או מבוססות איטרטורים (<code class="code-tag">do:, collect:, select:, inject:into:</code>), ומימוש אלגוריתמים מונחי עצמים.</td>
+                                        <td class="p-3 font-black text-purple-800">25–30 נק'</td>
                                     </tr>
-                                    <tr class="hover:bg-emerald-50/40">
-                                        <td class="p-3.5 font-black text-emerald-950">חלק ג': מטה-מחלקות (פרק 18) ★</td>
-                                        <td class="p-3.5 text-emerald-900">
-                                            <strong>שאלת חובה קבועה בכל מבחן!</strong> שרשראות שליחת הודעת <code class="text-xs">class</code> ו-<code class="text-xs">superclass</code>, 10 חוקי המודל האקסיומטיים, ומסלול יצירת מופע (<code class="text-xs">TranslucentColor new</code>).
-                                        </td>
-                                        <td class="p-3.5 font-black text-emerald-800">25–35 נקודות!</td>
+                                    <tr class="hover:bg-purple-50/30">
+                                        <td class="p-3 font-bold text-slate-900">מעקב הרצה, קדימויות הודעות ו-Method Lookup (פרקים 3, 5)</td>
+                                        <td class="p-3">חיזוי פלט של ביטויים מורכבים עם הודעות אונריות, בינריות ומילות מפתח, Cascades (<code class="code-tag">;</code>) ו-yourself, זיהוי נקודת התחלה של חיפוש מתודות (<code class="code-tag">self</code> מול <code class="code-tag">super</code>) וזיהוי שגיאות DNU.</td>
+                                        <td class="p-3 font-black text-purple-800">20–25 נק'</td>
+                                    </tr>
+                                    <tr class="hover:bg-purple-50/30">
+                                        <td class="p-3 font-bold text-slate-900">הבנה עיונית, ממשק Morphic ובדיקות SUnit (פרקים 1, 2, 8)</td>
+                                        <td class="p-3">שאלות קצרות על מהות ה-OOP הטהור, ADT מול מחלקה, זהות (<code class="code-tag">==</code>) מול שוויון (<code class="code-tag">=</code>) וחוזה ה-hash, שלוש רמות העתקה, עץ ה-Morphs, וכתיבת בדיקות יחידה ב-SUnit.</td>
+                                        <td class="p-3 font-black text-purple-800">15–20 נק'</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </section>
 
-                    <!-- Section 2: 5 Golden Traps -->
+                    <!-- 2. The 7 Exam Archetypes -->
                     <section class="glass-card p-6 sm:p-8 rounded-2xl">
-                        <h2 class="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2.5">
-                            <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-black">2</span>
-                            5 מלכודות המבחן הנפוצות ביותר (חובה לדעת!)
-                        </h2>
-                        <p class="text-slate-600 mb-6">
-                            הסגל של הקורס אוהב לבחון על נקודות עדינות שבהן מי שאינו מדייק נופל מיד:
-                        </p>
+                        <div class="border-b border-purple-200/80 pb-3 mb-6">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">2</span>
+                                שבעת ארכיטיפי השאלות בבחינות 20906
+                            </h2>
+                            <p class="text-xs text-slate-600">
+                                ניתוח 36 מועדי בחינה מראה כי כל שאלות הבחינה מתחלקות ל-7 ארכיטיפים ברורים:
+                            </p>
+                        </div>
 
-                        <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             
-                            <!-- Trap 1 -->
-                            <div class="p-4 rounded-xl border-r-4 border-rose-500 bg-rose-50/40">
-                                <div class="flex items-start gap-3">
-                                    <span class="text-xl mt-0.5">⚠️</span>
-                                    <div>
-                                        <strong class="text-rose-950 block text-base mb-1">מלכודת 1: אין קדימות לכפל על פני חיבור ב-Smalltalk!</strong>
-                                        <p class="text-sm text-slate-700 leading-relaxed">
-                                            ב-Smalltalk כל האופרטורים הבינריים הם בעלי <strong>אותה קדימות בדיוק</strong> ומוערכים משמאל לימין. הביטוי <code class="font-mono font-bold text-rose-900">2 + 3 * 4</code> יחזיר <strong class="text-rose-900">20</strong> (ולא 14!), כי תחילה מבוצע <code class="font-mono">2 + 3 = 5</code> ואז <code class="font-mono">5 * 4 = 20</code>!
-                                        </p>
-                                    </div>
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">1</span>
+                                    <span>כתיבת ומימוש קוד מאפס</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    כתיבת מתודות חדשות על מחלקות קיימות. הדגש הוא על קוד קריא ותמציתי תוך שימוש באיטרטורים של אוספים (<code class="code-tag">select:, collect:, inject:into:</code>) והימנעות מוחלטת מלולאות חיצוניות מלאכותיות.
+                                </p>
                             </div>
 
-                            <!-- Trap 2 -->
-                            <div class="p-4 rounded-xl border-r-4 border-amber-500 bg-amber-50/40">
-                                <div class="flex items-start gap-3">
-                                    <span class="text-xl mt-0.5">⚠️</span>
-                                    <div>
-                                        <strong class="text-amber-950 block text-base mb-1">מלכודת 2: משתנה המקבל בשליחה ל-super נשאר תמיד self!</strong>
-                                        <p class="text-sm text-slate-700 leading-relaxed">
-                                            השליחה ל-<code class="font-mono font-bold text-amber-900">super</code> משנה אך ורק את <strong>מקום תחילת חיפוש המתודה</strong> (במחלקת-העל), אך המקבל (העצם שעליו מופעלת המתודה) נשאר <strong>העצם המקורי (self)</strong>! אם המתודה שנמצאה ב-super קוראת למתודה אחרת דרך <code class="font-mono">self</code>, החיפוש יתחיל שוב מהמחלקה המקורית של העצם!
-                                        </p>
-                                    </div>
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">2</span>
+                                    <span>השלמת ותיקון קוד</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    הצגת קוד חלקי עם קטעים חסרים (<code class="code-tag">...</code>) או קוד עם באג עדין. נדרש להשלים את התנאים הנכונים, להחזיר ערך נכון עם <code class="code-tag">^</code>, או לתקן שרשור הודעות.
+                                </p>
                             </div>
 
-                            <!-- Trap 3 -->
-                            <div class="p-4 rounded-xl border-r-4 border-purple-500 bg-purple-50/40">
-                                <div class="flex items-start gap-3">
-                                    <span class="text-xl mt-0.5">⚠️</span>
-                                    <div>
-                                        <strong class="text-purple-950 block text-base mb-1">מלכודת 3: ערך החזרה ברירת מחדל ממתודה הוא ^ self!</strong>
-                                        <p class="text-sm text-slate-700 leading-relaxed">
-                                            אם מתודה בסמולטוק אינה כוללת חץ החזרה (<code class="font-mono">^</code>) מפורש, היא מחזירה כברירת מחדל את <strong>self (העצם המקבל)</strong> ולא <code class="font-mono">nil</code>! (כמו שראינו בבאג המפורסם של <code class="font-mono">newCellAt:at:</code> בפרק 5).
-                                        </p>
-                                    </div>
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">3</span>
+                                    <span>מעקב הרצה וחיזוי פלט (Code Tracing)</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    ניתן קטע קוד ב-Smalltalk ונדרש לציין מהו ערך ההחזרה של הביטוי או מה מודפס ל-Transcript. דורש דיוק מלא בסדרי קדימויות (אונרי $	o$ בינרי $	o$ מילות מפתח) משמאל לימין.
+                                </p>
                             </div>
 
-                            <!-- Trap 4 -->
-                            <div class="p-4 rounded-xl border-r-4 border-indigo-500 bg-indigo-50/40">
-                                <div class="flex items-start gap-3">
-                                    <span class="text-xl mt-0.5">⚠️</span>
-                                    <div>
-                                        <strong class="text-indigo-950 block text-base mb-1">מלכודת 4: שרשרת class על Metaclass נסגרת במעגל!</strong>
-                                        <p class="text-sm text-slate-700 leading-relaxed">
-                                            המחלקה של כל מטה-מחלקה היא המחלקה <code class="font-mono font-bold text-indigo-900">Metaclass</code>. ומהי המחלקה של <code class="font-mono">Metaclass</code>? היא <code class="font-mono font-bold text-indigo-900">Metaclass class</code>! ומהי המחלקה של <code class="font-mono">Metaclass class</code>? היא חוזרת שוב להיות <strong class="text-indigo-950 font-mono">Metaclass</strong>! המעגל הזה מבטיח שאין אינסוף רמות במערכת.
-                                        </p>
-                                    </div>
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">4</span>
+                                    <span>חידות מטה-מחלקות ומודל 5 הרמות</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    שאלת החובה המרכזית: שרטוט דיאגרמת מחלקות ומטה-מחלקות, ניתוח קשרי <code class="code-tag">class</code> (מופע של) ו-<code class="code-tag">superclass</code> (ירושה), וביצוע Lookup למתודות מחלקה.
+                                </p>
                             </div>
 
-                            <!-- Trap 5 -->
-                            <div class="p-4 rounded-xl border-r-4 border-blue-500 bg-blue-50/40">
-                                <div class="flex items-start gap-3">
-                                    <span class="text-xl mt-0.5">⚠️</span>
-                                    <div>
-                                        <strong class="text-blue-950 block text-base mb-1">מלכודת 5: אופרטור Cascade (;) פועל תמיד על אותו המקבל המקורי!</strong>
-                                        <p class="text-sm text-slate-700 leading-relaxed">
-                                            נקודה-פסיק (<code class="font-mono font-bold text-blue-900">;</code>) שולחת את ההודעה הבאה <strong>לאותו המקבל של ההודעה הקודמת</strong> ולא לתוצאת ההודעה! בביטוי <code class="font-mono">OrderedCollection new add: 1; add: 2; size</code>, תוצאת הביטוי היא <strong class="text-blue-950">2</strong> (האוסף עם 2 איברים), בעוד שללא נקודה-פסיק היה ניסיון לשלוח add לתוצאת ה-add הקודם!
-                                        </p>
-                                    </div>
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">5</span>
+                                    <span>יירוט הודעות (DNU) ורפלקציה</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    דריסת המתודה <code class="code-tag">doesNotUnderstand: aMessage</code> ליירוט הודעות שלא קיימות, יצירת Proxy שקוף, שימוש ב-<code class="code-tag">perform:withArguments:</code> ושליפת פרטי ההודעה מ-Message.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">6</span>
+                                    <span>ממשק Morphic וסימולציות גרפיות</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    מימוש מחלקת Morph מותאמת אישית, דריסת <code class="code-tag">drawOn: aCanvas</code>, טיפול באירועי עכבר (<code class="code-tag">handlesMouseDown:, mouseDown:</code>) ואנימציה עם <code class="code-tag">step</code> ו-<code class="code-tag">stepTime</code>.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs space-y-1.5 md:col-span-2">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span class="w-5 h-5 rounded bg-purple-100 flex items-center justify-center text-purple-700 text-xs">7</span>
+                                    <span>הבנה עיונית, ADT מול מחלקה וכלי Squeak</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    שאלות מושגיות: ההבדל המהותי בין ADT (הדגש על פעולות) למחלקה (הדגש על ייצוג נתונים ופולימורפיזם), חוזה ה-hash בעת דריסת =, שלוש רמות העתקה (<code class="code-tag">shallowCopy, copyTwoLevel, deepCopy</code>), וסביבת Squeak.
+                                </p>
                             </div>
 
                         </div>
                     </section>
 
-                    <!-- Section 3: Principles for Exam Success -->
-                    <section class="glass-card p-6 sm:p-8 rounded-2xl">
-                        <h2 class="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
-                            <span class="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm font-black">3</span>
-                            איך להתכונן בפועל? המלצות זהב
-                        </h2>
+                    <!-- 3. Top 5 Exam Traps (Must Know!) -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-rose-50/40 via-white to-purple-50/30">
+                        <div class="border-b border-rose-200/80 pb-3 mb-6">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-sm font-black">3</span>
+                                5 מלכודות המבחן הנפוצות ביותר (חובה לדעת!)
+                            </h2>
+                            <p class="text-xs text-slate-600">
+                                המלכודות הקלאסיות שמפילות סטודנטים מדי סמסטר. הכירו אותן היטב כדי לשמור על כל נקודה:
+                            </p>
+                        </div>
 
-                        <div class="space-y-3">
-                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
-                                <span class="text-xl">1️⃣</span>
-                                <div class="text-sm">
-                                    <strong class="text-slate-900 block font-bold mb-0.5">שליטה ללא עוררין בפרק 18:</strong>
-                                    שבו ושרטטו ביד את היררכיית המטה-מחלקות המקבילה, את 10 חוקי המודל ואת מסלול החיפוש של <code class="font-mono text-purple-700">TranslucentColor new</code>. 25–30 נקודות בכיס!
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-rose-800 flex items-center gap-1.5">
+                                    <span>⚠️</span>
+                                    <span>מלכודת 1: היעדר קדימות אריתמטית רגילה</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    ב-Smalltalk אין קדימות לכפל על פני חיבור! כל ההודעות הבינריות הן בעלות אותה קדימות ורצות <strong>משמאל לימין</strong>. הביטוי <code class="code-tag text-rose-700 font-bold">3 + 4 * 5</code> מחשב קודם <code class="code-tag">3 + 4 = 7</code> ואז <code class="code-tag">7 * 5 = 35</code> (ולא 23!). אם רוצים קדימות, חובה להשתמש בסוגריים עגולים.
+                                </p>
                             </div>
-                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
-                                <span class="text-xl">2️⃣</span>
-                                <div class="text-sm">
-                                    <strong class="text-slate-900 block font-bold mb-0.5">פתרון מבחנים עם דף ועיפרון:</strong>
-                                    אל תסתפקו בקריאת פתרונות מוכנים! פתחו את <a href="exams.html" class="text-purple-700 font-bold underline">מאגר המבחנים</a>, פתרו בעצמכם ורק לאחר מכן השוו לפתרון המפורט.
+
+                            <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-rose-800 flex items-center gap-1.5">
+                                    <span>⚠️</span>
+                                    <span>מלכודת 2: ערך ההחזרה כברירת מחדל</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    אם מתודה מסתיימת ללא סימן החזרה (<code class="code-tag text-purple-700">^</code>), היא מחזירה כברירת מחדל את <code class="code-tag font-bold text-purple-800">self</code> (את האובייקט המקבל), ולא את תוצאת הביטוי האחרון! לעומת זאת, בבלוק (<code class="code-tag">[ ... ]</code>), ערך הביטוי האחרון הוא ערך ההחזרה של הבלוק.
+                                </p>
                             </div>
-                            <div class="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-200">
-                                <span class="text-xl">3️⃣</span>
-                                <div class="text-sm">
-                                    <strong class="text-slate-900 block font-bold mb-0.5">חזרה מהירה בעזרת הסיכום המקיף:</strong>
-                                    ביומיים שלפני המבחן, עברו על <a href="summary.html" class="text-purple-700 font-bold underline">summary.html</a>. כל ההגדרות, הטבלאות והחוקים מרוכזים שם ללא בזבוז זמן.
+
+                            <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-rose-800 flex items-center gap-1.5">
+                                    <span>⚠️</span>
+                                    <span>מלכודת 3: self לעומת super</span>
                                 </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <code class="code-tag font-bold">super</code> אינו אובייקט נפרד! הוא מצביע בדיוק לאותו עצם כמו <code class="code-tag font-bold">self</code>. ההבדל היחיד: הוא מורה למכונה הווירטואלית להתחיל את ה-Method Lookup במחלקת-העל של המחלקה שבה כתוב הקוד, במקום במחלקת המקבל בפועל.
+                                </p>
                             </div>
+
+                            <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-xs space-y-1.5">
+                                <div class="font-black text-xs text-rose-800 flex items-center gap-1.5">
+                                    <span>⚠️</span>
+                                    <span>מלכודת 4: חוזה השוויון והגיבוב (= ו-hash)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    אם דרסתם את האופרטור <code class="code-tag font-bold">=</code> כדי להגדיר שוויון מבני, <strong>חובה מוחלטת לדרוס גם את מתודת hash!</strong> אם שני עצמים שווים לפי =, חייב להיות להם בדיוק אותו ערך hash. אי-דריסת hash גורמת לאובייקטים "להיעלם" בתוך Set ו-Dictionary.
+                                </p>
+                            </div>
+
+                            <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-xs space-y-1.5 md:col-span-2">
+                                <div class="font-black text-xs text-rose-800 flex items-center gap-1.5">
+                                    <span>⚠️</span>
+                                    <span>מלכודת 5: המטה-מחלקה של Metaclass (חוקי הליבה 5 ו-6)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    המחלקות של כל המטה-מחלקות (<code class="code-tag">Dog class class</code>, <code class="code-tag">Object class class</code>) הן כולן אותו עצם יחיד: המחלקה <code class="code-tag font-bold text-purple-900">Metaclass</code>. והמחלקה של <code class="code-tag">Metaclass</code> עצמה היא המטה-מחלקה שלה: <code class="code-tag font-bold text-purple-900">Metaclass class</code>, שהיא עצמה מופע של <code class="code-tag font-bold text-purple-900">Metaclass</code>! זהו המעגל הסוגר את מודל 5 הרמות.
+                                </p>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- 4. Golden Exam Strategy for 100 -->
+                    <section class="glass-card p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-purple-50/40 via-white to-indigo-50/20 space-y-4">
+                        <div class="border-b border-purple-200/80 pb-3">
+                            <h2 class="text-2xl font-bold text-slate-900 flex items-center gap-2.5 mb-1">
+                                <span class="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-sm font-black">4</span>
+                                אסטרטגיית הזהב להוצאת 100 בבחינה
+                            </h2>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            
+                            <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-xs space-y-1">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span>🏰</span>
+                                    <span>התחילו בשאלת המטה-מחלקות (פרק 9)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    שאלת המטה-מחלקות מעניקה 25–30 נקודות מלאות והיא צפויה לחלוטין. פתרו אותה ראשונה כשהראש רענן: שרטטו את העץ המקביל, עקבו אחר השיגור, והבטיחו 30 נקודות בכיס ב-40 הדקות הראשונות.
+                                </p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-xs space-y-1">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span>📐</span>
+                                    <span>רישום שלבי מעקב וקדימויות עם עיפרון</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    בשאלות מעקב קוד (Code Tracing), אל תחשבו בעל פה! רשמו בצד את פירוק הביטוי שלב-אחר-שלב: קודם סמנו את כל ההודעות האונריות, אז את הבינריות משמאל לימין, ולבסוף את מילות המפתח.
+                                </p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-xs space-y-1">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span>💻</span>
+                                    <span>תחביר Smalltalk תקני לחלוטין</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    הקפידו על סימן השמה תקני (<code class="code-tag">:=</code>), נקודה להפרדת משפטים (<code class="code-tag">.</code>), נקודה-פסיק לשרשור קסקייד (<code class="code-tag">;</code>), חץ להחזרה (<code class="code-tag">^</code>), ואל תבצעו השמה לפרמטרים של מתודה!
+                                </p>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-white border border-purple-200 shadow-xs space-y-1">
+                                <div class="font-black text-xs text-purple-900 flex items-center gap-1.5">
+                                    <span>⏱️</span>
+                                    <span>ניהול זמנים קפדני (1.8 דק' לנקודה)</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    הקצו כ-40 דקות לשאלת המטה-מחלקות, כ-40 דקות לשאלת מימוש הקוד, כ-35 דקות לשאלות מעקב וקדימויות, והשאירו לפחות 25 דקות מלאות לסריקה, השלמות והגהה קפדנית.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="pt-3 text-center">
+                            <a href="exams.html" class="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 text-white font-extrabold text-xs shadow-md transition-all hover:scale-105">
+                                <span>מעבר למאגר הבחינות והפתרונות המלא (כולל מועדי 2026)</span>
+                                <span>⚔️</span>
+                            </a>
                         </div>
                     </section>
 
@@ -875,6 +1123,7 @@
             if (e.key === '3') showTab('about-exam');
         });
     </script>
+    <script src="ai_widget.js"></script>
 </body>
 
 </html>

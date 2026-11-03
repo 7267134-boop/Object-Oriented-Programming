@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="ai-document-summary" content="פרק 1: יסודות החשיבה מונחית העצמים, התפתחות ההפשטה והמושג 'עצם'. כולל: משבר התוכנה, תזת צ'רץ'-טיורינג מול ספיר-וורף, משל הפרחים של באד, 7 רמות ההפשטה, ADT מול Class, זהות/מצב/התנהגות, מחזור חיי עצם ו-3 אלגוריתמי Garbage Collection (Reference Counting, Mark & Sweep, Stop & Copy), עצמים ב-C, זהות מול שוויון (== מול =) וחוזה ה-hash, העתקות shallowCopy/copyTwoLevel/deepCopy/postCopy ו-6 סוגי מתודות.">
     <title>תכנות מונחה עצמים (20906) – פרק 1: יסודות החשיבה מונחית העצמים, התפתחות ההפשטה והמושג "עצם"</title>
     <meta name="description" content="פרק 1 המלא בקורס תכנות מונחה עצמים (20906): פילוסופיית ה-OOP הטהור ושפת Smalltalk, משבר התוכנה, תזת צ'רץ'-טיורינג מול ספיר-וורף, משל הפרחים של Budd, התפתחות מנגנוני ההפשטה, ADT מול מחלקה וירושה, מרחב הבעיה והפתרון, כרטיסי CRC, מאפייני העצם ו-Garbage Collection, עצמים בשפת C, זהות מול שוויון (== מול = וחוזה ה-hash), והעתקת עצמים (shallowCopy, copyTwoLevel, deepCopy, postCopy, copyUpTo:).">
 
@@ -37,19 +38,7 @@
         }
     </script>
 
-    <!-- MathJax 3 Fallback for Mathematical Formulas & Formal Notation -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\(', '\)']],
-                displayMath: [['$$', '$$'], ['\[', '\]']],
-                processEscapes: true
-            },
-            svg: { fontCache: 'global' },
-            options: { renderActions: { addMenu: [] } }
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <!-- MathJax removed to avoid BiDi and text-rendering corruption -->
 
     <style>
         * { box-sizing: border-box; }
@@ -671,6 +660,7 @@
             }
         }
     </style>
+    <script src="theme-manager.js"></script>
 </head>
 
 <body class="h-screen flex flex-col md:flex-row overflow-hidden study-mode-deep selection:bg-purple-200 selection:text-purple-950">
@@ -819,14 +809,20 @@
 
         <!-- Sidebar Footer -->
         <div class="relative z-10 p-3 border-t border-violet-200/80 bg-white/75 backdrop-blur-md space-y-1.5 mt-auto">
-            <div class="grid grid-cols-2 gap-1.5">
-                <button type="button" onclick="openChapterNavModal('index')" class="py-1.5 px-2.5 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-950 border border-violet-300 text-xs font-bold flex items-center justify-center gap-1.5 transition cursor-pointer">
-                    <span>🏠</span><span>תפריט הקורס</span>
+            <div class="flex gap-1.5">
+                <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-slate-100 text-slate-400 font-bold text-[11px] border border-slate-200 cursor-not-allowed opacity-50" disabled type="button">
+                    <span class="font-mono text-xs">→</span>
+                    <span>הפרק הקודם</span>
                 </button>
-                <button type="button" onclick="openChapterNavModal('next')" class="py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer">
-                    <span>לפרק 2: Squeak</span><span>←</span>
+                <button type="button" onclick="navigateToLocalFile('20906_2.html', false)" class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold text-[11px] shadow-xs transition-all flex items-center justify-center gap-1 group border border-violet-500 cursor-pointer">
+                    <span>לפרק הבא (2)</span>
+                    <span class="font-mono text-xs">←</span>
                 </button>
             </div>
+            <button type="button" onclick="navigateToLocalFile('index.html', false)" class="w-full py-1.5 px-3 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-950 font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 border border-purple-200/80 cursor-pointer">
+                <span>🏠</span>
+                <span>חזרה לתפריט הראשי</span>
+            </button>
         </div>
     </aside>
 
@@ -921,7 +917,7 @@
                                             משנות ה-60–70 עלויות פיתוח התוכנה עברו את עלויות החומרה, ושיעור הכשלים בפרויקטים מורכבים זינק:
                                             <br>• <strong>פרויקט שינוע המזוודות בשדה התעופה בדנבר (1989–2005):</strong> 20 מתכנתים עבדו שנתיים, אך המערכת הייתה כה סבוכה שאיש לא הצליח להבין את התנהגותה מ"מעוף הציפור" והפרויקט בוטל בהפסדי עתק.
                                             <br>• <strong>משגר הלוויינים אריאן 5 (יוני 1996):</strong> התפוצץ בשיגור הבכורה עקב ניסיון להמיר מספר ממשי (<code>Float</code> של 64 סיביות) למספר שלם (<code>Integer</code> של 16 סיביות) במחשב ההנחיה.
-                                            <br>• <strong>קריסת מערכת אוויוניקה לאחר 18:20 ותקלת השנה המעוברת:</strong> ביממה יש $86{,}400$ שניות, אך משתנה שלם בן 16 סיביות מוגבל ל-$65{,}536$ שניות ($pprox 18.2$ שעות, כלומר השעה 18:12–18:20!), וב-31.12.2004 (היום ה-366 בשנה מעוברת) כשלה תקשורת מטוסים בגלל הנחת קבוע של 365 ימים.
+                                            <br>• <strong>קריסת מערכת אוויוניקה לאחר 18:20 ותקלת השנה המעוברת:</strong> ביממה יש 86,400 שניות, אך משתנה שלם בן 16 סיביות מוגבל ל-65,536 שניות (כ-18.2 שעות, כלומר השעה 18:12–18:20!), וב-31.12.2004 (היום ה-366 בשנה מעוברת) כשלה תקשורת מטוסים בגלל הנחת קבוע של 365 ימים.
                                         </p>
                                     </div>
                                     <div class="bg-white p-4 rounded-xl border border-purple-200 shadow-2xs space-y-1.5">
@@ -1225,7 +1221,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs md:text-sm">
                                 <div class="basic-subcard space-y-1">
                                     <div class="font-bold text-rose-950">💥 משבר התוכנה וצ'רץ'-טיורינג מול ספיר-וורף</div>
-                                    <p class="text-slate-700 leading-relaxed">• <b>משבר התוכנה:</b> מערכות ענק קרסו בגלל מורכבות וחוסר הכמסה – שינוע המזוודות בדנבר, משגר <b>אריאן 5</b> (המרת <code>Float</code> 64-bit ל-<code>Integer</code> 16-bit), וקריסת אוויוניקה אחרי 18:20 בגלל גבול $65{,}536$ שניות ב-16 סיביות מתוך $86{,}400$ שניות ביממה.<br/>• <b>תזת צ'רץ'-טיורינג מול היפותזת ספיר-וורף:</b> כל השפות שקולות חישובית למכונת טיורינג, אך לפי <b>ספיר-וורף</b> השפה מעצבת את החשיבה ולכן OOP ב-Smalltalk מאפשרת לפתח מערכות מורכבות ביעילות.</p>
+                                    <p class="text-slate-700 leading-relaxed">• <b>משבר התוכנה:</b> מערכות ענק קרסו בגלל מורכבות וחוסר הכמסה – שינוע המזוודות בדנבר, משגר <b>אריאן 5</b> (המרת <code>Float</code> 64-bit ל-<code>Integer</code> 16-bit), וקריסת אוויוניקה אחרי 18:20 בגלל גבול 65,536 שניות ב-16 סיביות מתוך 86,400 שניות ביממה.<br/>• <b>תזת צ'רץ'-טיורינג מול היפותזת ספיר-וורף:</b> כל השפות שקולות חישובית למכונת טיורינג, אך לפי <b>ספיר-וורף</b> השפה מעצבת את החשיבה ולכן OOP ב-Smalltalk מאפשרת לפתח מערכות מורכבות ביעילות.</p>
                                 </div>
                                 <div class="basic-subcard space-y-1">
                                     <div class="font-bold text-violet-950">🏆 5 כללי Alan Kay ו-10 חוקי Smalltalk (2026א)</div>
@@ -1720,7 +1716,7 @@
                                         <td class="p-3"><code>SIZEOF</code> נשבר בהעברת מערך לפונקציה ב-C (דעיכה למצביע); ב-Java המערך יודע את <code>a.length</code>.</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 font-bold">אסמבלר $\to$ ייצוג נתונים $\to$ פרוצדורות מקוננות</td>
+                                        <td class="p-3 font-bold">אסמבלר ← ייצוג נתונים ← פרוצדורות מקוננות</td>
                                         <td class="p-3">שמות סימבוליים, מיקוד בנתונים, ואז קינון לוקלי ועיצוב מהטפחות מטה.</td>
                                         <td class="p-3">בכולם שיתוף מצב מתמשך (כמו מחסנית <code>datastack</code>) מחייב משתנים גלובליים חשופים!</td>
                                     </tr>
@@ -2025,7 +2021,7 @@ NonEmptyList(x, l) = recursive self = record
                                 </div>
                                 <div class="basic-subcard space-y-1">
                                     <div class="font-bold text-violet-950">🪜 7 רמות ההפשטה לפי הסדר</div>
-                                    <p class="text-slate-700 leading-relaxed">1. <b>אסמבלר</b> (שמות סימבוליים) $\to$ 2. <b>ייצוג נתונים</b> (Fortran/Global) $\to$ 3. <b>פרוצדורות מקוננות</b> (Pascal) $\to$ 4. <b>מודול</b> (Modula-2, מופע יחיד) $\to$ 5. <b>ADT</b> (Ada, ריבוי מופעים ממוקד פעולות) $\to$ 6. <b>מחלקה</b> (ממוקדת עצמים ו-<code>self</code>) $\to$ 7. <b>ירושה</b> (שיתוף קוד בין מחלקות).</p>
+                                    <p class="text-slate-700 leading-relaxed">1. <b>אסמבלר</b> (שמות סימבוליים) ← 2. <b>ייצוג נתונים</b> (Fortran/Global) ← 3. <b>פרוצדורות מקוננות</b> (Pascal) ← 4. <b>מודול</b> (Modula-2, מופע יחיד) ← 5. <b>ADT</b> (Ada, ריבוי מופעים ממוקד פעולות) ← 6. <b>מחלקה</b> (ממוקדת עצמים ו-<code>self</code>) ← 7. <b>ירושה</b> (שיתוף קוד בין מחלקות).</p>
                                 </div>
                             </div>
                         </div>
@@ -2428,7 +2424,7 @@ NonEmptyList(x, l) = recursive self = record
                             </button>
                         </div>
                         <h2 class="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-2">שלושת מאפייני העצם וארבע הדוגמאות המכוננות</h2>
-                        <p class="text-slate-600 text-sm md:text-base leading-relaxed">משולש הקיום של כל עצם (זהות ייחודית, מצב סטטי והתנהגות דינמית) וניתוח מפורט של ארבע הדוגמאות: הפטיש בחנות, המספר המרוכב $e+2i$, הרשימה ההטרוגנית $(13, \text{'hello'}, \text{true})$ וכלי הרכב $35\text{-}070\text{-}19$.</p>
+                        <p class="text-slate-600 text-sm md:text-base leading-relaxed">משולש הקיום של כל עצם (זהות ייחודית, מצב סטטי והתנהגות דינמית) וניתוח מפורט של ארבע הדוגמאות: הפטיש בחנות, המספר המרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span>, הרשימה ההטרוגנית <code dir="ltr">(13, 'hello', true)</code> וכלי הרכב <span dir="ltr" class="font-mono font-bold text-violet-900">35-070-19</span>.</p>
                     </header>
 
                     <!-- DEEP MODE VIEW 1.5 -->
@@ -2448,7 +2444,7 @@ NonEmptyList(x, l) = recursive self = record
                                 <div class="bg-white p-4 rounded-xl border border-violet-200/80 shadow-2xs">
                                     <span class="font-black text-violet-900 block mb-1">🔨 4 הדוגמאות המכוננות</span>
                                     <p class="text-slate-700 text-xs md:text-sm leading-relaxed">
-                                        הפטיש בחנות, המספר המרוכב הנצחי $e+2i$, הרשימה הדינמית $(13, 	ext{'hello'}, 	ext{true})$ וכלי הרכב $35	ext{-}070	ext{-}19$ מדגימים את שלושת המאפיינים.
+                                        הפטיש בחנות, המספר המרוכב הנצחי <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span>, הרשימה הדינמית <code dir="ltr">(13, 'hello', true)</code> וכלי הרכב <span dir="ltr" class="font-mono font-bold text-violet-900">35-070-19</span> מדגימים את שלושת המאפיינים.
                                     </p>
                                 </div>
                                 <div class="bg-white p-4 rounded-xl border border-violet-200/80 shadow-2xs">
@@ -2690,11 +2686,11 @@ NonEmptyList(x, l) = recursive self = record
                             <h3 class="basic-card-title">2. ארבע הדוגמאות הקלאסיות לעצמים</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs md:text-sm">
                                 <div class="basic-subcard space-y-1">
-                                    <div class="font-bold text-slate-900">🔨 פטיש בחנות ו-🔢 המספר המרוכב $e+2i$</div>
-                                    <p class="text-slate-700 leading-relaxed">• <b>פטיש:</b> זהות = הפטיש הספציפי שנבחר מהמדף; מצב = מוצג למכירה; התנהגות = נעיצת מסמרים.<br/>• <b>מספר מרוכב $e+2i$:</b> זהות = מופע המספר; מצב = חלק ממשי $e$, חלק מדומה $2$, ערך מוחלט (עצם נצחי!); התנהגות = חיבור, כפל.</p>
+                                    <div class="font-bold text-slate-900">🔨 פטיש בחנות ו-🔢 המספר המרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span></div>
+                                    <p class="text-slate-700 leading-relaxed">• <b>פטיש:</b> זהות = הפטיש הספציפי שנבחר מהמדף; מצב = מוצג למכירה; התנהגות = נעיצת מסמרים.<br/>• <b>מספר מרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span>:</b> זהות = מופע המספר; מצב = חלק ממשי <span dir="ltr" class="font-mono font-bold">e</span>, חלק מדומה 2, ערך מוחלט (עצם נצחי!); התנהגות = חיבור, כפל.</p>
                                 </div>
                                 <div class="basic-subcard space-y-1">
-                                    <div class="font-bold text-slate-900">📋 הרשימה $(13, \text{'hello'}, \text{true})$ ו-🚗 כלי רכב $35\text{-}070\text{-}19$</div>
+                                    <div class="font-bold text-slate-900">📋 הרשימה <code dir="ltr">(13, 'hello', true)</code> ו-🚗 כלי רכב <span dir="ltr" class="font-mono font-bold text-violet-900">35-070-19</span></div>
                                     <p class="text-slate-700 leading-relaxed">• <b>רשימה:</b> זהות = מופע הרשימה; מצב = האיברים ואורך הרשימה; התנהגות = הוספה, מחיקה, הדפסה, מעבר אחד-אחד, מיון.<br/>• <b>כלי רכב:</b> זהות = הרכב הייחודי (לוחית זיהוי); מצב = מהירות, מיקום, צבע; התנהגות = נסיעה, האטה, האצה, עצירה.</p>
                                 </div>
                             </div>
@@ -2761,19 +2757,19 @@ NonEmptyList(x, l) = recursive self = record
                                         <td class="p-3">נעיצת מסמרים</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 font-bold">מספר מרוכב $e+2i$</td>
+                                        <td class="p-3 font-bold">מספר מרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span></td>
                                         <td class="p-3">הישות המתמטית / כתובת המופע</td>
-                                        <td class="p-3">חלק ממשי $e$, מדומה $2$, ערך מוחלט (נצחי)</td>
+                                        <td class="p-3">חלק ממשי <span dir="ltr" class="font-mono font-bold">e</span>, מדומה 2, ערך מוחלט (נצחי)</td>
                                         <td class="p-3">חיבור, כפל, ערך מוחלט</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 font-bold">רשימה $(13, \text{'hello'}, \text{true})$</td>
+                                        <td class="p-3 font-bold">רשימה <code dir="ltr">(13, 'hello', true)</code></td>
                                         <td class="p-3">כתובת מופע הרשימה בזיכרון</td>
-                                        <td class="p-3">אלמנטים, אורך הרשימה ($3$)</td>
+                                        <td class="p-3">אלמנטים, אורך הרשימה (3)</td>
                                         <td class="p-3">הוספה, מחיקה, הדפסה, סריקה, מיון</td>
                                     </tr>
                                     <tr>
-                                        <td class="p-3 font-bold">כלי רכב $35\text{-}070\text{-}19$</td>
+                                        <td class="p-3 font-bold">כלי רכב <span dir="ltr" class="font-mono font-bold text-violet-900">35-070-19</span></td>
                                         <td class="p-3">הרכב הפיזי הנושא את לוחית הזיהוי</td>
                                         <td class="p-3">מהירות, מיקום, צבע</td>
                                         <td class="p-3">נסיעה, האטה, האצה, עצירה</td>
@@ -4317,7 +4313,7 @@ public PList copy() {
                                 <span class="px-2.5 py-0.5 rounded-full bg-violet-100 text-violet-950 text-xs font-extrabold">בעיה 3 • הגדרת עצם, מרחבי התוכנית והעתקה רקורסיבית</span>
                                 <span class="text-xs text-slate-500 font-semibold">נושא: מרחב הבעיה/הפתרון ו-<code>PList.copy()</code></span>
                             </div>
-                            <h3 class="text-base md:text-lg font-black text-slate-900">(א) לאיזה מרחב (הבעיה או הפתרון) שייכים הפטיש, המספר המרוכב $e+2i$, כלי הרכב והרשימה? תנו דוגמה לרשימה ממרחב הבעיה ודוגמה לרשימה ממרחב הפתרון. (ב) בקוד ההעתקה הרקורסיבית של <code>PList</code> הקורא ל-<code>head.copy()</code> ול-<code>tail.copy()</code> כאשר <code>Point.copy()</code> מחזיר <code>return this;</code> — האם זו העתקה רדודה או העתקה עמוקה?</h3>
+                            <h3 class="text-base md:text-lg font-black text-slate-900">(א) לאיזה מרחב (הבעיה או הפתרון) שייכים הפטיש, המספר המרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span>, כלי הרכב והרשימה? תנו דוגמה לרשימה ממרחב הבעיה ודוגמה לרשימה ממרחב הפתרון. (ב) בקוד ההעתקה הרקורסיבית של <code>PList</code> הקורא ל-<code>head.copy()</code> ול-<code>tail.copy()</code> כאשר <code>Point.copy()</code> מחזיר <code>return this;</code> — האם זו העתקה רדודה או העתקה עמוקה?</h3>
                             <div class="p-4 rounded-xl bg-violet-50/50 border border-violet-200 space-y-2 text-xs md:text-sm">
                                 <div class="font-black text-violet-950">פתרון מלא ומובנה:</div>
                                 <ul class="space-y-1.5">
@@ -4369,11 +4365,11 @@ d := a copyTwoLevel.</pre>
                                         <br/>— איטרציה 2 (<code>y = 2</code>): מחזירה <code>{{ #() . 1 } . 2}</code>.
                                         <br/>— איטרציה 3 (<code>y = 3</code>): מחזירה <strong><code>{{{ #() . 1 } . 2 } . 3}</code></strong>. זהו עץ מערכים מקונן בעומק 4 רמות, שבו <code>a at: 1</code> הוא המערך הפנימי <code>{{ #() . 1 } . 2}</code> ו-<code>a at: 2</code> הוא <code>3</code>!</li>
                                     <li>• <strong>ב. תוצאות 5 הביטויים:</strong>
-                                        <br/>1. <code>a == b</code> $\to$ <strong><code>true</code></strong> (העתקה זהותית: <code>b</code> ו-<code>a</code> מצביעים לאותו עצם שורש).
-                                        <br/>2. <code>a == c</code> $\to$ <strong><code>false</code></strong> (<code>shallowCopy</code> יוצרת מערך שורש חדש בזיכרון).
-                                        <br/>3. <code>a = c</code> $\to$ <strong><code>true</code></strong> (השוואה מבנית: ל-<code>a</code> ול-<code>c</code> אותו אורך ואותם איברים שווים).
-                                        <br/>4. <code>(a at: 1) == (c at: 1)</code> $\to$ <strong><code>true</code></strong> (בהעתקה רדודה האיברים ברמה 2 מועתקים זהותית ולכן מצביעים לאותו תת-מערך!).
-                                        <br/>5. <code>(a at: 1) == (d at: 1)</code> $\to$ <strong><code>false</code></strong> (<code>copyTwoLevel</code> מבצעת <code>shallowCopy</code> גם לכל איבר ברמה 2, ולכן התת-מערך <code>d at: 1</code> הוא עותק חדש עם זהות חדשה!).</li>
+                                        <br/>1. <code>a == b</code> → <strong><code>true</code></strong> (העתקה זהותית: <code>b</code> ו-<code>a</code> מצביעים לאותו עצם שורש).
+                                        <br/>2. <code>a == c</code> → <strong><code>false</code></strong> (<code>shallowCopy</code> יוצרת מערך שורש חדש בזיכרון).
+                                        <br/>3. <code>a = c</code> → <strong><code>true</code></strong> (השוואה מבנית: ל-<code>a</code> ול-<code>c</code> אותו אורך ואותם איברים שווים).
+                                        <br/>4. <code>(a at: 1) == (c at: 1)</code> → <strong><code>true</code></strong> (בהעתקה רדודה האיברים ברמה 2 מועתקים זהותית ולכן מצביעים לאותו תת-מערך!).
+                                        <br/>5. <code>(a at: 1) == (d at: 1)</code> → <strong><code>false</code></strong> (<code>copyTwoLevel</code> מבצעת <code>shallowCopy</code> גם לכל איבר ברמה 2, ולכן התת-מערך <code>d at: 1</code> הוא עותק חדש עם זהות חדשה!).</li>
                                     <li>• <strong>ג. בדיקת הרמה השלישית ב-<code>copyTwoLevel</code>:</strong>
                                         <br/>הביטוי <code>((a at: 1) at: 1) == ((d at: 1) at: 1)</code> יחזיר <strong><code>true</code></strong>! מדוע? כי <code>copyTwoLevel</code> משכפלת רק את רמה 1 ואת רמה 2; האיברים שבתוך רמה 2 (שהם רמה 3: התת-מערך <code>{#() . 1}</code>) מועתקים בהעתקה רדודה בלבד ולכן עדיין משותפים זהותית!</li>
                                 </ul>
@@ -4456,7 +4452,7 @@ self perform: #postCopy withArguments: #() inSuperclass: Behavior superclass.</p
                         <!-- Bottom Navigation -->
                         <div class="flex justify-between pt-4 border-t border-slate-100">
                             <button type="button" onclick="showTab('tab-static-dynamic-summary')" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs md:text-sm transition cursor-pointer">→ ליחידה הקודמת: 1.9</button>
-                            <button type="button" onclick="openChapterNavModal('next')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold text-xs md:text-sm shadow-xs transition cursor-pointer">סיום פרק 1 • מעבר לפרק 2: סביבת Squeak ו-Quinto ←</button>
+                            <button type="button" onclick="navigateToLocalFile('20906_2.html', false)" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold text-xs md:text-sm shadow-xs transition cursor-pointer">סיום פרק 1 • מעבר לפרק 2: סביבת Squeak ו-Quinto ←</button>
                         </div>
                     </div>
 
@@ -4519,7 +4515,7 @@ self perform: #postCopy withArguments: #() inSuperclass: Behavior superclass.
                             </div>
                             <div class="flex justify-between pt-2">
                                 <button type="button" onclick="showTab('tab-static-dynamic-summary')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold cursor-pointer">→ 1.9</button>
-                                <button type="button" onclick="openChapterNavModal('next')" class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer">מעבר לפרק 2: Squeak ו-Quinto ←</button>
+                                <button type="button" onclick="navigateToLocalFile('20906_2.html', false)" class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer">מעבר לפרק 2: Squeak ו-Quinto ←</button>
                             </div>
                         </div>
                     </div>
@@ -4677,7 +4673,7 @@ self perform: #postCopy withArguments: #() inSuperclass: Behavior superclass.
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 bg-violet-50/70 p-3.5 rounded-xl border border-violet-200 text-xs">
                 <div class="bg-white p-2.5 rounded-lg border border-violet-100">
                     <strong class="text-violet-950 block mb-0.5">📌 על הסימולציה והתוכן שלה:</strong>
-                    מציגה בזמן אמת את 4 העצמים הקלאסיים: הפטיש, המספר המרוכב $e+2i$, הרשימה $(13, \text{'hello'}, \text{true})$ וכלי הרכב $35\text{-}070\text{-}19$.
+                    מציגה בזמן אמת את 4 העצמים הקלאסיים: הפטיש, המספר המרוכב <span dir="ltr" class="font-mono font-bold text-violet-900">e + 2i</span>, הרשימה <code dir="ltr">(13, 'hello', true)</code> וכלי הרכב <span dir="ltr" class="font-mono font-bold text-violet-900">35-070-19</span>.
                 </div>
                 <div class="bg-white p-2.5 rounded-lg border border-violet-100">
                     <strong class="text-indigo-950 block mb-0.5">⚙️ איך הסימולציה עובדת:</strong>
@@ -5482,23 +5478,54 @@ self perform: #postCopy withArguments: #() inSuperclass: Behavior superclass.
             }
         }
 
+        
+        function navigateToLocalFile(targetFile, openNewWindow) {
+            const isSandboxed = (window.location.protocol === 'blob:' || window.location.protocol === 'about:' || window.location.hostname.includes('usercontent'));
+            if (!isSandboxed) {
+                if (openNewWindow) window.open(targetFile, '_blank');
+                else window.location.href = targetFile;
+                return;
+            }
+            const mapNames = {
+                '20906_1.html': 'פרק 1: יסודות החשיבה מונחית העצמים, ההפשטה והמושג "עצם"',
+                '20906_2.html': 'פרק 2: סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto',
+                '20906_3.html': 'פרק 3: תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות',
+                '20906_4.html': 'פרק 4: מתודות, פרימיטיבים, בלוקים ומבני בקרה',
+                '20906_5.html': 'פרק 5: המושג "מחלקה", הורשה, Traits ו-Method Lookup',
+                '20906_6.html': 'פרק 6: היררכיות הליבה, מספרים ומערכת האוספים (Collections)',
+                '20906_7.html': 'פרק 7: תכנון מונחה עצמים מבוזר – חידת שמונה המלכות',
+                '20906_8.html': 'פרק 8: ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic',
+                '20906_9.html': 'פרק 9: מודל המטה-מחלקות (Metaclass), 5 הרמות ורפלקציה',
+                'index.html': 'תפריט הקורס הראשי'
+            };
+            const m = document.getElementById('chapter-nav-modal');
+            const titleEl = document.getElementById('chapter-nav-modal-title');
+            const bodyEl = document.getElementById('chapter-nav-modal-body');
+            if (titleEl) titleEl.textContent = 'מעבר אל ' + (mapNames[targetFile] || targetFile);
+            if (bodyEl) bodyEl.innerHTML = '<p>בסביבת הדפדפן המקומית או בשרת, כפתור זה מעביר ישירות לקובץ <code>' + targetFile + '</code> (' + (mapNames[targetFile] || targetFile) + ').</p>';
+            if (m) {
+                m.classList.remove('hidden');
+                m.classList.add('flex');
+            }
+        }
+
         function openChapterNavModal(target) {
             const modal = document.getElementById('chapter-nav-modal');
             const title = document.getElementById('chapter-nav-modal-title');
             const body = document.getElementById('chapter-nav-modal-body');
             if (!modal || !title || !body) return;
             if (target === 'index') {
-                title.textContent = '🏠 ארכיטקטורת 9 הפרקים החדשה של הקורס (index.html)';
+                title.textContent = '🏠 ארכיטקטורת 9 הפרקים של הקורס';
                 body.innerHTML = '<p>בתיקיית הקורס כפתור זה מוביל אל <code>index.html</code> המציג את 4 חטיבות הקורס ו-9 הפרקים החדשים:</p>' +
                     '<ul class="space-y-1 mt-2 font-semibold text-violet-950">' +
-                    '<li>• <b>פרק 1 (נוכחי – 1.html):</b> יסודות ה-OOP, התפתחות מנגנוני ההפשטה והמושג "עצם".</li>' +
-                    '<li>• <b>פרק 2 (2.html):</b> סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto.</li>' +
+                    '<li>• <b>פרק 1 (נוכחי – 20906_1.html):</b> יסודות ה-OOP, התפתחות מנגנוני ההפשטה והמושג "עצם".</li>' +
+                    '<li>• <b>פרק 2 (20906_2.html):</b> סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto.</li>' +
                     '<li>• <b>פרקים 3–4:</b> תחביר Smalltalk, הודעות, קדימויות, בלוקים (BlockClosure), מבני בקרה ו-SUnit.</li>' +
                     '<li>• <b>פרקים 5–6:</b> מחלקות, ירושה, Traits, Method Lookup, מספרים ומערכת האוספים (Collections).</li>' +
                     '<li>• <b>פרקים 7–9:</b> תכנון מבוזר (8 המלכות), מנשק Morphic ומודל 5 הרמות של מטה-מחלקות.</li></ul>';
             } else {
-                title.textContent = '🚀 הפרק הבא בתוכנית: פרק 2 (2.html) – סביבת העבודה Squeak ופרויקט Quinto';
-                body.innerHTML = '<p>סיימתם בהצלחה את פרק 1! בתיקיית הקורס כפתור זה מעביר ישירות אל <code>2.html</code>, המאחד ללא כפילויות את כל כלי הפיתוח של Squeak (Workspace, Transcript, System Browser, Method Finder, Inspector וה-Debugger) יחד עם הפרויקט המעשי המלא של משחק <b>Quinto</b> ווריאציות הבחינות שלו.</p>';
+                title.textContent = '🚀 הפרק הבא בתוכנית: פרק 2 (20906_2.html) – סביבת העבודה Squeak ופרויקט Quinto';
+                body.innerHTML = '<p>סיימתם בהצלחה את פרק 1! בתיקיית הקורס כפתור זה מעביר ישירות אל <code>20906_2.html</code>, המאחד ללא כפילויות את כל כלי הפיתוח של Squeak (Workspace, Transcript, System Browser, Method Finder, Inspector וה-Debugger) יחד עם הפרויקט המעשי המלא של משחק <b>Quinto</b> ווריאציות הבחינות שלו.</p>';
             }
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -6268,5 +6295,6 @@ self perform: #postCopy withArguments: #() inSuperclass: Behavior superclass.
             typesetMath();
         });
     </script>
+    <script src="ai_widget.js"></script>
 </body>
 </html>

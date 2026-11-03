@@ -562,6 +562,7 @@
             }
         }
     </style>
+    <script src="theme-manager.js"></script>
 </head>
 <body class="h-screen flex flex-col md:flex-row overflow-hidden study-mode-deep">
 
@@ -696,18 +697,18 @@
     <!-- Sidebar Footer Navigation (3.html / 5.html / index.html) -->
     <div class="relative z-10 p-3 border-t border-purple-200/80 bg-white/85 backdrop-blur-md space-y-1.5">
         <div class="flex gap-1.5">
-            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-100 via-fuchsia-50 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-purple-950 font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-300/80 cursor-pointer" onclick="navigateToLocalFile('3.html', false)" type="button">
+            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-100 via-fuchsia-50 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-purple-950 font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-300/80 cursor-pointer" onclick="navigateToLocalFile('20906_3.html', false)" type="button">
                 <span class="font-mono text-xs">→</span>
                 <span>הפרק הקודם (3)</span>
             </button>
-            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-500 cursor-pointer" onclick="navigateToLocalFile('5.html', false)" type="button">
+            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-500 cursor-pointer" onclick="navigateToLocalFile('20906_5.html', false)" type="button">
                 <span>לפרק הבא (5)</span>
                 <span class="font-mono text-xs">←</span>
             </button>
         </div>
         <button class="w-full py-1.5 px-3 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-950 font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 border border-purple-200 cursor-pointer" onclick="navigateToLocalFile('index.html', false)" type="button">
             <span>🏠</span>
-            <span>חזרה לתפריט הקורס הראשי (index.html)</span>
+            <span>חזרה לתפריט הראשי</span>
         </button>
     </div>
 </aside>
@@ -3062,7 +3063,7 @@ PalindromeTest &gt;&gt; testPalindrome
             <!-- Bottom Navigation -->
             <div class="mt-8 pt-5 border-t border-violet-100 flex justify-between items-center">
                 <button class="px-4 py-2 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-900 border border-violet-200 text-xs md:text-sm font-bold cursor-pointer" onclick="showTab('tab-4-7')" type="button">→ חזרה ליחידה 4.7</button>
-                <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs md:text-sm font-black shadow-sm transition cursor-pointer flex items-center gap-2" onclick="navigateToLocalFile('5.html', false)" type="button">
+                <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs md:text-sm font-black shadow-sm transition cursor-pointer flex items-center gap-2" onclick="navigateToLocalFile('20906_5.html', false)" type="button">
                     <span>מעבר לפרק 5: מחלקות, ירושה וחיפוש מתודות</span>
                     <span>←</span>
                 </button>
@@ -3103,7 +3104,7 @@ PalindromeTest &gt;&gt; testPalindrome
             </ol>
             <div class="flex justify-between pt-2">
                 <button class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold cursor-pointer" onclick="showTab('tab-4-7')" type="button">→ 4.7</button>
-                <button class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer" onclick="navigateToLocalFile('5.html', false)" type="button">לפרק 5 ←</button>
+                <button class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer" onclick="navigateToLocalFile('20906_5.html', false)" type="button">לפרק 5 ←</button>
             </div>
         </div>
     </div>
@@ -3648,6 +3649,7 @@ PalindromeTest &gt;&gt; testPalindrome
         if (typeof renderMathInElement === 'function') {
             try {
                 renderMathInElement(rootEl || document.body, {
+                    ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'button'],
                     delimiters: [
                         {left: '$$', right: '$$', display: true},
                         {left: '$', right: '$', display: false}
@@ -3748,9 +3750,16 @@ PalindromeTest &gt;&gt; testPalindrome
         const titleEl = document.getElementById('nav-modal-title');
         const bodyEl = document.getElementById('nav-modal-body');
         const mapNames = {
-            '3.html': 'פרק 3: תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות',
-            '5.html': 'פרק 5: מחלקות, ירושה, חיפוש מתודות (self מול super) ומחלקות מופשטות',
-            'index.html': 'תפריט הקורס הראשי (index.html)'
+            '20906_1.html': 'פרק 1: יסודות החשיבה מונחית העצמים, ההפשטה והמושג "עצם"',
+            '20906_2.html': 'פרק 2: סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto',
+            '20906_3.html': 'פרק 3: תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות',
+            '20906_4.html': 'פרק 4: מתודות, פרימיטיבים, בלוקים ומבני בקרה',
+            '20906_5.html': 'פרק 5: המושג "מחלקה", הורשה, Traits ו-Method Lookup',
+            '20906_6.html': 'פרק 6: היררכיות הליבה, מספרים ומערכת האוספים (Collections)',
+            '20906_7.html': 'פרק 7: תכנון מונחה עצמים מבוזר – חידת שמונה המלכות',
+            '20906_8.html': 'פרק 8: ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic',
+            '20906_9.html': 'פרק 9: מודל המטה-מחלקות (Metaclass), 5 הרמות ורפלקציה',
+            'index.html': 'תפריט הקורס הראשי'
         };
         if (titleEl) titleEl.textContent = 'מעבר אל ' + (mapNames[targetFile] || targetFile);
         if (bodyEl) bodyEl.innerHTML = 'בסביבת הדפדפן המקומית או בתיקיית הקורס, כפתור זה מעביר ישירות לקובץ <code>' + targetFile + '</code> (' + (mapNames[targetFile] || targetFile) + '). בתצוגה מקדימה מבודדת של קובץ יחיד, פתחו את הקובץ המבוקש מתוך תיקיית הקורס.';
@@ -5063,5 +5072,6 @@ PalindromeTest &gt;&gt; testPalindrome
         renderAllMath(document.body);
     });
 </script>
+    <script src="ai_widget.js"></script>
 </body>
 </html>

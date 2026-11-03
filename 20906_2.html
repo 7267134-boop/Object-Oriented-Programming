@@ -562,6 +562,7 @@
             }
         }
     </style>
+    <script src="theme-manager.js"></script>
 </head>
 <body class="h-screen flex flex-col md:flex-row overflow-hidden study-mode-deep">
 
@@ -696,18 +697,18 @@
     <!-- Sidebar Footer Navigation (1.html / 3.html / index.html) -->
     <div class="relative z-10 p-3 border-t border-purple-200/80 bg-white/85 backdrop-blur-md space-y-1.5">
         <div class="flex gap-1.5">
-            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-100 via-fuchsia-50 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-purple-950 font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-300/80 cursor-pointer" onclick="navigateToLocalFile('1.html', false)" type="button">
+            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-100 via-fuchsia-50 to-pink-100 hover:from-purple-200 hover:to-pink-200 text-purple-950 font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-300/80 cursor-pointer" onclick="navigateToLocalFile('20906_1.html', false)" type="button">
                 <span class="font-mono text-xs">→</span>
                 <span>הפרק הקודם (1)</span>
             </button>
-            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-500 cursor-pointer" onclick="navigateToLocalFile('3.html', false)" type="button">
+            <button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-purple-600 via-fuchsia-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-[11px] shadow-2xs transition-all flex items-center justify-center gap-1 group border border-purple-500 cursor-pointer" onclick="navigateToLocalFile('20906_3.html', false)" type="button">
                 <span>לפרק הבא (3)</span>
                 <span class="font-mono text-xs">←</span>
             </button>
         </div>
         <button class="w-full py-1.5 px-3 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-950 font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 border border-purple-200 cursor-pointer" onclick="navigateToLocalFile('index.html', false)" type="button">
             <span>🏠</span>
-            <span>חזרה לתפריט הקורס הראשי (index.html)</span>
+            <span>חזרה לתפריט הראשי</span>
         </button>
     </div>
 </aside>
@@ -3336,7 +3337,7 @@ LifeGame &gt;&gt; wantsSteps
             <!-- Bottom Navigation -->
             <div class="mt-8 pt-5 border-t border-violet-100 flex justify-between items-center">
                 <button class="px-4 py-2 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-900 border border-violet-200 text-xs md:text-sm font-bold transition cursor-pointer" onclick="showTab('tab-2-7')" type="button">→ חזרה ל-2.7: בעיות פתורות והרחבות</button>
-                <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs md:text-sm font-black shadow-sm transition cursor-pointer flex items-center gap-2" onclick="navigateToLocalFile('3.html', false)" type="button">
+                <button class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white text-xs md:text-sm font-black shadow-sm transition cursor-pointer flex items-center gap-2" onclick="navigateToLocalFile('20906_3.html', false)" type="button">
                     <span>מעבר לפרק 3: תחביר שפת Smalltalk, הודעות וקדימויות</span>
                     <span>←</span>
                 </button>
@@ -3377,7 +3378,7 @@ LifeGame &gt;&gt; wantsSteps
             </ol>
             <div class="flex justify-between pt-2">
                 <button class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold cursor-pointer" onclick="showTab('tab-2-7')" type="button">→ 2.7</button>
-                <button class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer" onclick="navigateToLocalFile('3.html', false)" type="button">לפרק 3 ←</button>
+                <button class="px-4 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold cursor-pointer" onclick="navigateToLocalFile('20906_3.html', false)" type="button">לפרק 3 ←</button>
             </div>
         </div>
     </div>
@@ -3742,7 +3743,7 @@ LifeGame &gt;&gt; wantsSteps
             </div>
         </div>
         <div class="flex flex-wrap gap-2">
-            <button id="db25-btn-v1" onclick="inspectDebugger2_5('v1')" class="px-3.5 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold cursor-pointer" type="button">גרסה 1: באג '.' מול $. (קורס!)</button>
+            <button id="db25-btn-v1" onclick="inspectDebugger2_5('v1')" class="px-3.5 py-2 rounded-xl bg-rose-600 text-white text-xs font-bold cursor-pointer" type="button">גרסה 1: באג '.' מול <code>$.</code> (קורס!)</button>
             <button id="db25-btn-v2" onclick="inspectDebugger2_5('v2')" class="px-3.5 py-2 rounded-xl bg-violet-50 text-violet-950 border border-violet-200 text-xs font-bold cursor-pointer" type="button">גרסה 2: מחזיר '.txt' וקורס על 'readme'</button>
             <button id="db25-btn-v3" onclick="inspectDebugger2_5('v3')" class="px-3.5 py-2 rounded-xl bg-violet-50 text-violet-950 border border-violet-200 text-xs font-bold cursor-pointer" type="button">גרסה 3 (מתוקנת): +1 ו-detect:ifNone:</button>
             <button id="db25-btn-btns" onclick="inspectDebugger2_5('btns')" class="px-3.5 py-2 rounded-xl bg-violet-50 text-violet-950 border border-violet-200 text-xs font-bold cursor-pointer" type="button">השוואת Into מול Over מול Through</button>
@@ -3970,6 +3971,7 @@ LifeGame &gt;&gt; wantsSteps
         if (typeof renderMathInElement === 'function') {
             try {
                 renderMathInElement(rootEl || document.body, {
+                    ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'button'],
                     delimiters: [
                         {left: '$$', right: '$$', display: true},
                         {left: '$', right: '$', display: false}
@@ -4070,9 +4072,16 @@ LifeGame &gt;&gt; wantsSteps
         const titleEl = document.getElementById('nav-modal-title');
         const bodyEl = document.getElementById('nav-modal-body');
         const mapNames = {
-            '1.html': 'פרק 1: יסודות החשיבה מונחית העצמים, ההפשטה והמושג "עצם"',
-            '3.html': 'פרק 3: תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות',
-            'index.html': 'תפריט הקורס הראשי (index.html)'
+            '20906_1.html': 'פרק 1: יסודות החשיבה מונחית העצמים, ההפשטה והמושג "עצם"',
+            '20906_2.html': 'פרק 2: סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto',
+            '20906_3.html': 'פרק 3: תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות',
+            '20906_4.html': 'פרק 4: מתודות, פרימיטיבים, בלוקים ומבני בקרה',
+            '20906_5.html': 'פרק 5: המושג "מחלקה", הורשה, Traits ו-Method Lookup',
+            '20906_6.html': 'פרק 6: היררכיות הליבה, מספרים ומערכת האוספים (Collections)',
+            '20906_7.html': 'פרק 7: תכנון מונחה עצמים מבוזר – חידת שמונה המלכות',
+            '20906_8.html': 'פרק 8: ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic',
+            '20906_9.html': 'פרק 9: מודל המטה-מחלקות (Metaclass), 5 הרמות ורפלקציה',
+            'index.html': 'תפריט הקורס הראשי'
         };
         if (titleEl) titleEl.textContent = 'מעבר אל ' + (mapNames[targetFile] || targetFile);
         if (bodyEl) bodyEl.innerHTML = 'בסביבת הדפדפן המקומית או בתיקיית הקורס, כפתור זה מעביר ישירות לקובץ <code>' + targetFile + '</code> (' + (mapNames[targetFile] || targetFile) + '). בתצוגה מקדימה מבודדת של קובץ יחיד, פתחו את הקובץ המבוקש מתוך תיקיית הקורס.';
@@ -5203,7 +5212,7 @@ Closure: [ self toggleNeighboursOfCellAt: ${i} at: ${j} ]</code></pre>
         { topic: 'Inspector ו-Explorer', front: 'עבור המחלקה MyClass (עם x y, משתנה מחלקה Adata ומשתנה מטה-מחלקה z), היכן נראה כל משתנה ב-Inspector?', back: '• ב-MyClass new inspect רואים רק את משתני המופע x ו-y.\n• ב-MyClass inspect (או self class inspect) רואים את z כשדה ישיר ברשימה השמאלית, ואת משתנה המחלקה Adata בתוך המילון שבשדה classPool!' },
         { topic: 'Inspector ו-Explorer', front: 'מדוע שינוי x ב-Inspector אינו מפר אנקפסולציה ועוקף את ה-Setter x:, לעומת שינוי תא ממוספר ב-CollectionInspector?', back: 'ה-Inspector מריץ קוד בהקשר הפנימי של העצם הנחקר (self) ומשנה את תא הזיכרון של x ישירות בלי לקרוא למתודה x:. לעומת זאת, ב-CollectionInspector (על מערך כגון MyArrayClass), שינוי תא ממוספר שולח לעצם את ההודעה self at: index put: val ולכן מפעיל את בדיקת הטיפוסים ב-at:put:!' },
         { topic: 'ה-Debugger', front: 'מה תפקידו של הכפתור Through ב-Debugger לעומת Into ו-Over?', back: 'כאשר ההודעה הבאה לביצוע היא איטרטור שמקבל בלוק (כגון detect: [...] ב-String>>suffix), לחיצה על Into תיכנס לקוד הספרייה הפנימי של detect:, ואילו Through מדלג על מעטפת האיטרטור ועוצר ישירות בתוך הבלוק שלנו בכל איטרציה!' },
-        { topic: 'ה-Debugger', front: 'מהם שלושת הבאגים והתיקונים במתודה String >> suffix?', back: '1. FileDirectory dot מחזיר מחרוזת \'.\' בעוד self at: i מחזיר תו $. ⬅ מתקנים ל-FileDirectory dot asCharacter.\n2. copyFrom: dotPosition מחזיר \'.txt\' עם הנקודה ⬅ מתקנים ל-dotPosition + 1.\n3. קובץ ללא נקודה (\'readme\') זורק שגיאה ב-detect: ⬅ מתקנים ל-detect: [...] ifNone: [self size].' },
+        { topic: 'ה-Debugger', front: 'מהם שלושת הבאגים והתיקונים במתודה String >> suffix?', back: '1. FileDirectory dot מחזיר מחרוזת \'.\' בעוד self at: i מחזיר תו <code>$.</code> ⬅ מתקנים ל-FileDirectory dot asCharacter.\n2. copyFrom: dotPosition מחזיר \'.txt\' עם הנקודה ⬅ מתקנים ל-dotPosition + 1.\n3. קובץ ללא נקודה (\'readme\') זורק שגיאה ב-detect: ⬅ מתקנים ל-detect: [...] ifNone: [self size].' },
         { topic: 'Monticello ושחזור', front: 'מהו כלל הבלעדיות ב-Monticello וכיצד משייכים מתודת הרחבה (כגון String >> shout) למארז SBE-Quinto?', back: 'כל מחלקה במערכת יכולה להשתייך למארז Monticello אחד בלבד. כדי לצרף למארז שלנו מתודה שהוספנו למחלקת מערכת חיצונית (כגון String), שמים אותה בפרוטוקול שמתחיל בכוכבית ואחריה שם המארז באותיות קטנות: *sbe-quinto.' },
         { topic: 'Monticello ושחזור', front: 'כיצד עוצרים לולאה אינסופית ב-Squeak, ובאילו שתי דרכים משחזרים קוד לאחר סגירה ללא שמירה?', back: 'עצירת לולאה אינסופית: קיצור המקלדת Alt+. (Cmd+.) הפותח Debugger, או חיסול התהליך ב-Process Browser.\nשתי דרכי שחזור: (1) מתוך קובץ ה-.changes דרך World ⊳ changes... ⊳ recently logged changes...; (2) טעינת קובץ .st ב-fileIn.' },
         { topic: 'פרויקט Quinto', front: 'ממי יורשות SBECell ו-SBEGame, וכיצד התא יודע אילו שכנים להפוך בלי לשמור את השורה והעמודה שלו?', back: 'SBECell יורשת מ-SimpleSwitchMorph (ומחזיקה רק את mouseAction), ו-SBEGame יורשת מ-BorderedMorph (ומחזיקה את המטריצה cells). הלוח מפקיד בכל תא סגור לקסיקלי [self toggleNeighboursOfCellAt: i at: j] שלוכד בזיכרון את i, j ואת הלוח self!' },
@@ -5358,7 +5367,7 @@ Closure: [ self toggleNeighboursOfCellAt: ${i} at: ${j} ]</code></pre>
         'tab-2-5': {
             open: [
                 { q: 'שאלה 1: תארו את 4 החלוניות של חלון ה-Debugger ואת ההבדל המדויק בין כפתורי הצעידה Into, Over ו-Through.', d: 'מדוע כפתור Through כה חשוב כשמדבגים מתודה שמשתמשת ב-detect: או ב-do:?', a: '4 החלוניות: (1) למעלה: מחסנית הקריאות (Stack Trace); (2) במרכז: קוד המתודה של המסגרת הנבחרת עם ההודעה הבאה מודגשת; (3) למטה משמאל: Inspector על self; (4) למטה מימין: Inspector על הפרמטרים והמשתנים המקומיים.\nהבדל הכפתורים: Over מריץ את ההודעה המודגשת במלואה; Into נכנס לתוך המתודה של ההודעה המודגשת; ואילו Through מיועד למצב שבו ההודעה המודגשת מעבירה בלוק לאיטרטור (כמו detect: [...]) – הוא מדלג על קוד הספרייה של detect: ועוצר ישירות בתוך הבלוק שלנו!' },
-                { q: 'שאלה 2: פרטו את שלושת הבאגים שהתגלו בפיתוח המתודה String >> suffix ואת התיקון המדויק לכל אחד מהם.', d: 'מה קרה עבור \'readme.txt\' suffix ומה קרה עבור \'readme\' suffix?', a: '1. באג טיפוס הנקודה: FileDirectory dot מחזיר מחרוזת \'.\' בעוד self at: i מחזיר תו $., ולכן ההשוואה ביניהם תמיד false ⬅ מתקנים ל-dot := FileDirectory dot asCharacter.\n2. באג היסט האינדקס: copyFrom: dotPosition to: self size החזיר \'.txt\' כולל הנקודה ⬅ מתקנים ל-dotPosition + 1.\n3. באג קובץ ללא נקודה (\'readme\'): detect: זרק חריגת Object is not in the collection ⬅ מתקנים ל-detect: [...] ifNone: [self size] שמחזיר עבורו מחרוזת ריקה \'\'.' },
+                { q: 'שאלה 2: פרטו את שלושת הבאגים שהתגלו בפיתוח המתודה String >> suffix ואת התיקון המדויק לכל אחד מהם.', d: 'מה קרה עבור \'readme.txt\' suffix ומה קרה עבור \'readme\' suffix?', a: '1. באג טיפוס הנקודה: FileDirectory dot מחזיר מחרוזת \'.\' בעוד self at: i מחזיר תו <code>$.</code>, ולכן ההשוואה ביניהם תמיד false ⬅ מתקנים ל-dot := FileDirectory dot asCharacter.\n2. באג היסט האינדקס: copyFrom: dotPosition to: self size החזיר \'.txt\' כולל הנקודה ⬅ מתקנים ל-dotPosition + 1.\n3. באג קובץ ללא נקודה (\'readme\'): detect: זרק חריגת Object is not in the collection ⬅ מתקנים ל-detect: [...] ifNone: [self size] שמחזיר עבורו מחרוזת ריקה \'\'.' },
                 { q: 'שאלה 3: כיצד עוצרים לולאה אינסופית הרצה ב-Workspace (כגון [true] whileTrue: [...]), ומה תפקידו של הכלי Process Browser?', d: 'איזה קיצור מקלדת שולח פסיקת משתמש?', a: 'לוחצים על קיצור המקלדת Alt+. (או Cmd+. ב-Mac), ששולח פסיקת משתמש (User Interrupt), עוצר את התהליך הפעיל ופותח עליו חלון Debugger (משם לוחצים Abandon). לחלופין, ניתן לפתוח את הכלי Process Browser המציג את כל התהליכים הרצים במערכת ולחסל (terminate) את התהליך הסורר.' },
                 { q: 'שאלה 4: הסבירו כיצד מנהל המארזים Monticello יודע אילו מחלקות ואילו מתודות הרחבה לשמור בתוך קובץ ה-.mcz של המארז שלנו.', d: 'כיצד נשייך את המתודה String >> shout למארז SBE-Quinto?', a: 'Monticello משייך למארז (למשל SBE-Quinto) את כל המחלקות שבקטגוריית המערכת התואמת לשמו. מאחר שכל מחלקה שייכת למארז אחד בלבד והמחלקה String שייכת למארז המערכת Collections, כדי לצרף את מתודת ההרחבה String >> shout למארז שלנו מעבירים אותה לפרוטוקול ששמו מתחיל בכוכבית ואחריה שם המארז באותיות קטנות: *sbe-quinto!' },
                 { q: 'שאלה 5: נניח שיצרתם את המחלקה Animal ואישרתם ב-accept את מתודותיה, וביצעתם לה fileOut, ואז Squeak נסגרה ללא שמירה. באילו שתי דרכים תשחזרו אותה?', d: 'מה ההבדל בין שחזור מ-.changes לבין fileIn?', a: 'דרך א׳ (מקובץ ה-.changes): פותחים את World ⊳ changes... ⊳ recently logged changes... (או מריצים Smalltalk recover: 10000), מסמנים את הגדרת המחלקה והמתודות שנרשמו אוטומטית ב-.changes ולוחצים fileIn.\nדרך ב׳ (מקובץ ה-.st): גוררים את הקובץ Animal.st לחלון ה-World או פותחים File List ולוחצים על fileIn entire file.' }
@@ -5589,5 +5598,6 @@ Closure: [ self toggleNeighboursOfCellAt: ${i} at: ${j} ]</code></pre>
         renderAllMath(document.body);
     });
 </script>
+    <script src="ai_widget.js"></script>
 </body>
 </html>

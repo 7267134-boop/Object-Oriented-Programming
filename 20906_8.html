@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="ai-document-summary" content="פרק 8: ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic. כולל: ישירות וחיות, ממשק ה-Halo, מערכת הצירים והמרחב, הרכבת צורות ו-submorphs at: 1, שחזור טקסטואלי initString ו-fullPrintOn:, CrossMorph, אירועי עכבר ומקלדת, אנימציית Stepping והבהוב, Drag & Drop, קוביית DieMorph וציור על Canvas.">
 <title>תכנות מונחה עצמים (20906) – פרק 8: ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic</title>
 <meta content="פרק 8 בתוכנית החדשה של תכנות מונחה עצמים (20906): ארכיטקטורת ממשק גרפי מונחה עצמים Morphic ב-Squeak Smalltalk – ישירות וחיות, Halo, היררכיית Morph, מערכת הצירים, הרכבת צורות ו-submorphs at: 1, שחזור טקסטואלי initString ו-fullPrintOn:, ציור מותאם ב-drawOn: ו-containsPoint:, אירועי עכבר ומקלדת, מנגנון האנימציה stepTime/wantsSteps והבהוב startFlashing, תיבות דו-שיח, Drag &amp; Drop, קוביית המשחק DieMorph ושיגור דינמי עם perform:." name="description"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -625,6 +626,7 @@ body.study-mode-fast main#main-scroll-container {
     }
 }
 </style>
+    <script src="theme-manager.js"></script>
 </head>
 <body class="h-screen flex overflow-hidden study-mode-deep">
 
@@ -739,17 +741,17 @@ body.study-mode-fast main#main-scroll-container {
 <!-- Sidebar Footer: Chapter Navigation (7.html <- 8.html -> 9.html & index.html) -->
 <div class="relative z-10 p-2.5 border-t border-violet-200/70 bg-white/65 backdrop-blur-md space-y-1.5 mt-auto">
 <div class="flex gap-1.5">
-<button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-violet-100 via-purple-50 to-indigo-100 hover:from-violet-200 hover:to-purple-100 text-violet-950 font-bold text-[11px] shadow-xs transition-all flex items-center justify-center gap-1 group border border-violet-300/80 text-center cursor-pointer" onclick="navigateToCoursePage('7.html')" title="מעבר לפרק 7: תכנון מבוזר וחידת 8 המלכות" type="button">
+<button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-violet-100 via-purple-50 to-indigo-100 hover:from-violet-200 hover:to-purple-100 text-violet-950 font-bold text-[11px] shadow-xs transition-all flex items-center justify-center gap-1 group border border-violet-300/80 text-center cursor-pointer" onclick="navigateToLocalFile('20906_7.html', false)" title="מעבר לפרק 7: תכנון מבוזר וחידת 8 המלכות" type="button">
 <span class="relative z-10 font-mono text-xs transform group-hover:translate-x-0.5 transition-transform">→</span>
 <span class="relative z-10">הפרק הקודם (7)</span>
 </button>
-<button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-700 hover:from-violet-700 hover:to-indigo-700 text-white font-bold text-[11px] shadow-xs transition-all flex items-center justify-center gap-1 group border border-violet-500 text-center cursor-pointer" onclick="navigateToCoursePage('9.html')" title="מעבר לפרק 9: מודל המטה-מחלקות ו-5 הרמות" type="button">
+<button class="relative overflow-hidden flex-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-violet-600 via-indigo-600 to-purple-700 hover:from-violet-700 hover:to-indigo-700 text-white font-bold text-[11px] shadow-xs transition-all flex items-center justify-center gap-1 group border border-violet-500 text-center cursor-pointer" onclick="navigateToLocalFile('20906_9.html', false)" title="מעבר לפרק 9: מודל המטה-מחלקות ו-5 הרמות" type="button">
 <span class="relative z-10">לפרק הבא (9)</span>
 <span class="relative z-10 font-mono text-xs transform group-hover:-translate-x-0.5 transition-transform">←</span>
 </button>
 </div>
-<button class="relative overflow-hidden w-full py-1.5 px-3 rounded-lg bg-gradient-to-r from-violet-50 via-white to-fuchsia-50 hover:from-violet-100 hover:to-fuchsia-100 text-violet-950 font-bold text-[11px] shadow-xs transition-all flex items-center justify-center border border-violet-300/80 text-center cursor-pointer" onclick="navigateToCoursePage('index.html')" type="button">
-<span class="relative z-10">🏠 בחזרה לתפריט הראשי של הקורס</span>
+<button class="relative overflow-hidden w-full py-1.5 px-3 rounded-lg bg-gradient-to-r from-violet-50 via-white to-fuchsia-50 hover:from-violet-100 hover:to-fuchsia-100 text-violet-950 font-bold text-[11px] shadow-xs transition-all flex items-center justify-center border border-violet-300/80 text-center cursor-pointer" onclick="navigateToLocalFile('index.html', false)" type="button">
+<span class="relative z-10">🏠 חזרה לתפריט הראשי</span>
 </button>
 </div>
 </aside>
@@ -805,7 +807,7 @@ body.study-mode-fast main#main-scroll-container {
 הסביבה מגיבה למשתמש באופן מיידי ורציף, והמידע על המסך מתעדכן בזמן אמת (למשל קואורדינטות המיקום מתעדכנות תוך כדי גרירה וללא הידור מחדש).
 </div>
 <div class="bg-white/90 p-3.5 rounded-xl border border-fuchsia-200 shadow-2xs">
-<strong class="text-fuchsia-950 block mb-1">3. ציר $Y$ יורד כלפי מטה</strong>
+<strong class="text-fuchsia-950 block mb-1">3. ציר <span class="font-mono font-bold">Y</span> יורד כלפי מטה</strong>
 ראשית הצירים <span class="math-ltr">(0, 0)</span> נמצאת בפינה <strong>השמאלית-העליונה</strong> של המסך: ערכי <span class="math-ltr">+X</span> מתקדמים ימינה וערכי <span class="math-ltr">+Y</span> מתקדמים <strong>כלפי מטה</strong>.
 </div>
 </div>
@@ -5414,7 +5416,7 @@ Morph new initString (ללא מסגרת)
 </ul>
 <div class="flex justify-end gap-2 pt-2">
 <button class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold cursor-pointer" onclick="closeNextChapterPreview()" type="button">הישאר בפרק 8</button>
-<button class="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold cursor-pointer" onclick="navigateToCoursePage('9.html')" type="button">מעבר אל פרק 9 (9.html) ←</button>
+<button class="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold cursor-pointer" onclick="navigateToLocalFile('20906_9.html', false)" type="button">מעבר אל פרק 9 (9.html) ←</button>
 </div>
 </div>
 </div>
@@ -5476,13 +5478,24 @@ function setStudyMode(mode, silent) {
     if (scroller && !silent) scroller.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+function navigateToLocalFile(targetFile, openNewWindow) {
+    const isSandboxed = (window.location.protocol === 'blob:' || window.location.protocol === 'about:' || window.location.hostname.includes('usercontent'));
+    if (!isSandboxed) {
+        if (openNewWindow) window.open(targetFile, '_blank');
+        else window.location.href = targetFile;
+        return;
+    }
+    window.location.href = targetFile;
+}
+
 function navigateToCoursePage(filename) {
-    if (filename === '9.html') {
+    if (filename === '20906_9.html') {
         showModeToast('🚀 מעבר אל פרק 9 (9.html) – מודל המטה-מחלקות');
-    } else if (filename === '7.html') {
+    } else if (filename === '20906_7.html') {
         showModeToast('⬅️ מעבר אל פרק 7 (7.html) – חידת 8 המלכות');
     } else {
-        showModeToast('🏠 מעבר אל תפריט הקורס הראשי (index.html)');
+        showModeToast('🏠 מעבר אל חזרה לתפריט הראשי');
     }
     try {
         if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -6323,5 +6336,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 </script>
+    <script src="ai_widget.js"></script>
 </body>
 </html>

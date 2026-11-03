@@ -23,6 +23,8 @@ html_content = f'''<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="theme-manager.js"></script>
     <!-- Google Fonts: Heebo & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -224,21 +226,23 @@ html_content = f'''<!DOCTYPE html>
         /* Expanded State: Smooth organic oval pill with partial transparency */
         #cat-nose-container:hover #cat-nose-pill,
         #cat-nose-pill.nose-expanded {{
-            width: 320px !important;
-            height: 140px !important;
-            border-radius: 38px !important;
-            background: rgba(24, 8, 40, 0.75) !important;
-            backdrop-filter: blur(16px) !important;
-            -webkit-backdrop-filter: blur(16px) !important;
+            width: 350px !important;
+            min-height: 160px !important;
+            height: auto !important;
+            border-radius: 36px !important;
+            background: rgba(20, 8, 35, 0.88) !important;
+            backdrop-filter: blur(18px) !important;
+            -webkit-backdrop-filter: blur(18px) !important;
             box-shadow: 0 20px 45px -5px rgba(236, 72, 153, 0.45) !important;
+            padding: 0.75rem 1rem !important;
         }}
 
         @media (max-width: 640px) {{
             #cat-nose-container:hover #cat-nose-pill,
             #cat-nose-pill.nose-expanded {{
-                width: 285px !important;
-                height: 135px !important;
-                border-radius: 34px !important;
+                width: 300px !important;
+                min-height: 145px !important;
+                border-radius: 30px !important;
             }}
         }}
 
@@ -328,6 +332,30 @@ html_content = f'''<!DOCTYPE html>
                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-900 border border-orange-200">Method Lookup</span>
                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-fuchsia-50 text-fuchsia-900 border border-fuchsia-200">Morphic GUI</span>
                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-950 border border-rose-200">Metaclass Loop</span>
+                </div>
+
+                <!-- Quick Direct Navigation Links Bar -->
+                <div class="mt-5 pt-4 border-t border-purple-100/90 w-full flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                    <a href="0_intro.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-purple-100/80 text-purple-900 border border-purple-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
+                        <span>📖</span>
+                        <span>יחידה 0: מבוא והקדמה</span>
+                    </a>
+                    <a href="summary.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-indigo-100/80 text-indigo-900 border border-indigo-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
+                        <span>📑</span>
+                        <span>מחברת סיכום הקורס</span>
+                    </a>
+                    <a href="exams.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-pink-100/80 text-pink-900 border border-pink-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
+                        <span>⚔️</span>
+                        <span>מאגר בחינות ופתרונות</span>
+                    </a>
+                    <a href="https://all-the-courses.pages.dev/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 text-purple-950 border border-purple-200/80 shadow-xs hover:scale-105 active:scale-95 transition-all">
+                        <span>🌐</span>
+                        <span>כל הקורסים</span>
+                    </a>
+                    <a href="https://wa.me/972586736525" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-50 hover:bg-green-100 text-green-900 border border-green-200 shadow-xs hover:scale-105 active:scale-95 transition-all">
+                        <i class="fa-brands fa-whatsapp text-green-600 text-sm"></i>
+                        <span>וואטסאפ</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -754,7 +782,7 @@ html_content = f'''<!DOCTYPE html>
                             <h4 id="nose-title" class="text-xs sm:text-sm font-black text-white leading-tight mb-1 line-clamp-1 drop-shadow-sm">
                                 יסודות החשיבה מונחית העצמים
                             </h4>
-                            <p id="nose-desc" class="text-[10px] sm:text-[11px] text-purple-200 leading-snug line-clamp-2 mb-2 drop-shadow-xs">
+                            <p id="nose-desc" class="text-[10px] sm:text-[11px] text-purple-200 leading-snug line-clamp-3 mb-2 drop-shadow-xs">
                                 7 שלבי התפתחות ההפשטה בתוכנה, משל המלצר והשף, ועקרונות Pure OOP.
                             </p>
                             <a id="nose-btn" href="20906_1.html"
@@ -784,12 +812,12 @@ html_content = f'''<!DOCTYPE html>
             {{
                 id: "intro",
                 numberLabel: "יחידה 0",
-                badge: "מבוא והקדמה",
-                title: "מבוא והקדמה לקורס תכנות מונחה עצמים",
-                desc: "הכרות עם עולם ה-OOP הטהור, שפת Smalltalk, סביבת Squeak, 5 מלכודות הזהב וטיפים להצלחה בבחינה.",
+                badge: "יחידה 0 • מבוא והקדמה",
+                title: "מבוא, הקדמה וארכיטקטורת הקורס",
+                desc: "שער הכניסה ל-Pure OOP: הכרת שפת Smalltalk וסביבת Squeak, מפת 9 פרקי הליבה, מדריך 3 מצבי הלימוד באתר, וסודות ההצלחה בבחינת הגמר.",
                 link: "0_intro.html",
                 color: "#ec4899", // Pink
-                tags: ["Pure OOP", "Squeak", "5 מלכודות", "טיפים למבחן"],
+                tags: ["Pure OOP", "Squeak", "3 מצבי לימוד", "סודות הבחינה"],
                 segmentName: "חצי אוזן ימין חיצונית"
             }},
             {{
@@ -797,10 +825,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 1",
                 badge: "פרק 1 • יסודות ה-OOP",
                 title: "יסודות החשיבה מונחית העצמים, התפתחות ההפשטה והמושג 'עצם'",
-                desc: "היסודות הפילוסופיים והטכנולוגיים של OOP, 7 שלבי התפתחות ההפשטה בתוכנה, משל המלצר והשף, ועקרונות Pure OOP.",
+                desc: "7 רמות ההפשטה בתוכנה, משבר התוכנה, משל הפרחים של באד, ADT מול מחלקה, מחזור חיי עצם ו-GC, זהות (==) מול שוויון (= ו-hash), ו-3 רמות העתקה.",
                 link: "20906_1.html",
                 color: "#f97316", // Warm Orange
-                tags: ["7 שלבי הפשטה", "משל המלצר", "חביקה Encapsulation", "זהות Identity"],
+                tags: ["7 רמות הפשטה", "זהות == מול שוויון =", "חוזה hash", "shallow/deepCopy"],
                 segmentName: "חצי אוזן ימין פנימית"
             }},
             {{
@@ -808,10 +836,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 2",
                 badge: "פרק 2 • סביבת Squeak",
                 title: "סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto",
-                desc: "סיור מעמיק בסביבת ה-Image/Changes, כלי ה-System Browser, ה-Workspace, ה-Transcript ומימוש פרויקט Quinto.",
+                desc: "הכרת סביבת הפיתוח החיה: ארכיטקטורת Image ו-Changes, ממשק 3 כפתורי העכבר, ה-System Browser, ה-Inspector וה-Debugger, תכנון RDD ופיתוח משחק Quinto.",
                 link: "20906_2.html",
                 color: "#fb923c", // Light Orange
-                tags: ["Image & Changes", "System Browser", "Workspace", "Quinto Game"],
+                tags: ["Image & Changes", "System Browser", "Debugger & Inspector", "משחק Quinto"],
                 segmentName: "חצי אוזן שמאל פנימית"
             }},
             {{
@@ -819,10 +847,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 3",
                 badge: "פרק 3 • תחביר והודעות",
                 title: "תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות",
-                desc: "3 סוגי ההודעות: Unary, Binary, Keyword, כללי קדימות קפדניים משמאל לימין ללא קדימות אריתמטית, ושרשור Cascading.",
+                desc: "3 סוגי הודעות (אונריות, בינריות ומילות-מפתח), חוק קדימות משמאל לימין ללא עדיפות לכפל, 6 הפסאודו-משתנים, מערכים סטטיים מול דינמיים ושרשור קסקייד (;).",
                 link: "20906_3.html",
                 color: "#a855f7", // Purple
-                tags: ["Unary / Binary / Keyword", "סדרי קדימויות", "שרשור Cascading ;", "קבועים Literal"],
+                tags: ["Unary/Binary/Keyword", "קדימות משמאל לימין", "6 הפסאודו-משתנים", "Cascade ;"],
                 segmentName: "חצי אוזן שמאל חיצונית"
             }},
             {{
@@ -830,10 +858,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 4",
                 badge: "פרק 4 • בלוקים ו-SUnit",
                 title: "מתודות, בלוקים (BlockClosure), מבני בקרה פולימורפיים ו-SUnit",
-                desc: "תחביר מתודות, משתנים זמניים, סגורים לקסיקליים (Blocks), מבני בקרה כהודעות פולימורפיות, וכתיבת בדיקות יחידה ב-SUnit.",
+                desc: "הגדרת מתודות ואיסור השמה לפרמטר, סגורים לקסיקליים (BlockClosure), יציאה לא-מקומית (^), תנאים ולולאות כהודעות פולימורפיות, וכתיבת בדיקות יחידה ב-SUnit.",
                 link: "20906_4.html",
                 color: "#db2777", // Pink Rose
-                tags: ["BlockClosure [:x | ...]", "whileTrue:", "ifTrue:ifFalse:", "בדיקות SUnit"],
+                tags: ["BlockClosure", "יציאה לא-מקומית ^", "ifTrue:ifFalse:", "בדיקות SUnit"],
                 segmentName: "שערת שפם עליונה ימנית"
             }},
             {{
@@ -841,10 +869,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 5",
                 badge: "פרק 5 • מחלקות והורשה",
                 title: "המושג 'מחלקה', הורשה, Traits ומנגנון ה-Method Lookup",
-                desc: "הגדרת מחלקות, משתני מופע ומחלקה, מסלול ה-Lookup ממופע למחלקה ולאבותיה, וההבדל הקריטי בין self ל-super.",
+                desc: "3 תפקידי המחלקה, משתני מופע מול מחלקה, אלגוריתם חיפוש מתודות בעץ הירושה, ההבדל היסודי בין self ל-super, שימוש ב-Traits, ויירוט הודעות עם doesNotUnderstand:.",
                 link: "20906_5.html",
                 color: "#f97316", // Orange
-                tags: ["Method Lookup", "self לעומת super", "משתני מופע ומחלקה", "Traits"],
+                tags: ["Method Lookup", "self מול super", "משתני מחלקה ומופע", "doesNotUnderstand:"],
                 segmentName: "שערת שפם אמצעית ימנית"
             }},
             {{
@@ -852,10 +880,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 6",
                 badge: "פרק 6 • אוספים ומספרים",
                 title: "היררכיות הליבה, מספרים ומערכת האוספים (Collections)",
-                desc: "עץ המחלקות המרכזי של Smalltalk, עולם המספרים (SmallInteger/Fraction), והיררכיית האוספים (OrderedCollection, Set, Dictionary).",
+                desc: "המחלקה Object, עולם המספרים והשברים (Fraction), עץ האוספים (Array, OrderedCollection, Set, Dictionary), הבדל בין Set ל-IdentitySet, ואיטרטורים עשירים (do, collect, inject).",
                 link: "20906_6.html",
                 color: "#7c3aed", // Royal Purple
-                tags: ["OrderedCollection", "Dictionary & Set", "Number & Fraction", "איטרציות do: select: collect:"],
+                tags: ["המחלקה Object", "היררכיית המספרים", "עץ Collections", "איטרטורים פולימורפיים"],
                 segmentName: "שערת שפם תחתונה ימנית"
             }},
             {{
@@ -863,10 +891,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 7",
                 badge: "פרק 7 • שמונה המלכות",
                 title: "תכנון מונחה עצמים מבוזר – חידת שמונה המלכות",
-                desc: "פתרון אלגנטי ומבוזר לחידת 8 המלכות ללא לולאות מקוננות, העברת אחריות בין עצמים (Backtracking), והכללות לממדים נוספים.",
+                desc: "פתרון מבוזר ואלגנטי לחידת 8 המלכות ללא לולאות מקוננות, העברת אחריות ואלגוריתם Backtracking בין אובייקטים עצמאיים (QueenTerminator), הכללה ל-NxN וניתוח 8 הסימטריות.",
                 link: "20906_7.html",
                 color: "#ec4899", // Pink
-                tags: ["Backtracking מבוזר", "8 Queens", "האצלת סמכויות", "Queen First/Neighbor"],
+                tags: ["Backtracking מבוזר", "חידת 8 המלכות", "QueenTerminator", "הכללה ל-NxN"],
                 segmentName: "שערת שפם עליונה שמאלית"
             }},
             {{
@@ -874,10 +902,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 8",
                 badge: "פרק 8 • ממשק Morphic",
                 title: "ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic",
-                desc: "מודל ה-GUI הטהור של Squeak: היררכיית ה-Morphs, עץ ההכלה (submorphs/owner), טיפול באירועים ואנימציות מבוססות זמן.",
+                desc: "מודל ה-GUI החי והישיר של Squeak: עץ ההכלה (submorphs ו-owner), ממשק ה-Halo, מערכת הצירים, ציור על Canvas, טיפול באירועי עכבר ומקלדת, ואנימציה חיה עם Stepping.",
                 link: "20906_8.html",
                 color: "#f97316", // Orange
-                tags: ["Morphic Tree", "submorphs & owner", "step & stepTime", "טיפול באירועי עכבר"],
+                tags: ["עץ ה-Morphs", "ממשק Halo", "אירועי עכבר ומקלדת", "אנימציית Stepping"],
                 segmentName: "שערת שפם אמצעית שמאלית"
             }},
             {{
@@ -885,10 +913,10 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "פרק 9",
                 badge: "פרק 9 • מטה-מחלקות",
                 title: "מודל מטה-המחלקות (Metaclass) ורפלקציה ב-Smalltalk",
-                desc: "סוד השלמות של המודל: מחלקה כעצם, מעגל 5 הרמות, 10 חוקי הזהב של Smalltalk, ורפלקציה מלאה בזמן ריצה.",
+                desc: "גולת הכותרת של הקורס: מחלקה כעצם חי בזיכרון, 10 חוקי המודל האקסיומטיים, היררכיית המטה-מחלקות המקבילה, מודל 5 הרמות, מעקב שיגור Color new, ורפלקציה בזמן ריצה.",
                 link: "20906_9.html",
                 color: "#8b5cf6", // Purple
-                tags: ["Metaclass Loop", "5 רמות המודל", "10 חוקי הזהב", "רפלקציה מלאה"],
+                tags: ["מודל 5 הרמות", "10 חוקי המודל", "היררכיית Metaclass", "מסלול Color new"],
                 segmentName: "שערת שפם תחתונה שמאלית"
             }},
             {{
@@ -896,21 +924,21 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "סיכום",
                 badge: "סיכום הקורס המלא",
                 title: "מחברת סיכום קורס מקיפה ומלאה (100% כיסוי)",
-                desc: "סיכום דיגיטלי מקיף של כל חומרי הקורס, שפת Smalltalk, סביבת Squeak, טבלאות השוואה, 10 החוקים ומטה-מחלקות.",
+                desc: "סיכום דיגיטלי הרמטי ושלם של כל 9 פרקי הליבה: עקרונות Pure OOP, תחביר שפת Smalltalk, כלי סביבת Squeak, טבלאות השוואה, חוקי ברזל ומודל 5 הרמות – מושלם לחזרה לקראת הבחינה.",
                 link: "summary.html",
                 color: "#a855f7",
-                tags: ["כל 9 הפרקים", "100% כיסוי", "טבלאות השוואה", "מחברת דיגיטלית"],
+                tags: ["כל 9 הפרקים", "100% כיסוי", "טבלאות השוואה", "חזרה מרוכזת"],
                 segmentName: "עין ימין (סיכום הקורס)"
             }},
             {{
                 id: "exams",
                 numberLabel: "בחינות",
                 badge: "מאגר בחינות ותרגול",
-                title: "מאגר בחינות, שאלות אמריקאיות ותרגול אינטראקטיבי",
-                desc: "מאגר תרגול עצום הכולל שאלות ממבחנים אמיתיים (כולל מועדי 2026), מעקבי הודעות, ניתוחי קוד ופתרונות מלאים.",
+                title: "מאגר בחינות גמר אינטראקטיבי ופתרונות מלאים",
+                desc: "עשרות מועדי בחינה רשמיים עם פתרונות מומחה מפורטים ל-100%: ניתוחי מעקב קוד, שאלות מטה-מחלקות ורפלקציה, מסננים לפי 7 ארכיטיפים, מחברת נוסחאות ותרשימים מלאה.",
                 link: "exams.html",
                 color: "#ec4899",
-                tags: ["שאלות אמריקאיות", "מועדי 2026", "מעקבי self/super", "פתרונות מלאים"],
+                tags: ["מועדי 2026 ומבחני עבר", "פתרונות מלאים ל-100%", "7 ארכיטיפי שאלות", "מחברת נוסחאות"],
                 segmentName: "עין שמאל (מאגר בחינות)"
             }}
         ];
@@ -1031,11 +1059,18 @@ html_content = f'''<!DOCTYPE html>
         // 5. ATTACH LISTENERS TO SQUEAK SVG SEGMENTS & NODES
         function initSvgInteractivity() {{
             CHAPTERS_DATA.forEach(c => {{
-                const group = document.getElementById(`seg-group-${{c.id}}`) || document.getElementById(`eye-${{c.id === 'summary' ? 'left' : 'right'}}-group`);
+                let elId = `seg-group-${{c.id}}`;
+                if (c.id === 'summary') elId = 'eye-left-group';
+                if (c.id === 'exams') elId = 'eye-right-group';
+                const group = document.getElementById(elId);
                 if (group) {{
+                    group.style.cursor = 'pointer';
                     group.addEventListener('mouseenter', () => setActiveChapter(c.id, true));
                     group.addEventListener('mouseleave', () => collapseNose());
-                    group.addEventListener('click', () => {{ window.location.href = c.link; }});
+                    group.addEventListener('click', (e) => {{
+                        e.preventDefault();
+                        window.location.href = c.link;
+                    }});
                     group.addEventListener('touchstart', (e) => {{
                         setActiveChapter(c.id, true);
                     }}, {{ passive: true }});
@@ -1060,44 +1095,7 @@ html_content = f'''<!DOCTYPE html>
         }}
 
         // 6. THEME TOGGLE (NORMAL -> DARK -> READING)
-        function toggleTheme() {{
-            let currentTheme = localStorage.getItem('site-theme') || 'normal';
-            if (currentTheme === 'normal') currentTheme = 'dark';
-            else if (currentTheme === 'dark') currentTheme = 'reading';
-            else currentTheme = 'normal';
-
-            localStorage.setItem('site-theme', currentTheme);
-            applyTheme();
-        }}
-
-        function applyTheme() {{
-            const currentTheme = localStorage.getItem('site-theme') || 'normal';
-            const btn = document.getElementById('theme-toggle-btn');
-            const existingStyle = document.getElementById('dynamic-theme-style');
-            if (existingStyle) existingStyle.remove();
-
-            if (btn) {{
-                if (currentTheme === 'normal') btn.textContent = '☀️';
-                else if (currentTheme === 'dark') btn.textContent = '🌙';
-                else if (currentTheme === 'reading') btn.textContent = '📖';
-            }}
-
-            if (currentTheme !== 'normal') {{
-                const style = document.createElement('style');
-                style.id = 'dynamic-theme-style';
-                if (currentTheme === 'dark') {{
-                    style.textContent = `
-                        html {{ filter: invert(0.9) hue-rotate(180deg); }}
-                        img, video, iframe, pre, .no-invert {{ filter: invert(1) hue-rotate(180deg); }}
-                    `;
-                }} else if (currentTheme === 'reading') {{
-                    style.textContent = `
-                        html {{ filter: sepia(0.45) brightness(0.96); }}
-                    `;
-                }}
-                document.head.appendChild(style);
-            }}
-        }}
+        // Handled centrally by theme-manager.js
 
         // 7. INITIALIZE ON DOM CONTENT LOADED
         document.addEventListener('DOMContentLoaded', () => {{
