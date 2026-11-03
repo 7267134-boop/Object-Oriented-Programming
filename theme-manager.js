@@ -8,6 +8,14 @@
         const existing = document.getElementById('dynamic-theme-style');
         if (existing) existing.remove();
 
+        // Update data-theme and class on root html element
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            document.documentElement.classList.add('theme-dark');
+        } else {
+            document.documentElement.classList.remove('theme-dark');
+        }
+
         if (currentTheme !== 'normal') {
             const style = document.createElement('style');
             style.id = 'dynamic-theme-style';
@@ -20,7 +28,7 @@
                         filter: invert(0.9) hue-rotate(180deg);
                     }
                     /* Re-invert media and elements that already have balanced dark tones */
-                    img, video, iframe, pre, canvas, .bg-slate-900, .bg-slate-800, .bg-darker, .bg-dark, .no-invert, #ai-widget-container {
+                    img, video, iframe, pre, canvas, .bg-slate-900, .bg-slate-800, .bg-darker, .bg-dark, .no-invert, #ai-widget-container, .no-invert-dark {
                         filter: invert(1) hue-rotate(180deg);
                     }
                 `;
@@ -37,6 +45,9 @@
             document.head.appendChild(style);
         }
         updateThemeIcon();
+
+        // Dispatch a custom event in case components want to listen to theme changes
+        window.dispatchEvent(new CustomEvent('siteThemeChanged', { detail: { theme: currentTheme } }));
     }
 
     // 3. Update the floating button icon based on state (if present on index.html)

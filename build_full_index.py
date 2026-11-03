@@ -112,14 +112,51 @@ html_content = f'''<!DOCTYPE html>
         }}
 
         @keyframes silver-waves {{
-            0% {{ background-position: -200% 0; }}
-            100% {{ background-position: 200% 0; }}
+            0% {{
+                background-position: 200% center;
+            }}
+
+            100% {{
+                background-position: -200% center;
+            }}
         }}
 
         .silver-waves-bg {{
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%);
+            background: linear-gradient(105deg,
+                    transparent 20%,
+                    rgba(255, 255, 255, 0.4) 25%,
+                    transparent 30%,
+                    rgba(255, 255, 255, 0.8) 45%,
+                    rgba(255, 255, 255, 0.4) 50%,
+                    transparent 55%,
+                    rgba(255, 255, 255, 0.3) 70%,
+                    transparent 75%);
             background-size: 200% 100%;
             animation: silver-waves 3s linear infinite;
+        }}
+
+        @keyframes spin-rainbow {{
+            0% {{
+                transform: rotate(0deg);
+            }}
+
+            100% {{
+                transform: rotate(360deg);
+            }}
+        }}
+
+        .rainbow-spin-bg {{
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            padding: 3px;
+            background: conic-gradient(from 0deg, #7c3aed, #9333ea, #c026d3, #d946ef, #ec4899, #f43f5e, #f472b6, #c084fc, #7c3aed);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spin-rainbow 4s linear infinite;
+            pointer-events: none;
+            z-index: 0;
         }}
 
         /* Rotating Glowing Light Beam Gradient (Purple, Pink, Orange) */
@@ -213,36 +250,38 @@ html_content = f'''<!DOCTYPE html>
 
         /* Resting State: Small cute cat nose */
         .nose-collapsed {{
-            width: 88px !important;
+            width: 90px !important;
             height: 56px !important;
             border-radius: 28px !important;
-            background: rgba(24, 8, 40, 0.7) !important;
+            background: rgba(24, 8, 40, 0.8) !important;
             backdrop-filter: blur(12px) !important;
             -webkit-backdrop-filter: blur(12px) !important;
             border: 2px solid rgba(244, 114, 182, 0.75) !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
         }}
 
-        /* Expanded State: Smooth organic oval pill with partial transparency */
+        /* Expanded State: Smooth organic oval card with soft luminous frosted glass */
         #cat-nose-container:hover #cat-nose-pill,
         #cat-nose-pill.nose-expanded {{
-            width: 350px !important;
-            min-height: 160px !important;
+            width: 420px !important;
+            min-height: 215px !important;
             height: auto !important;
             border-radius: 36px !important;
-            background: rgba(20, 8, 35, 0.88) !important;
-            backdrop-filter: blur(18px) !important;
-            -webkit-backdrop-filter: blur(18px) !important;
-            box-shadow: 0 20px 45px -5px rgba(236, 72, 153, 0.45) !important;
-            padding: 0.75rem 1rem !important;
+            background: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(24px) !important;
+            -webkit-backdrop-filter: blur(24px) !important;
+            border: 2px solid rgba(244, 114, 182, 0.6) !important;
+            box-shadow: 0 25px 60px -10px rgba(124, 58, 237, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.9) !important;
+            padding: 1.1rem 1.25rem !important;
         }}
 
         @media (max-width: 640px) {{
             #cat-nose-container:hover #cat-nose-pill,
             #cat-nose-pill.nose-expanded {{
-                width: 300px !important;
-                min-height: 145px !important;
+                width: min(350px, 92vw) !important;
+                min-height: 200px !important;
                 border-radius: 30px !important;
+                padding: 0.9rem 1rem !important;
             }}
         }}
 
@@ -256,6 +295,65 @@ html_content = f'''<!DOCTYPE html>
         #cat-nose-pill.nose-expanded #nose-expanded-view {{
             opacity: 1 !important;
             pointer-events: auto !important;
+        }}
+
+        #cat-nose-container:hover .accent-spin-bg,
+        #cat-nose-pill.nose-expanded .accent-spin-bg {{
+            display: none !important;
+        }}
+
+        /* =====================================================================
+           CREEPY CAT NIGHT MODE - SCARY RED EYES & MISCHIEVOUS CHESHIRE SMILE
+           ===================================================================== */
+        .no-invert-dark {{
+            filter: invert(1) hue-rotate(180deg);
+        }}
+
+        .creepy-eye-normal {{
+            transition: opacity 0.5s ease;
+        }}
+        .creepy-eye-night {{
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }}
+        .creepy-mouth {{
+            opacity: 0;
+            transform-origin: 512px 610px;
+            transform: scale(0.85);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }}
+
+        html[data-theme="dark"] .creepy-eye-normal,
+        html.theme-dark .creepy-eye-normal {{
+            opacity: 0 !important;
+        }}
+        html[data-theme="dark"] .creepy-eye-night,
+        html.theme-dark .creepy-eye-night {{
+            opacity: 1 !important;
+        }}
+        html[data-theme="dark"] .creepy-mouth,
+        html.theme-dark .creepy-mouth {{
+            opacity: 1 !important;
+            transform: scale(1) !important;
+        }}
+
+        @keyframes creepyGlow {{
+            0%, 100% {{ filter: drop-shadow(0 0 10px #ff0033) drop-shadow(0 0 20px rgba(255, 0, 51, 0.6)); }}
+            50% {{ filter: drop-shadow(0 0 16px #ff1744) drop-shadow(0 0 30px rgba(255, 23, 68, 0.85)); }}
+        }}
+
+        @keyframes pulseSlit {{
+            0%, 100% {{ transform: scaleX(1); }}
+            50% {{ transform: scaleX(0.7); }}
+        }}
+
+        .creepy-slit {{
+            animation: pulseSlit 3s ease-in-out infinite;
+            transform-origin: center;
+        }}
+
+        .creepy-glow {{
+            animation: creepyGlow 2.5s ease-in-out infinite;
         }}
     </style>
 </head>
@@ -273,29 +371,26 @@ html_content = f'''<!DOCTYPE html>
     </div>
 
     <!-- ========================================================================= -->
-    <!-- TOP-LEFT FIXED BUTTON: OTHER COURSES (SILVERY WHITE INTERIOR, ACCENT FRAME)-->
+    <!-- TOP-LEFT FIXED BUTTON: OTHER COURSES (MATCHES OPERATING SYSTEMS STYLE)    -->
     <!-- ========================================================================= -->
     <a href="https://all-the-courses.pages.dev/"
-        class="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 group block bg-transparent rounded-full p-[3px] transition-all duration-500 hover:shadow-2xl hover:shadow-pink-500/30 hover:-translate-y-1 hover:scale-105 w-24 h-24 sm:w-28 sm:h-28 overflow-hidden"
+        class="fixed top-4 left-4 sm:top-6 sm:left-6 z-50 group block bg-transparent rounded-full p-[3px] transition-all duration-500 hover:shadow-2xl hover:shadow-purple-400/30 hover:-translate-y-1 hover:scale-105 w-32 h-32 sm:w-40 sm:h-40 overflow-hidden"
         title="מעבר לפורטל כל הקורסים">
-        
-        <!-- Rotating Conic Border: Bordeaux, Purple, Pink, Orange -->
-        <div class="accent-spin-bg"></div>
 
-        <!-- Inner Silvery-White Glass Container (לבן כסוף, NOT colored inside!) -->
-        <div class="bg-white/85 backdrop-blur-xl rounded-full w-full h-full relative z-10 flex flex-col items-center justify-center border border-white/80 group-hover:bg-white/95 transition-all duration-500 shadow-md text-center p-1 sm:p-2 overflow-hidden">
-            <!-- Silver Waves Shimmer -->
+        <!-- Spinning Conic Border in Purple, Pink & Rose Palette -->
+        <div class="rainbow-spin-bg"></div>
+
+        <div
+            class="bg-white/20 backdrop-blur-xl rounded-full w-full h-full relative z-10 flex flex-col items-center justify-center border border-white/30 hover:bg-white/30 transition-all duration-500 shadow-[0_8px_32px_rgba(255,255,255,0.05)] text-center p-2 overflow-hidden">
+            <!-- Silver waves animation layer -->
             <div class="absolute inset-0 silver-waves-bg pointer-events-none z-0"></div>
 
-            <!-- Silvery-white Icon Bubble -->
-            <div class="w-8 h-8 sm:w-9 sm:h-9 mb-0.5 rounded-full bg-slate-100/90 border border-slate-200/50 flex items-center justify-center text-slate-700 group-hover:text-purple-900 group-hover:scale-110 transition-all duration-500 shadow-xs relative z-20">
-                <i data-lucide="library" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+            <div
+                class="w-12 h-12 sm:w-14 sm:h-14 mb-2 rounded-full bg-white/30 flex items-center justify-center text-purple-700 group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:to-pink-500 group-hover:text-white transition-all duration-500 shadow-inner relative z-20">
+                <i data-lucide="library" class="w-6 h-6 sm:w-8 sm:h-8"></i>
             </div>
-            
-            <!-- Text -->
-            <span class="text-xs sm:text-sm font-black text-slate-800 group-hover:text-purple-950 transition-colors leading-tight relative z-20">
-                לקורסים<br>נוספים
-            </span>
+            <span
+                class="text-sm sm:text-base font-bold text-slate-700 group-hover:text-purple-900 transition-colors leading-tight relative z-20">לקורסים<br>נוספים</span>
         </div>
     </a>
 
@@ -316,46 +411,18 @@ html_content = f'''<!DOCTYPE html>
                 </div>
 
                 <!-- Main Headline -->
-                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-none mb-3">
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-none mb-3 sm:mb-4">
                     תכנות מונחה עצמים
                 </h1>
                 
-                <!-- Subtitle -->
-                <p class="text-sm sm:text-lg md:text-xl font-medium text-slate-700 max-w-2xl leading-relaxed mb-4">
-                    פורטל הלמידה הראשי • סביבת <span class="font-extrabold text-purple-900">Smalltalk & Squeak</span>, מפת דרכים אינטראקטיבית, סיכומי עומק ומאגר בחינות
-                </p>
-
-                <!-- Quick Concept Tags -->
-                <div class="flex flex-wrap items-center justify-center gap-2">
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-50 text-purple-900 border border-purple-200">Pure OOP</span>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-pink-50 text-pink-900 border border-pink-200">Everything is an Object</span>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-orange-50 text-orange-900 border border-orange-200">Method Lookup</span>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-fuchsia-50 text-fuchsia-900 border border-fuchsia-200">Morphic GUI</span>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-950 border border-rose-200">Metaclass Loop</span>
-                </div>
-
-                <!-- Quick Direct Navigation Links Bar -->
-                <div class="mt-5 pt-4 border-t border-purple-100/90 w-full flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-                    <a href="0_intro.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-purple-100/80 text-purple-900 border border-purple-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
-                        <span>📖</span>
-                        <span>יחידה 0: מבוא והקדמה</span>
-                    </a>
-                    <a href="summary.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-indigo-100/80 text-indigo-900 border border-indigo-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
-                        <span>📑</span>
-                        <span>מחברת סיכום הקורס</span>
-                    </a>
-                    <a href="exams.html" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/90 hover:bg-pink-100/80 text-pink-900 border border-pink-200 shadow-xs hover:shadow-sm hover:scale-105 active:scale-95 transition-all">
-                        <span>⚔️</span>
-                        <span>מאגר בחינות ופתרונות</span>
-                    </a>
-                    <a href="https://all-the-courses.pages.dev/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 text-purple-950 border border-purple-200/80 shadow-xs hover:scale-105 active:scale-95 transition-all">
-                        <span>🌐</span>
-                        <span>כל הקורסים</span>
-                    </a>
-                    <a href="https://wa.me/972586736525" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-green-50 hover:bg-green-100 text-green-900 border border-green-200 shadow-xs hover:scale-105 active:scale-95 transition-all">
-                        <i class="fa-brands fa-whatsapp text-green-600 text-sm"></i>
-                        <span>וואטסאפ</span>
-                    </a>
+                <!-- Course & Website General Description (Directly on white card, clean & unboxed) -->
+                <div class="max-w-2xl text-slate-600 text-xs sm:text-sm md:text-[14.5px] font-normal leading-relaxed text-center space-y-1.5">
+                    <p>
+                        פורטל הלמידה המקיף לקורס <strong>תכנות מונחה עצמים (20906)</strong> באוניברסיטה הפתוחה. הקורס מקנה הבנה מעמיקה של עקרונות התכנות מונחה העצמים הטהור (Pure OOP) בסביבת <strong>Smalltalk & Squeak</strong> – מודל ייחודי שבו כל ישות במערכת היא עצם חי וכל חישוב מתבצע באמצעות העברת הודעות.
+                    </p>
+                    <p class="text-slate-500 text-[11.5px] sm:text-xs md:text-sm">
+                        האתר מרכז עבורכם מסלול למידה שלם וחווייתי הכולל מפת דרכים אינטראקטיבית לחקירת 9 פרקי הליבה, סיכומי עומק בהירים, סימולציות גרפיות חיות להמחשת מודלים מופשטים, שאלות תרגול ומאגר בחינות מקיף.
+                    </p>
                 </div>
             </div>
         </div>
@@ -366,9 +433,9 @@ html_content = f'''<!DOCTYPE html>
     <!-- ========================================================================= -->
     <main class="relative w-full max-w-[1180px] mx-auto px-2 sm:px-6 py-2 z-20 mb-12 flex-1">
         
-        <!-- Squeak Stage Container (Transparent, directly over the base64 background!) -->
+        <!-- Squeak Stage Container (Frosted Glass Card with soft ambient separation) -->
         <div id="squeak-hub-card"
-            class="relative w-full overflow-visible select-none flex flex-col items-center justify-center p-1 sm:p-2">
+            class="relative w-full overflow-visible select-none flex flex-col items-center justify-center p-3 sm:p-5 rounded-[2.5rem] bg-white/75 backdrop-blur-xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(124,58,237,0.08)]">
 
             <!-- Soft Helper Banner -->
             <div class="mb-3 px-5 py-1.5 rounded-full border border-purple-200/80 bg-white/75 backdrop-blur-md text-xs font-bold text-slate-700 shadow-xs flex items-center gap-2">
@@ -381,70 +448,97 @@ html_content = f'''<!DOCTYPE html>
                 
                 <svg id="squeak-svg" viewBox="-50 -35 1124 785" class="w-full h-auto overflow-visible" style="max-height: 620px;">
                     <defs>
-                        <!-- Glowing Laser Light Beam Gradient (Purple, Pink, Orange) -->
+                        <!-- Smooth Continuous Border Gradient (Unbroken, Pastel Transition) -->
+                        <linearGradient id="continuous-border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#f472b6" />   <!-- Soft Pastel Rose -->
+                            <stop offset="25%" stop-color="#fb923c" />  <!-- Soft Warm Coral / Peach -->
+                            <stop offset="50%" stop-color="#c084fc" />  <!-- Soft Lavender -->
+                            <stop offset="75%" stop-color="#60a5fa" />  <!-- Soft Periwinkle -->
+                            <stop offset="100%" stop-color="#f472b6" /> <!-- Back to Rose -->
+                        </linearGradient>
+
+                        <!-- Glowing Laser Light Beam Gradient (Soft Pastel Palette) -->
                         <linearGradient id="light-beam-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#7c3aed" />   <!-- Vibrant Purple -->
-                            <stop offset="25%" stop-color="#ec4899" />  <!-- Neon Pink -->
-                            <stop offset="50%" stop-color="#f97316" />  <!-- Bright Orange -->
-                            <stop offset="75%" stop-color="#db2777" />  <!-- Deep Pink -->
-                            <stop offset="100%" stop-color="#7c3aed" /> <!-- Loop to Purple -->
+                            <stop offset="0%" stop-color="#c4b5fd" />   <!-- Soft Pastel Lavender -->
+                            <stop offset="25%" stop-color="#f472b6" />  <!-- Soft Pastel Rose -->
+                            <stop offset="50%" stop-color="#fca583" />  <!-- Soft Warm Coral -->
+                            <stop offset="75%" stop-color="#a78bfa" />  <!-- Soft Lilac -->
+                            <stop offset="100%" stop-color="#c4b5fd" /> <!-- Loop to Soft Lavender -->
                         </linearGradient>
 
                         <!-- Soft Beam Glow Filter -->
                         <filter id="beam-glow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="3.5" result="blur" />
+                            <feGaussianBlur stdDeviation="2.8" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
 
                         <!-- Particle Core Glow Filter -->
                         <filter id="particle-glow" x="-40%" y="-40%" width="180%" height="180%">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feGaussianBlur stdDeviation="2.5" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
 
                         <!-- Eye Socket Glow Filter -->
                         <filter id="eye-glow" x="-25%" y="-25%" width="150%" height="150%">
-                            <feGaussianBlur stdDeviation="5" result="blur" />
+                            <feGaussianBlur stdDeviation="4" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
+
+                        <!-- Curved Smile Paths for Eye Arched Text (Left Eye: cx=391, cy=374 | Right Eye: cx=623, cy=384) -->
+                        <path id="arc-left-smile" d="M 345,398 A 50,54 0 0,0 437,398" fill="none" />
+                        <path id="arc-right-smile" d="M 577,408 A 50,54 0 0,0 669,408" fill="none" />
+
+                        <!-- Creepy Red Eye Glow Filter -->
+                        <filter id="creepy-red-glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+
+                        <!-- Fiery Red Iris Gradient -->
+                        <radialGradient id="creepy-iris-grad" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#ff1744" />
+                            <stop offset="40%" stop-color="#dc2626" />
+                            <stop offset="85%" stop-color="#7f1d1d" />
+                            <stop offset="100%" stop-color="#450a0a" />
+                        </radialGradient>
                     </defs>
 
                     <!-- ============================================================== -->
-                    <!-- LAYER 0: EXPANDED BOUNDING FRAME & CONTINUOUS LIGHT BEAM PIPE   -->
-                    <!-- (Ears & Whiskers are 100% comfortably contained inside!)        -->
+                    <!-- LAYER 0: CONTINUOUS GLOWING PERIMETER FRAME (UNBROKEN PASTEL)  -->
+                    <!-- (Modeled after the Computational Models standard - No Dashes!)  -->
                     <!-- ============================================================== -->
                     
-                    <!-- Expanded Bounding Rect Path with ambient glow and light beam -->
-                    <path id="bbox-frame-path"
-                        d="M 15,-15 L 1009,-15 A 40,40 0 0 1 1049,25 L 1049,695 A 40,40 0 0 1 1009,735 L 15,735 A 40,40 0 0 1 -25,695 L -25,25 A 40,40 0 0 1 15,-15 Z"
-                        fill="rgba(255, 255, 255, 0.04)"
-                        stroke="rgba(255, 255, 255, 0.25)"
-                        stroke-width="12" />
-
-                    <path
+                    <!-- Ambient Soft White Underlay for Outer Frame -->
+                    <path id="bbox-frame-underlay"
                         d="M 15,-15 L 1009,-15 A 40,40 0 0 1 1049,25 L 1049,695 A 40,40 0 0 1 1009,735 L 15,735 A 40,40 0 0 1 -25,695 L -25,25 A 40,40 0 0 1 15,-15 Z"
                         fill="none"
-                        stroke="url(#light-beam-grad)"
-                        stroke-width="3"
-                        stroke-dasharray="140 35 70 35"
+                        stroke="rgba(255, 255, 255, 0.85)"
+                        stroke-width="8" />
+
+                    <!-- Continuous Glowing Border Path (Unbroken, Smooth Pastel Gradient) -->
+                    <path id="bbox-frame-path"
+                        d="M 15,-15 L 1009,-15 A 40,40 0 0 1 1049,25 L 1049,695 A 40,40 0 0 1 1009,735 L 15,735 A 40,40 0 0 1 -25,695 L -25,25 A 40,40 0 0 1 15,-15 Z"
+                        fill="none"
+                        stroke="url(#continuous-border-grad)"
+                        stroke-width="4.5"
                         stroke-linecap="round"
-                        class="flowing-frame"
                         filter="url(#beam-glow)" />
 
-                    <!-- Circular Framing Pipe Conduit enclosing the Squeak Face -->
-                    <circle cx="512" cy="365" r="348" fill="none" stroke="rgba(255, 255, 255, 0.22)" stroke-width="20" />
-                    <circle cx="512" cy="365" r="338" fill="none" stroke="rgba(255, 255, 255, 0.45)" stroke-width="1.5" />
-                    <circle cx="512" cy="365" r="358" fill="none" stroke="rgba(255, 255, 255, 0.45)" stroke-width="1.5" />
-                    <circle id="circular-pipe-path" cx="512" cy="365" r="348" fill="none" stroke="url(#light-beam-grad)" stroke-width="6" stroke-dasharray="150 50 70 50" stroke-linecap="round" class="flowing-pipe" />
+                    <!-- Faint Ambient Framing Ring -->
+                    <circle cx="512" cy="365" r="348" fill="none" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" />
+                    <circle cx="512" cy="365" r="348" fill="none" stroke="url(#light-beam-grad)" stroke-width="2" opacity="0.3" />
 
                     <!-- Feeder Light Rays Connecting Outer Frame to Whisker & Ear Tips -->
-                    <g class="pointer-events-none opacity-60">
-                        <path id="feeder-ear-r" d="M 835,-15 L 835,6" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
-                        <path id="feeder-ear-l" d="M 157,-15 L 157,6" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
-                        <path id="feeder-whisker-rt" d="M 1049,550 L 1005,550" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
-                        <path id="feeder-whisker-rm" d="M 1049,645 Q 1012,645 975,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
-                        <path id="feeder-whisker-lt" d="M -25,550 L 20,550" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
-                        <path id="feeder-whisker-lm" d="M -25,645 Q 12,645 50,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="2.5" stroke-dasharray="6 4" class="flowing-feeder" />
+                    <g class="pointer-events-none opacity-40">
+                        <path id="feeder-ear-r" d="M 835,-15 L 835,6" stroke="url(#light-beam-grad)" stroke-width="2" />
+                        <path id="feeder-ear-l" d="M 157,-15 L 157,6" stroke="url(#light-beam-grad)" stroke-width="2" />
+                        <path id="feeder-whisker-rt" d="M 1049,550 L 1005,550" stroke="url(#light-beam-grad)" stroke-width="2" />
+                        <path id="feeder-whisker-rm" d="M 1049,645 Q 1012,645 975,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="2" />
+                        <path id="feeder-whisker-lt" d="M -25,550 L 20,550" stroke="url(#light-beam-grad)" stroke-width="2" />
+                        <path id="feeder-whisker-lm" d="M -25,645 Q 12,645 50,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="2" />
                     </g>
 
 
@@ -464,8 +558,8 @@ html_content = f'''<!DOCTYPE html>
                         <path d="M 840,385 C 895,250 895,60 835,6" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="80 160" class="flowing-path-dash pointer-events-none opacity-80" />
                         <!-- Fixed Number Node (Zero Jitter/Jumping) -->
                         <g id="node-intro" class="squeak-node">
-                            <circle cx="881" cy="165" r="22" fill="#180828" stroke="#ec4899" stroke-width="2.5" class="node-circle" />
-                            <text x="881" y="165" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="900" fill="#ffffff">מבוא</text>
+                            <circle cx="881" cy="165" r="22" fill="#ffffff" stroke="#f472b6" stroke-width="2.5" class="node-circle" />
+                            <text x="881" y="165" text-anchor="middle" dominant-baseline="central" font-size="11" font-weight="900" fill="#be185d">מבוא</text>
                         </g>
                     </g>
 
@@ -476,8 +570,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-1" d="M 835,6 C 750,40 680,130 655,220" fill="none" stroke="url(#light-beam-grad)" stroke-width="8" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 835,6 C 750,40 680,130 655,220" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="60 120" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-1" class="squeak-node">
-                            <circle cx="723" cy="92" r="20" fill="#180828" stroke="#f97316" stroke-width="2.5" class="node-circle" />
-                            <text x="723" y="92" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#ffffff">1</text>
+                            <circle cx="723" cy="92" r="20" fill="#ffffff" stroke="#fb923c" stroke-width="2.5" class="node-circle" />
+                            <text x="723" y="92" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#c2410c">1</text>
                         </g>
                     </g>
 
@@ -488,8 +582,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-2" d="M 157,6 C 240,40 310,130 351,220" fill="none" stroke="url(#light-beam-grad)" stroke-width="8" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 157,6 C 240,40 310,130 351,220" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="60 120" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-2" class="squeak-node">
-                            <circle cx="270" cy="92" r="20" fill="#180828" stroke="#f97316" stroke-width="2.5" class="node-circle" />
-                            <text x="270" y="92" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#ffffff">2</text>
+                            <circle cx="270" cy="92" r="20" fill="#ffffff" stroke="#fbbf24" stroke-width="2.5" class="node-circle" />
+                            <text x="270" y="92" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#b45309">2</text>
                         </g>
                     </g>
 
@@ -500,8 +594,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-3" d="M 157,6 C 100,60 100,250 165,390" fill="none" stroke="url(#light-beam-grad)" stroke-width="8" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 157,6 C 100,60 100,250 165,390" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="80 160" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-3" class="squeak-node">
-                            <circle cx="115" cy="166" r="20" fill="#180828" stroke="#a855f7" stroke-width="2.5" class="node-circle" />
-                            <text x="115" y="166" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#ffffff">3</text>
+                            <circle cx="115" cy="166" r="20" fill="#ffffff" stroke="#c084fc" stroke-width="2.5" class="node-circle" />
+                            <text x="115" y="166" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="900" fill="#7e22ce">3</text>
                         </g>
                     </g>
 
@@ -517,8 +611,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-4" d="M 618,527 C 750,510 880,520 1005,550" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 618,527 C 750,510 880,520 1005,550" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="70 140" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-4" class="squeak-node">
-                            <circle cx="814" cy="521" r="18" fill="#180828" stroke="#ec4899" stroke-width="2.5" class="node-circle" />
-                            <text x="814" y="521" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">4</text>
+                            <circle cx="814" cy="521" r="18" fill="#ffffff" stroke="#f472b6" stroke-width="2.5" class="node-circle" />
+                            <text x="814" y="521" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#be185d">4</text>
                         </g>
                     </g>
 
@@ -529,8 +623,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-5" d="M 622,567 C 750,565 870,590 975,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 622,567 C 750,565 870,590 975,645" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="70 140" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-5" class="squeak-node">
-                            <circle cx="807" cy="585" r="18" fill="#180828" stroke="#f97316" stroke-width="2.5" class="node-circle" />
-                            <text x="807" y="585" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">5</text>
+                            <circle cx="807" cy="585" r="18" fill="#ffffff" stroke="#fb923c" stroke-width="2.5" class="node-circle" />
+                            <text x="807" y="585" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#c2410c">5</text>
                         </g>
                     </g>
 
@@ -541,8 +635,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-6" d="M 622,622 C 710,618 790,635 860,680" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 622,622 C 710,618 790,635 860,680" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="50 100" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-6" class="squeak-node">
-                            <circle cx="748" cy="633" r="18" fill="#180828" stroke="#7c3aed" stroke-width="2.5" class="node-circle" />
-                            <text x="748" y="633" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">6</text>
+                            <circle cx="748" cy="633" r="18" fill="#ffffff" stroke="#c084fc" stroke-width="2.5" class="node-circle" />
+                            <text x="748" y="633" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#7e22ce">6</text>
                         </g>
                     </g>
 
@@ -553,8 +647,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-7" d="M 405,527 C 275,510 145,520 20,550" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 405,527 C 275,510 145,520 20,550" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="70 140" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-7" class="squeak-node">
-                            <circle cx="211" cy="521" r="18" fill="#180828" stroke="#ec4899" stroke-width="2.5" class="node-circle" />
-                            <text x="211" y="521" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">7</text>
+                            <circle cx="211" cy="521" r="18" fill="#ffffff" stroke="#f472b6" stroke-width="2.5" class="node-circle" />
+                            <text x="211" y="521" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#be185d">7</text>
                         </g>
                     </g>
 
@@ -565,8 +659,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-8" d="M 400,567 C 275,565 155,590 50,645" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 400,567 C 275,565 155,590 50,645" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="70 140" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-8" class="squeak-node">
-                            <circle cx="218" cy="585" r="18" fill="#180828" stroke="#f97316" stroke-width="2.5" class="node-circle" />
-                            <text x="218" y="585" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">8</text>
+                            <circle cx="218" cy="585" r="18" fill="#ffffff" stroke="#38bdf8" stroke-width="2.5" class="node-circle" />
+                            <text x="218" y="585" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#0284c7">8</text>
                         </g>
                     </g>
 
@@ -577,8 +671,8 @@ html_content = f'''<!DOCTYPE html>
                         <path id="path-9" d="M 400,622 C 315,618 235,635 165,680" fill="none" stroke="url(#light-beam-grad)" stroke-width="7.5" stroke-linecap="round" filter="url(#beam-glow)" class="light-beam-path" />
                         <path d="M 400,622 C 315,618 235,635 165,680" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="50 100" class="flowing-path-dash pointer-events-none opacity-80" />
                         <g id="node-9" class="squeak-node">
-                            <circle cx="277" cy="633" r="18" fill="#180828" stroke="#7c3aed" stroke-width="2.5" class="node-circle" />
-                            <text x="277" y="633" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ffffff">9</text>
+                            <circle cx="277" cy="633" r="18" fill="#ffffff" stroke="#818cf8" stroke-width="2.5" class="node-circle" />
+                            <text x="277" y="633" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#4338ca">9</text>
                         </g>
                     </g>
 
@@ -708,45 +802,125 @@ html_content = f'''<!DOCTYPE html>
 
 
                     <!-- ============================================================== -->
-                    <!-- LAYER 4: EYES WITH TEXT DIRECTLY WRITTEN ON THEM               -->
+                    <!-- LAYER 4: EYES WITH TEXT CURVED ALONG THE LOWER CONTOUR          -->
+                    <!-- (Hugs the lower curvature naturally - Pupils completely visible!)-->
                     <!-- ============================================================== -->
 
                     <!-- Left Eye -> Course Summary (סיכום הקורס) -->
                     <g id="eye-left-group" class="eye-container" data-id="summary">
-                        <ellipse cx="391" cy="374" rx="58" ry="72" fill="#120722" stroke="url(#light-beam-grad)" stroke-width="5" filter="url(#eye-glow)" class="eye-socket" />
+                        <ellipse cx="391" cy="374" rx="58" ry="72" fill="#120722" stroke="url(#continuous-border-grad)" stroke-width="4.5" filter="url(#eye-glow)" class="eye-socket" />
                         
-                        <!-- Roving Pupil Behind Text -->
-                        <g id="pupil-left" class="pupil-group">
-                            <ellipse cx="391" cy="374" rx="42" ry="54" fill="#240e3f" />
-                            <ellipse cx="391" cy="374" rx="40" ry="52" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.8" />
-                            <ellipse cx="399" cy="360" rx="14" ry="20" fill="#ffffff" />
-                            <circle cx="382" cy="390" r="4.5" fill="#ffffff" opacity="0.75" />
+                        <!-- Normal Shiny Pupil & Reflections (Fades out in Night Mode) -->
+                        <g id="pupil-left" class="pupil-group creepy-eye-normal">
+                            <ellipse cx="391" cy="374" rx="44" ry="56" fill="#240e3f" />
+                            <ellipse cx="391" cy="374" rx="42" ry="54" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.6" />
+                            <ellipse cx="399" cy="358" rx="14" ry="20" fill="#ffffff" />
+                            <circle cx="382" cy="388" r="4.5" fill="#ffffff" opacity="0.75" />
                         </g>
 
-                        <!-- Text Directly on Eye Surface -->
-                        <g class="pointer-events-none">
-                            <rect x="331" y="360" width="120" height="28" rx="14" fill="rgba(18, 7, 34, 0.85)" stroke="#a855f7" stroke-width="1.5" />
-                            <text x="391" y="374" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" fill="#fdf2f8">סיכום הקורס 📖</text>
+                        <!-- Creepy Scary Red Eye (Night Mode Only) -->
+                        <g class="creepy-eye-night no-invert-dark pointer-events-none">
+                            <ellipse cx="391" cy="374" rx="58" ry="72" fill="#0c0414" stroke="#ff1744" stroke-width="3" filter="url(#creepy-red-glow)" />
+                            <ellipse cx="391" cy="374" rx="46" ry="58" fill="url(#creepy-iris-grad)" />
+                            <ellipse cx="391" cy="374" rx="38" ry="50" fill="none" stroke="#fca5a5" stroke-width="1.5" opacity="0.4" stroke-dasharray="4 2" />
+                            <g class="creepy-slit" style="transform-origin: 391px 374px;">
+                                <path d="M 391,330 Q 382,374 391,418 Q 400,374 391,330 Z" fill="#000000" stroke="#ff0033" stroke-width="2" filter="url(#creepy-red-glow)" />
+                                <path d="M 391,336 Q 385,374 391,412 Q 397,374 391,336 Z" fill="#000000" />
+                                <circle cx="387" cy="360" r="3.5" fill="#ffffff" opacity="0.9" />
+                                <circle cx="395" cy="385" r="2" fill="#ff4d4d" opacity="0.8" />
+                            </g>
                         </g>
+
+                        <!-- Arched Underlay Ribbon hugging the lower curve -->
+                        <path d="M 345,398 A 50,54 0 0,0 437,398" fill="none" stroke="rgba(24, 8, 40, 0.88)" stroke-width="22" stroke-linecap="round" />
+                        <path d="M 345,398 A 50,54 0 0,0 437,398" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+
+                        <!-- Arched Text along Lower Contour -->
+                        <text font-size="11.5" font-weight="900" fill="#fdf2f8" text-anchor="middle" dominant-baseline="central" class="pointer-events-none">
+                            <textPath href="#arc-left-smile" startOffset="50%">
+                                סיכום הקורס 📖
+                            </textPath>
+                        </text>
                     </g>
 
                     <!-- Right Eye -> Exam Preparation (מאגר בחינות) -->
                     <g id="eye-right-group" class="eye-container" data-id="exams">
-                        <ellipse cx="623" cy="384" rx="58" ry="72" fill="#120722" stroke="url(#light-beam-grad)" stroke-width="5" filter="url(#eye-glow)" class="eye-socket" />
+                        <ellipse cx="623" cy="384" rx="58" ry="72" fill="#120722" stroke="url(#continuous-border-grad)" stroke-width="4.5" filter="url(#eye-glow)" class="eye-socket" />
                         
-                        <!-- Roving Pupil Behind Text -->
-                        <g id="pupil-right" class="pupil-group">
-                            <ellipse cx="623" cy="384" rx="42" ry="54" fill="#380b26" />
-                            <ellipse cx="623" cy="384" rx="40" ry="52" fill="none" stroke="#db2777" stroke-width="2" opacity="0.8" />
-                            <ellipse cx="631" cy="370" rx="14" ry="20" fill="#ffffff" />
-                            <circle cx="614" cy="400" r="4.5" fill="#ffffff" opacity="0.75" />
+                        <!-- Normal Shiny Pupil & Reflections (Fades out in Night Mode) -->
+                        <g id="pupil-right" class="pupil-group creepy-eye-normal">
+                            <ellipse cx="623" cy="384" rx="44" ry="56" fill="#380b26" />
+                            <ellipse cx="623" cy="384" rx="42" ry="54" fill="none" stroke="#f472b6" stroke-width="1.5" opacity="0.6" />
+                            <ellipse cx="631" cy="368" rx="14" ry="20" fill="#ffffff" />
+                            <circle cx="614" cy="398" r="4.5" fill="#ffffff" opacity="0.75" />
                         </g>
 
-                        <!-- Text Directly on Eye Surface -->
-                        <g class="pointer-events-none">
-                            <rect x="563" y="370" width="120" height="28" rx="14" fill="rgba(18, 7, 34, 0.85)" stroke="#db2777" stroke-width="1.5" />
-                            <text x="623" y="384" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="900" fill="#fdf2f8">מאגר בחינות 🎯</text>
+                        <!-- Creepy Scary Red Eye (Night Mode Only) -->
+                        <g class="creepy-eye-night no-invert-dark pointer-events-none">
+                            <ellipse cx="623" cy="384" rx="58" ry="72" fill="#0c0414" stroke="#ff1744" stroke-width="3" filter="url(#creepy-red-glow)" />
+                            <ellipse cx="623" cy="384" rx="46" ry="58" fill="url(#creepy-iris-grad)" />
+                            <ellipse cx="623" cy="384" rx="38" ry="50" fill="none" stroke="#fca5a5" stroke-width="1.5" opacity="0.4" stroke-dasharray="4 2" />
+                            <g class="creepy-slit" style="transform-origin: 623px 384px;">
+                                <path d="M 623,340 Q 614,384 623,428 Q 632,384 623,340 Z" fill="#000000" stroke="#ff0033" stroke-width="2" filter="url(#creepy-red-glow)" />
+                                <path d="M 623,346 Q 617,384 623,422 Q 629,384 623,346 Z" fill="#000000" />
+                                <circle cx="619" cy="370" r="3.5" fill="#ffffff" opacity="0.9" />
+                                <circle cx="627" cy="395" r="2" fill="#ff4d4d" opacity="0.8" />
+                            </g>
                         </g>
+
+                        <!-- Arched Underlay Ribbon hugging the lower curve -->
+                        <path d="M 577,408 A 50,54 0 0,0 669,408" fill="none" stroke="rgba(24, 8, 40, 0.88)" stroke-width="22" stroke-linecap="round" />
+                        <path d="M 577,408 A 50,54 0 0,0 669,408" fill="none" stroke="#f472b6" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+
+                        <!-- Arched Text along Lower Contour -->
+                        <text font-size="11.5" font-weight="900" fill="#fdf2f8" text-anchor="middle" dominant-baseline="central" class="pointer-events-none">
+                            <textPath href="#arc-right-smile" startOffset="50%">
+                                מאגר בחינות 🎯
+                            </textPath>
+                        </text>
+                    </g>
+
+                    <!-- ============================================================== -->
+                    <!-- LAYER 4.5: CREEPY MISCHIEVOUS CHESHIRE SMILE (NIGHT MODE ONLY) -->
+                    <!-- (Emerges smoothly under the nose when switching to Dark Mode!) -->
+                    <!-- ============================================================== -->
+                    <g id="creepy-mouth-group" class="creepy-mouth creepy-glow no-invert-dark pointer-events-none">
+                        <!-- Sinister Mouth Opening (Dark Crimson Void) -->
+                        <path d="M 425,572 
+                                 C 455,655 569,655 599,572 
+                                 C 565,618 459,618 425,572 Z" 
+                              fill="#180005" 
+                              stroke="#ff0033" 
+                              stroke-width="3" 
+                              stroke-linejoin="round" />
+
+                        <!-- Outer Glowing Grin Perimeter -->
+                        <path d="M 415,562 Q 512,670 609,562" 
+                              fill="none" 
+                              stroke="#ff1744" 
+                              stroke-width="3.5" 
+                              stroke-linecap="round" 
+                              filter="url(#creepy-red-glow)" />
+
+                        <!-- Wicked Dimple Curves at corners -->
+                        <path d="M 410,552 Q 417,562 425,572" fill="none" stroke="#ff1744" stroke-width="3.5" stroke-linecap="round" />
+                        <path d="M 614,552 Q 607,562 599,572" fill="none" stroke="#ff1744" stroke-width="3.5" stroke-linecap="round" />
+
+                        <!-- Upper Sharp Fangs & Razor Teeth -->
+                        <polygon points="445,588 453,608 461,592" fill="#fff1f2" stroke="#dc2626" stroke-width="0.75" />
+                        <polygon points="465,594 471,607 478,597" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="481,599 487,610 493,601" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="498,602 504,612 510,603" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="514,603 520,612 526,602" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="531,601 537,610 543,599" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="546,597 553,607 559,594" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="563,592 571,608 579,588" fill="#fff1f2" stroke="#dc2626" stroke-width="0.75" />
+
+                        <!-- Lower Sharp Predatory Teeth -->
+                        <polygon points="452,618 459,604 466,619" fill="#fff1f2" stroke="#dc2626" stroke-width="0.7" />
+                        <polygon points="488,627 494,615 500,627" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="524,627 530,615 536,627" fill="#fff1f2" stroke="#dc2626" stroke-width="0.5" />
+                        <polygon points="558,619 565,604 572,618" fill="#fff1f2" stroke="#dc2626" stroke-width="0.7" />
                     </g>
 
                 </svg>
@@ -773,22 +947,22 @@ html_content = f'''<!DOCTYPE html>
                             <span class="text-[9px] font-black tracking-widest text-purple-200">SQUEAK</span>
                         </div>
 
-                        <!-- EXPANDED STATE: Chapter Details inside the Semi-Transparent Nose -->
+                        <!-- EXPANDED STATE: Chapter Details inside the Semi-Transparent Nose (High Readability!) -->
                         <div id="nose-expanded-view"
-                            class="absolute inset-0 flex flex-col items-center justify-center p-3 text-center transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-auto">
-                            <span id="nose-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-white/10 text-pink-300 border border-pink-400/40 mb-1">
+                            class="absolute inset-0 flex flex-col items-center justify-center px-4 py-3 text-center transition-opacity duration-300 opacity-0 group-hover:opacity-100 pointer-events-auto gap-1">
+                            <span id="nose-badge" class="px-3 py-0.5 rounded-full text-xs font-black bg-purple-100 text-purple-900 border border-purple-300 shadow-2xs">
                                 פרק 1
                             </span>
-                            <h4 id="nose-title" class="text-xs sm:text-sm font-black text-white leading-tight mb-1 line-clamp-1 drop-shadow-sm">
-                                יסודות החשיבה מונחית העצמים
+                            <h4 id="nose-title" class="text-sm sm:text-[15px] font-black text-slate-900 leading-snug line-clamp-1 max-w-[370px]">
+                                יסודות החשיבה מונחית העצמים וההפשטה
                             </h4>
-                            <p id="nose-desc" class="text-[10px] sm:text-[11px] text-purple-200 leading-snug line-clamp-3 mb-2 drop-shadow-xs">
-                                7 שלבי התפתחות ההפשטה בתוכנה, משל המלצר והשף, ועקרונות Pure OOP.
+                            <p id="nose-desc" class="text-xs text-slate-600 font-normal leading-normal max-w-[370px] px-1">
+                                7 רמות ההפשטה בתוכנה, משל הפרחים של באד, מחזור חיי עצם ו-GC, זהות (==) מול שוויון (= ו-hash), ורמות העתקה.
                             </p>
                             <a id="nose-btn" href="20906_1.html"
-                                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold text-white bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:scale-105 active:scale-95 transition-all shadow-md">
+                                class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 hover:scale-105 active:scale-95 transition-all shadow-md mt-0.5">
                                 <span>כניסה לפרק</span>
-                                <i data-lucide="arrow-left" class="w-3 h-3"></i>
+                                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
                             </a>
                         </div>
                     </div>
@@ -814,9 +988,9 @@ html_content = f'''<!DOCTYPE html>
                 numberLabel: "יחידה 0",
                 badge: "יחידה 0 • מבוא והקדמה",
                 title: "מבוא, הקדמה וארכיטקטורת הקורס",
-                desc: "שער הכניסה ל-Pure OOP: הכרת שפת Smalltalk וסביבת Squeak, מפת 9 פרקי הליבה, מדריך 3 מצבי הלימוד באתר, וסודות ההצלחה בבחינת הגמר.",
+                desc: "שער הכניסה ל-Pure OOP: הכרת שפת Smalltalk וסביבת Squeak, מפת 9 פרקי הליבה, 3 מצבי הלימוד וסודות ההצלחה בבחינה.",
                 link: "0_intro.html",
-                color: "#ec4899", // Pink
+                color: "#f472b6", // Soft Pastel Rose
                 tags: ["Pure OOP", "Squeak", "3 מצבי לימוד", "סודות הבחינה"],
                 segmentName: "חצי אוזן ימין חיצונית"
             }},
@@ -824,10 +998,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "1",
                 numberLabel: "פרק 1",
                 badge: "פרק 1 • יסודות ה-OOP",
-                title: "יסודות החשיבה מונחית העצמים, התפתחות ההפשטה והמושג 'עצם'",
-                desc: "7 רמות ההפשטה בתוכנה, משבר התוכנה, משל הפרחים של באד, ADT מול מחלקה, מחזור חיי עצם ו-GC, זהות (==) מול שוויון (= ו-hash), ו-3 רמות העתקה.",
+                title: "יסודות החשיבה מונחית העצמים וההפשטה",
+                desc: "7 רמות ההפשטה בתוכנה, משל הפרחים של באד, מחזור חיי עצם ו-GC, זהות (==) מול שוויון (= ו-hash), ורמות העתקה.",
                 link: "20906_1.html",
-                color: "#f97316", // Warm Orange
+                color: "#fb923c", // Soft Pastel Coral
                 tags: ["7 רמות הפשטה", "זהות == מול שוויון =", "חוזה hash", "shallow/deepCopy"],
                 segmentName: "חצי אוזן ימין פנימית"
             }},
@@ -835,10 +1009,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "2",
                 numberLabel: "פרק 2",
                 badge: "פרק 2 • סביבת Squeak",
-                title: "סביבת העבודה Squeak, כלי הפיתוח ופרויקט Quinto",
-                desc: "הכרת סביבת הפיתוח החיה: ארכיטקטורת Image ו-Changes, ממשק 3 כפתורי העכבר, ה-System Browser, ה-Inspector וה-Debugger, תכנון RDD ופיתוח משחק Quinto.",
+                title: "סביבת העבודה Squeak ופרויקט Quinto",
+                desc: "הכרת סביבת הפיתוח החיה: ארכיטקטורת Image ו-Changes, כלי ה-System Browser, Debugger, ופיתוח משחק Quinto.",
                 link: "20906_2.html",
-                color: "#fb923c", // Light Orange
+                color: "#fbbf24", // Soft Warm Amber
                 tags: ["Image & Changes", "System Browser", "Debugger & Inspector", "משחק Quinto"],
                 segmentName: "חצי אוזן שמאל פנימית"
             }},
@@ -846,10 +1020,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "3",
                 numberLabel: "פרק 3",
                 badge: "פרק 3 • תחביר והודעות",
-                title: "תחביר שפת Smalltalk, סוגי הודעות וסדרי קדימויות",
-                desc: "3 סוגי הודעות (אונריות, בינריות ומילות-מפתח), חוק קדימות משמאל לימין ללא עדיפות לכפל, 6 הפסאודו-משתנים, מערכים סטטיים מול דינמיים ושרשור קסקייד (;).",
+                title: "תחביר שפת Smalltalk וסוגי הודעות",
+                desc: "3 סוגי הודעות (אונריות, בינריות ומילות-מפתח), חוקי קדימות משמאל לימין, 6 הפסאודו-משתנים ושרשור קסקייד (;).",
                 link: "20906_3.html",
-                color: "#a855f7", // Purple
+                color: "#c084fc", // Soft Lavender
                 tags: ["Unary/Binary/Keyword", "קדימות משמאל לימין", "6 הפסאודו-משתנים", "Cascade ;"],
                 segmentName: "חצי אוזן שמאל חיצונית"
             }},
@@ -857,10 +1031,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "4",
                 numberLabel: "פרק 4",
                 badge: "פרק 4 • בלוקים ו-SUnit",
-                title: "מתודות, בלוקים (BlockClosure), מבני בקרה פולימורפיים ו-SUnit",
-                desc: "הגדרת מתודות ואיסור השמה לפרמטר, סגורים לקסיקליים (BlockClosure), יציאה לא-מקומית (^), תנאים ולולאות כהודעות פולימורפיות, וכתיבת בדיקות יחידה ב-SUnit.",
+                title: "מתודות, בלוקים (BlockClosure) ו-SUnit",
+                desc: "הגדרת מתודות ואיסור השמה, סגורים לקסיקליים (BlockClosure), יציאה לא-מקומית (^), תנאים ולולאות ובדיקות SUnit.",
                 link: "20906_4.html",
-                color: "#db2777", // Pink Rose
+                color: "#f472b6", // Soft Pastel Rose
                 tags: ["BlockClosure", "יציאה לא-מקומית ^", "ifTrue:ifFalse:", "בדיקות SUnit"],
                 segmentName: "שערת שפם עליונה ימנית"
             }},
@@ -868,10 +1042,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "5",
                 numberLabel: "פרק 5",
                 badge: "פרק 5 • מחלקות והורשה",
-                title: "המושג 'מחלקה', הורשה, Traits ומנגנון ה-Method Lookup",
-                desc: "3 תפקידי המחלקה, משתני מופע מול מחלקה, אלגוריתם חיפוש מתודות בעץ הירושה, ההבדל היסודי בין self ל-super, שימוש ב-Traits, ויירוט הודעות עם doesNotUnderstand:.",
+                title: "מחלקות, הורשה ומנגנון Method Lookup",
+                desc: "משתני מופע ומחלקה, אלגוריתם חיפוש מתודות בעץ הירושה, ההבדל בין self ל-super, ויירוט עם doesNotUnderstand:.",
                 link: "20906_5.html",
-                color: "#f97316", // Orange
+                color: "#fb923c", // Soft Warm Coral
                 tags: ["Method Lookup", "self מול super", "משתני מחלקה ומופע", "doesNotUnderstand:"],
                 segmentName: "שערת שפם אמצעית ימנית"
             }},
@@ -879,10 +1053,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "6",
                 numberLabel: "פרק 6",
                 badge: "פרק 6 • אוספים ומספרים",
-                title: "היררכיות הליבה, מספרים ומערכת האוספים (Collections)",
-                desc: "המחלקה Object, עולם המספרים והשברים (Fraction), עץ האוספים (Array, OrderedCollection, Set, Dictionary), הבדל בין Set ל-IdentitySet, ואיטרטורים עשירים (do, collect, inject).",
+                title: "היררכיות הליבה ומערכת האוספים",
+                desc: "המחלקה Object, עולם המספרים והשברים, עץ ה-Collections (Set, OrderedCollection, Dictionary) ואיטרטורים עשירים.",
                 link: "20906_6.html",
-                color: "#7c3aed", // Royal Purple
+                color: "#c084fc", // Soft Lavender
                 tags: ["המחלקה Object", "היררכיית המספרים", "עץ Collections", "איטרטורים פולימורפיים"],
                 segmentName: "שערת שפם תחתונה ימנית"
             }},
@@ -890,10 +1064,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "7",
                 numberLabel: "פרק 7",
                 badge: "פרק 7 • שמונה המלכות",
-                title: "תכנון מונחה עצמים מבוזר – חידת שמונה המלכות",
-                desc: "פתרון מבוזר ואלגנטי לחידת 8 המלכות ללא לולאות מקוננות, העברת אחריות ואלגוריתם Backtracking בין אובייקטים עצמאיים (QueenTerminator), הכללה ל-NxN וניתוח 8 הסימטריות.",
+                title: "תכנון מונחה עצמים – חידת 8 המלכות",
+                desc: "פתרון מבוזר ואלגנטי לחידת 8 המלכות ללא לולאות מקוננות, העברת אחריות ואלגוריתם Backtracking בין אובייקטים עצמאיים.",
                 link: "20906_7.html",
-                color: "#ec4899", // Pink
+                color: "#f472b6", // Soft Pastel Rose
                 tags: ["Backtracking מבוזר", "חידת 8 המלכות", "QueenTerminator", "הכללה ל-NxN"],
                 segmentName: "שערת שפם עליונה שמאלית"
             }},
@@ -901,10 +1075,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "8",
                 numberLabel: "פרק 8",
                 badge: "פרק 8 • ממשק Morphic",
-                title: "ארכיטקטורת ממשק גרפי מונחה עצמים – Morphic",
-                desc: "מודל ה-GUI החי והישיר של Squeak: עץ ההכלה (submorphs ו-owner), ממשק ה-Halo, מערכת הצירים, ציור על Canvas, טיפול באירועי עכבר ומקלדת, ואנימציה חיה עם Stepping.",
+                title: "ארכיטקטורת ממשק גרפי – Morphic",
+                desc: "מודל ה-GUI החי של Squeak: עץ ה-submorphs, ממשק ה-Halo, טיפול באירועי עכבר ומקלדת, ואנימציה חיה עם Stepping.",
                 link: "20906_8.html",
-                color: "#f97316", // Orange
+                color: "#38bdf8", // Soft Pastel Sky
                 tags: ["עץ ה-Morphs", "ממשק Halo", "אירועי עכבר ומקלדת", "אנימציית Stepping"],
                 segmentName: "שערת שפם אמצעית שמאלית"
             }},
@@ -912,10 +1086,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "9",
                 numberLabel: "פרק 9",
                 badge: "פרק 9 • מטה-מחלקות",
-                title: "מודל מטה-המחלקות (Metaclass) ורפלקציה ב-Smalltalk",
-                desc: "גולת הכותרת של הקורס: מחלקה כעצם חי בזיכרון, 10 חוקי המודל האקסיומטיים, היררכיית המטה-מחלקות המקבילה, מודל 5 הרמות, מעקב שיגור Color new, ורפלקציה בזמן ריצה.",
+                title: "מודל מטה-המחלקות (Metaclass) ורפלקציה",
+                desc: "מחלקה כעצם חי בזיכרון, 10 חוקי המודל האקסיומטיים, היררכיית Metaclass המקבילה, מודל 5 הרמות ומסלול Color new.",
                 link: "20906_9.html",
-                color: "#8b5cf6", // Purple
+                color: "#818cf8", // Soft Pastel Periwinkle
                 tags: ["מודל 5 הרמות", "10 חוקי המודל", "היררכיית Metaclass", "מסלול Color new"],
                 segmentName: "שערת שפם תחתונה שמאלית"
             }},
@@ -923,10 +1097,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "summary",
                 numberLabel: "סיכום",
                 badge: "סיכום הקורס המלא",
-                title: "מחברת סיכום קורס מקיפה ומלאה (100% כיסוי)",
-                desc: "סיכום דיגיטלי הרמטי ושלם של כל 9 פרקי הליבה: עקרונות Pure OOP, תחביר שפת Smalltalk, כלי סביבת Squeak, טבלאות השוואה, חוקי ברזל ומודל 5 הרמות – מושלם לחזרה לקראת הבחינה.",
+                title: "מחברת סיכום קורס מקיפה ומלאה",
+                desc: "סיכום דיגיטלי הרמטי ושלם של כל 9 פרקי הליבה: עקרונות Pure OOP, תחביר Smalltalk, טבלאות השוואה וחוקי ברזל לבחינה.",
                 link: "summary.html",
-                color: "#a855f7",
+                color: "#c084fc",
                 tags: ["כל 9 הפרקים", "100% כיסוי", "טבלאות השוואה", "חזרה מרוכזת"],
                 segmentName: "עין ימין (סיכום הקורס)"
             }},
@@ -934,10 +1108,10 @@ html_content = f'''<!DOCTYPE html>
                 id: "exams",
                 numberLabel: "בחינות",
                 badge: "מאגר בחינות ותרגול",
-                title: "מאגר בחינות גמר אינטראקטיבי ופתרונות מלאים",
-                desc: "עשרות מועדי בחינה רשמיים עם פתרונות מומחה מפורטים ל-100%: ניתוחי מעקב קוד, שאלות מטה-מחלקות ורפלקציה, מסננים לפי 7 ארכיטיפים, מחברת נוסחאות ותרשימים מלאה.",
+                title: "מאגר בחינות גמר ופתרונות מלאים",
+                desc: "עשרות מועדי בחינה רשמיים עם פתרונות מלאים ל-100%: ניתוחי מעקב קוד, שאלות מטה-מחלקות, מסננים ומחברת נוסחאות.",
                 link: "exams.html",
-                color: "#ec4899",
+                color: "#f472b6",
                 tags: ["מועדי 2026 ומבחני עבר", "פתרונות מלאים ל-100%", "7 ארכיטיפי שאלות", "מחברת נוסחאות"],
                 segmentName: "עין שמאל (מאגר בחינות)"
             }}
@@ -977,7 +1151,7 @@ html_content = f'''<!DOCTYPE html>
 
                 if (triggerExpand && pill) {{
                     pill.style.borderColor = chapter.color;
-                    pill.style.boxShadow = `0 18px 40px -5px ${{hexToRgba(chapter.color, 0.45)}}`;
+                    pill.style.boxShadow = `0 22px 50px -10px ${{hexToRgba(chapter.color, 0.35)}}, 0 0 0 1px rgba(255, 255, 255, 0.9)`;
                     pill.classList.remove('nose-collapsed');
                     pill.classList.add('nose-expanded');
                 }}
@@ -1015,7 +1189,7 @@ html_content = f'''<!DOCTYPE html>
                 pill.classList.remove('nose-expanded');
                 pill.classList.add('nose-collapsed');
                 pill.style.borderColor = 'rgba(244, 114, 182, 0.75)';
-                pill.style.boxShadow = '0 10px 25px rgba(0,0,0,0.25)';
+                pill.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
             }}
         }}
 
