@@ -1281,6 +1281,13 @@ html_content = f'''<!DOCTYPE html>
             if (typeof lucide !== 'undefined') lucide.createIcons();
         }});
     </script>
+
+    <script src="ai_widget.js"></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js'
+        data-cf-beacon='{{"token": "c8628b533416460cbb4be9e1b68a786d"}}'></script>
+    <!-- End Cloudflare Web Analytics -->
 </body>
 </html>
 '''
