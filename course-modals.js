@@ -18,7 +18,19 @@
     const FIVE_DAYS_MS = 5 * 24 * 60 * 60 * 1000;
 
     // Injected styles
-    function injectStyles() {
+        function isMainPage() {
+        try {
+            const path = (window.location.pathname || '').toLowerCase().replace(/\\/g, '/');
+            const segments = path.split('/').filter(Boolean);
+            if (segments.length === 0) return true;
+            const lastSegment = segments[segments.length - 1];
+            return lastSegment === '' || lastSegment === 'index.html' || lastSegment === 'index';
+        } catch (e) {
+            return true;
+        }
+    }
+
+function injectStyles() {
         if (document.getElementById(`${COURSE_ID}-modals-style`)) return;
         const style = document.createElement('style');
         style.id = `${COURSE_ID}-modals-style`;
@@ -501,6 +513,8 @@
     };
 
     window.showCourseWelcomeModal = function () {
+        try { localStorage.setItem(KEY_DAY1_SHOWN, 'true'); } catch (e) {}
+
         injectStyles();
         buildWelcomeModal();
         const modal = document.getElementById('oop-welcome-modal');
@@ -528,39 +542,58 @@
 
     // Logic Evaluation on Load
     function checkModalTriggers() {
-        injectStyles();
-        buildWelcomeModal();
-        buildShareModal();
+        try {
+            injectStyles();
+            buildWelcomeModal();
+            buildShareModal();
 
-        const now = Date.now();
-        let firstVisit = localStorage.getItem(KEY_FIRST_VISIT);
-        if (!firstVisit) {
-            localStorage.setItem(KEY_FIRST_VISIT, now.toString());
-            firstVisit = now.toString();
-        }
-        const firstVisitTs = parseInt(firstVisit, 10) || now;
-        const timeSinceFirstVisit = now - firstVisitTs;
+            const isMain = isMainPage();
+            const day1Shown = localStorage.getItem(KEY_DAY1_SHOWN) === 'true';
 
-        const day1Shown = localStorage.getItem(KEY_DAY1_SHOWN) === 'true';
-        const lastShareTs = parseInt(localStorage.getItem(KEY_LAST_SHARE_POPUP) || '0', 10);
-
-        // First Visit Check: If welcome hasn't been shown yet
-        if (!day1Shown) {
-            setTimeout(() => {
-                window.showCourseWelcomeModal();
-            }, 800);
-            return;
-        }
-
-        // 5-Day Share Popup Check:
-        // Must be at least 24 hours since initial visit AND at least 5 days since last share popup
-        if (timeSinceFirstVisit >= ONE_DAY_MS) {
-            const timeSinceLastShare = now - lastShareTs;
-            if (timeSinceLastShare >= FIVE_DAYS_MS) {
-                setTimeout(() => {
-                    window.showCourseShareModal();
-                }, 1200);
+            // מניעת הקפצה חוזרת בעמודים פנימיים (פרקים, מבחנים, סיכומים)
+            if (!isMain && day1Shown) {
+                return;
             }
+
+            const now = Date.now();
+            let firstVisit = localStorage.getItem(KEY_FIRST_VISIT);
+            if (!firstVisit) {
+                firstVisit = now.toString();
+                try {
+                    localStorage.setItem(KEY_FIRST_VISIT, firstVisit);
+                } catch (e) {}
+            }
+            const firstVisitTs = parseInt(firstVisit, 10) || now;
+
+            // תרחיש 1: כניסה ראשונה אי-פעם לאתר (בכל עמוד שהוא)
+            if (!day1Shown) {
+                try {
+                    localStorage.setItem(KEY_DAY1_SHOWN, 'true');
+                } catch (e) {}
+                setTimeout(() => {
+                    window.showCourseWelcomeModal();
+                }, 800);
+                return;
+            }
+
+            // תרחיש 2: גולש חוזר (חלון שיתוף 5 ימים) - באופן בלעדי בעמוד הראשי בלבד!
+            if (!isMain) {
+                return;
+            }
+
+            const timeSinceFirstVisit = now - firstVisitTs;
+            const lastShareTs = parseInt(localStorage.getItem(KEY_LAST_SHARE_POPUP) || '0', 10);
+
+            if (timeSinceFirstVisit >= ONE_DAY_MS) {
+                const timeSinceLastShare = now - lastShareTs;
+                if (lastShareTs === 0 || timeSinceLastShare >= FIVE_DAYS_MS) {
+                    setTimeout(() => {
+                        window.showCourseShareModal();
+                    }, 1200);
+                }
+            }
+        } catch (e) {
+            console.error('Error in checkModalTriggers:', e);
         }
     }
 
