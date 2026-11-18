@@ -16,6 +16,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="theme-manager.js"></script>
+    <script src="course-modals.js?v=20261116"></script>
     <!-- Google Fonts: Heebo & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1112,6 +1113,20 @@
             <h4 class="text-center text-slate-600 font-extrabold text-sm uppercase tracking-widest mb-4">
                 קישורים מהירים ויצירת קשר
             </h4>
+
+            <!-- Action Quick Pills: Day 1 Guide & 5-Day Share -->
+            <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
+                <button onclick="window.showCourseWelcomeModal && window.showCourseWelcomeModal()"
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/80 hover:bg-white text-purple-700 font-bold text-xs sm:text-sm shadow-sm border border-purple-200/80 hover:border-purple-400 hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <span>ℹ️</span>
+                    <span>מדריך ומפת האתר</span>
+                </button>
+                <button onclick="window.showCourseShareModal && window.showCourseShareModal()"
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/80 hover:bg-white text-fuchsia-700 font-bold text-xs sm:text-sm shadow-sm border border-fuchsia-200/80 hover:border-fuchsia-400 hover:shadow-md hover:-translate-y-0.5 transition-all">
+                    <span>💙</span>
+                    <span>שיתוף האתר ומאגר הקורסים</span>
+                </button>
+            </div>
 
             <div class="flex justify-center items-center gap-5 mb-8">
                 <!-- LinkedIn -->
